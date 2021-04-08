@@ -1,0 +1,45 @@
+<ion-content class="background-div">
+    <div class="background-div-rounded">
+        <div class="back-arrow-absolute center">
+            <ion-row class="w-100">
+                <ion-col size='2' class="center">
+                    <ion-icon name="chevron-back-outline" class="app-icon pointer" (click)="nagivateBack()"></ion-icon>
+                </ion-col>
+                <ion-col size='8'>
+                    <h2 class="header-title text-center hide-overflow">Entreprise</h2>
+                </ion-col>
+                <ion-col size='2' class="end">
+                </ion-col>
+            </ion-row>
+        </div>
+        <div class="input-div-profile center">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size='12' class="start mb-2">
+                        <label class="input-label">Activité de l'entreprise</label>
+                        <input type="text" id="activity" class="input-with-icon" placeholder='Activité'>
+                        <ion-icon name="business-outline" class="input-icon-with-label"></ion-icon>
+                    </ion-col>
+                    <ion-col size='12' class="start mb-2">
+                        <label class="input-label">Numéro TVA</label>
+                        <input type="text" id="numTVA" class="input-with-icon" placeholder='Numéro TVA'>
+                        <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                    </ion-col>
+                    <ion-col size='12' class="start mb-2">
+                        <label class="input-label">Numéro RCS</label>
+                        <input type="text" id="numRCS" class="input-with-icon" placeholder='Numéro RCS'>
+                        <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                    </ion-col>
+                    <ion-col size='12' class="start mb-2">
+                        <label class="input-label">Numéro SIRET</label>
+                        <input type="text" id="numSIRET" class="input-with-icon" placeholder='Numéro SIRET'>
+                        <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                    </ion-col>
+                    <ion-col size='12' class="start mb-2">
+                        <button class="app-btn pointer" (click)="navigateTo('/tabs/tab5')">Modifier</button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+</ion-content>

@@ -17,7 +17,8 @@ import { AddExpenseAccountComponent } from './add-page/add-expense-account/add-e
 import { TimeProjectComponent } from './modals/time-project/time-project.component';
 import { CalendarProjectComponent } from './modals/calendar-project/calendar-project.component';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MglTimelineModule } from 'angular-mgl-timeline';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -38,7 +39,8 @@ import { CalendarProjectComponent } from './modals/calendar-project/calendar-pro
   imports: [
     IonicModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    MglTimelineModule
   ],
   exports: [
     HeaderComponent,
