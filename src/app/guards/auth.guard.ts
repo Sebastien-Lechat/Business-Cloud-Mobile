@@ -6,12 +6,12 @@ import { Router } from '@angular/router';
     providedIn: 'root',
 })
 export class AuthGuard {
-    private localUser = localStorage.getItem('currentUser');
 
     constructor(private router: Router) { }
 
     canActivate() {
-        if (this.localUser) {
+        const localUser = localStorage.getItem('currentUser');
+        if (localUser) {
             return true;
         }
         this.router.navigate(['auth/login']);

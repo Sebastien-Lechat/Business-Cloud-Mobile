@@ -9,6 +9,8 @@
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
+        "android": "ionic capacitor run android",
+        "android-live": "ionic capacitor run android --livereload",
         "e2e": "ng e2e"
     },
     "private": true,
