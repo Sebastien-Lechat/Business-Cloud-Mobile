@@ -6,16 +6,16 @@
         <ion-row>
             <ion-col size='12' class="mb-4 start">
                 <label class="input-label">Email<span class="red-star">*</span></label>
-                <input type="email" id="email" class="input-with-icon" placeholder='Email'>
+                <input type="email" id="email" class="input-with-icon" placeholder='Email' [(ngModel)]="email">
                 <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
             </ion-col>
             <ion-col size='12' class="mb-4 start">
                 <label class="input-label">Mot de passe<span class="red-star">*</span></label>
-                <input type="password" id="password" class="input-with-icon" placeholder='Mot de passe'>
+                <input type="password" id="password" class="input-with-icon" placeholder='Mot de passe' [(ngModel)]="password">
                 <ion-icon name="lock-closed-outline" class="input-icon-with-label"></ion-icon>
             </ion-col>
             <ion-col size='12' class="mt-2 mb-4 center">
-                <button class="app-btn-auth pointer" (click)="navigateTo('/auth/double-auth')">Connexion</button>
+                <button class="app-btn-auth pointer" (click)="login()">Connexion</button>
             </ion-col>
             <ion-col size='12' class="mb-4 around">
                 <div class="center social-div facebook-div pointer">

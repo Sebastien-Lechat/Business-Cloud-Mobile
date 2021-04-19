@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'auth/login',
@@ -28,7 +30,8 @@ const routes: Routes = [
   },
   {
     path: 'messages',
-    loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesPageModule)
+    loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesPageModule),
+    canActivate: [AuthGuard],
   },
 ];
 @NgModule({

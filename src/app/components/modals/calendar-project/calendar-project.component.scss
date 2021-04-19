@@ -1,0 +1,17 @@
+mgl-timeline-entry-dot {
+    background-color: var(--color-3);
+    border-radius: 10px;
+}
+
+::ng-deep .mgl-timeline-line {
+    border-radius: 10px;
+}
+
+::ng-deep .mgl-timeline-entry-card-header,
+ ::ng-deep .mgl-timeline-entry-card {
+    border-radius: 0px 10px 10px 0px;
+}
+
+::ng-deep .mgl-timeline-entry-card-header {
+    background-color: #DFE7F5 !important;
+}

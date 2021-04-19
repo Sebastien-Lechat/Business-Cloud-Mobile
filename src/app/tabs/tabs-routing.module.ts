@@ -48,6 +48,10 @@ const routes: Routes = [
         loadChildren: () => import('./../pages/user-change-address/user-change-address.module').then(m => m.UserChangeAddressPageModule)
       },
       {
+        path: 'user-change-enterprise',
+        loadChildren: () => import('./../pages/user-change-enterprise/user-change-enterprise.module').then(m => m.UserChangeEnterprisePageModule)
+      },
+      {
         path: 'user-profile',
         loadChildren: () => import('./../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
       },
