@@ -35,7 +35,7 @@ export class EmailVerifyPage implements OnInit {
   }
 
   changeInputCode(value: string, index: number) {
-    if (parseInt(value, 10) >= 1 && parseInt(value, 10) <= 9) {
+    if (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 9) {
       this.code = this.one + this.two + this.three + this.four + this.five + this.six;
       if (value.length === 1 && index !== 6) {
         document.getElementById((index + 1).toString()).focus();

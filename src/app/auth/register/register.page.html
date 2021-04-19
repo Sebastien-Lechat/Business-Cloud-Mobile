@@ -1,98 +1,100 @@
 <ion-content>
-    <div class="logo-div">
-        <img src="./../../../assets/img/logo.PNG" alt="">
+    <div class="center min-100">
+        <div class="logo-div">
+            <img src="./../../../assets/img/BUSINESS-CLOUD_Logo_text.png" alt="">
+        </div>
+        <ion-grid class="px-3">
+            <ion-row>
+                <ion-col size='12' class="mb-2">
+                    <ion-toolbar>
+                        <ion-segment value="personne" (ionChange)="segmentChanged($event)">
+                            <ion-segment-button value="personne">
+                                Particulier
+                            </ion-segment-button>
+                            <ion-segment-button value="entreprise">
+                                Entreprise
+                            </ion-segment-button>
+                        </ion-segment>
+                    </ion-toolbar>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start">
+                    <label class="input-label">Nom et prénom<span class="red-star">*</span></label>
+                    <input type="text" id="nom" class="input-with-icon" placeholder='Entrez votre nom complet...' [(ngModel)]="name">
+                    <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start">
+                    <label class="input-label">Email<span class="red-star">*</span></label>
+                    <input type="email" id="email" class="input-with-icon" placeholder='Entrez votre email...' [(ngModel)]="email">
+                    <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start">
+                    <label class="input-label">Date de naissance</label>
+                    <input type="text" id="date-naiss" class="input-with-icon" placeholder='Ex: 15-06-1996, 15/04/1998' [(ngModel)]="dateNaissance">
+                    <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start">
+                    <label class="input-label">Téléphone</label>
+                    <input type="text" id="phone" class="input-with-icon" placeholder='Entrez votre téléphone...' [(ngModel)]="phone">
+                    <ion-icon name="call-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="start mb-2">
+                    <label class="input-label">Adresse</label>
+                    <input type="text" id="address" class="input-with-icon" placeholder='Entrez votre adresse...' [(ngModel)]="address">
+                    <ion-icon src="assets/icon/place.svg" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="start mb-2">
+                    <label class="input-label">Code postal</label>
+                    <input type="text" id="zip" class="input-with-icon" placeholder='Entrez votre code postal...' [(ngModel)]="zip">
+                    <ion-icon name="map-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="start mb-2">
+                    <label class="input-label">Ville</label>
+                    <input type="text" id="city" class="input-with-icon" placeholder='Entrez votre ville...' [(ngModel)]="city">
+                    <ion-icon name="business-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="start mb-2">
+                    <label class="input-label">Pays</label>
+                    <input type="text" id="country" class="input-with-icon" placeholder='Entrez votre pays...' [(ngModel)]="country">
+                    <ion-icon name="earth-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start">
+                    <label class="input-label">Mot de passe<span class="red-star">*</span></label>
+                    <input type="password" id="password" class="input-with-icon" placeholder='Entrez votre mot de passe...' [(ngModel)]="password">
+                    <ion-icon name="lock-closed-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start" [class.mb-4]="segment !== 'entreprise'">
+                    <label class="input-label">Confirmer le mot de passe<span class="red-star">*</span></label>
+                    <input type="password" id="confirmPassword" class="input-with-icon" placeholder='Confirmer le mot de passe...' [(ngModel)]="confirmPassword">
+                    <ion-icon name="lock-closed-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start" *ngIf="segment === 'entreprise'">
+                    <label class="input-label">Activité<span class="red-star">*</span></label>
+                    <input type="text" id="activity" class="input-with-icon" placeholder="Activité de l'entrprise..." [(ngModel)]="activity">
+                    <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start" *ngIf="segment === 'entreprise'">
+                    <label class="input-label">N° TVA<span class="red-star">*</span></label>
+                    <input type="text" id="tva" class="input-with-icon" placeholder="Numéro TVA de l'entrprise..." [(ngModel)]="numTVA">
+                    <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 start" *ngIf="segment === 'entreprise'">
+                    <label class="input-label">N° SIRET<span class="red-star">*</span></label>
+                    <input type="text" id="siret" class="input-with-icon" placeholder="Numéro SIRET de l'entrprise..." [(ngModel)]="numSIRET">
+                    <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-4 start" *ngIf="segment === 'entreprise'">
+                    <label class="input-label">N° RCS<span class="red-star">*</span></label>
+                    <input type="text" id="RCS" class="input-with-icon" placeholder="Numéro RCS de l'entrprise..." [(ngModel)]="numRCS">
+                    <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-4 center">
+                    <button class="app-btn-auth pointer" (click)="register()">Inscription</button>
+                </ion-col>
+                <ion-col size='12' class="mb-2 center">
+                    <span class="register-text">Vous avez déjà un compte ?</span>
+                    <span class="password-lost-text pointer" (click)="navigateTo('/auth/login')">Connexion</span>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </div>
-    <ion-grid class="px-3">
-        <ion-row>
-            <ion-col size='12' class="mb-2">
-                <ion-toolbar>
-                    <ion-segment value="personne" (ionChange)="segmentChanged($event)">
-                        <ion-segment-button value="personne">
-                            Particulier
-                        </ion-segment-button>
-                        <ion-segment-button value="entreprise">
-                            Entreprise
-                        </ion-segment-button>
-                    </ion-segment>
-                </ion-toolbar>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start">
-                <label class="input-label">Nom et prénom<span class="red-star">*</span></label>
-                <input type="text" id="nom" class="input-with-icon" placeholder='Nom'>
-                <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start">
-                <label class="input-label">Email<span class="red-star">*</span></label>
-                <input type="email" id="email" class="input-with-icon" placeholder='Email'>
-                <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start">
-                <label class="input-label">Date de naissance</label>
-                <input type="text" id="date-naiss" class="input-with-icon" placeholder='Date de naissance'>
-                <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start">
-                <label class="input-label">Téléphone</label>
-                <input type="text" id="phone" class="input-with-icon" placeholder='Téléphone'>
-                <ion-icon name="call-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="start mb-2">
-                <label class="input-label">Adresse</label>
-                <input type="text" id="address" class="input-with-icon" placeholder='Adresse'>
-                <ion-icon src="assets/icon/place.svg" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="start mb-2">
-                <label class="input-label">Code postal</label>
-                <input type="text" id="zip" class="input-with-icon" placeholder='Code postal'>
-                <ion-icon name="map-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="start mb-2">
-                <label class="input-label">Ville</label>
-                <input type="text" id="city" class="input-with-icon" placeholder='Ville'>
-                <ion-icon name="business-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="start mb-2">
-                <label class="input-label">Pays</label>
-                <input type="text" id="country" class="input-with-icon" placeholder='Pays'>
-                <ion-icon name="earth-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start">
-                <label class="input-label">Mot de passe<span class="red-star">*</span></label>
-                <input type="password" id="password" class="input-with-icon" placeholder='Mot de passe'>
-                <ion-icon name="lock-closed-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start" [class.mb-4]="_segment !== 'entreprise'">
-                <label class="input-label">Confirmer le mot de passe<span class="red-star">*</span></label>
-                <input type="password" id="confirmPassword" class="input-with-icon" placeholder='Confirmer le mot de passe'>
-                <ion-icon name="lock-closed-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start" *ngIf="_segment === 'entreprise'">
-                <label class="input-label">Activité<span class="red-star">*</span></label>
-                <input type="text" id="activity" class="input-with-icon" placeholder="Activité">
-                <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start" *ngIf="_segment === 'entreprise'">
-                <label class="input-label">N° TVA<span class="red-star">*</span></label>
-                <input type="text" id="tva" class="input-with-icon" placeholder="N° TVA">
-                <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-2 start" *ngIf="_segment === 'entreprise'">
-                <label class="input-label">N° SIRET<span class="red-star">*</span></label>
-                <input type="text" id="siret" class="input-with-icon" placeholder="N° SIRET">
-                <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-4 start" *ngIf="_segment === 'entreprise'">
-                <label class="input-label">N° RCS<span class="red-star">*</span></label>
-                <input type="text" id="RCS" class="input-with-icon" placeholder="N° RCS">
-                <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
-            </ion-col>
-            <ion-col size='12' class="mb-4 center">
-                <button class="app-btn-auth pointer" (click)="navigateTo('/auth/verify-email')">Inscription</button>
-            </ion-col>
-            <ion-col size='12' class="mb-2 center">
-                <span class="register-text">Vous avez déjà un compte ?</span>
-                <span class="password-lost-text pointer" (click)="navigateTo('/auth/login')">Connexion</span>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
 </ion-content>

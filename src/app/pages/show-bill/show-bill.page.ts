@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { testData, TArticles } from 'src/types/articles-type';
+import { testData, TArticles } from 'src/interfaces/articles-type';
 
 @Component({
   selector: 'app-show-bill',

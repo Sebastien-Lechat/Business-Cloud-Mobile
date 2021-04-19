@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TArticles } from 'src/types/articles-type';
+import { TArticles } from 'src/interfaces/articles-type';
 
 @Component({
   selector: 'app-article-table',

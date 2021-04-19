@@ -31,9 +31,7 @@ export class LoginPage implements OnInit {
       this.authService.login(userEmail, userPassword).subscribe({
         next: async () => {
           await loading.dismiss();
-          this.router.navigate(['/']).then(() => {
-            this.toasterService.presentSuccessToast('Connexion réussie');
-          });
+          this.router.navigate(['/tabs/tab3']).then(data => console.log('data', data)).catch(error => console.log('error', error));
         },
         error: async (error: HttpErrorResponse) => {
           await loading.dismiss();
@@ -56,6 +54,10 @@ export class LoginPage implements OnInit {
           else if (error.error.code === '101008') { this.toasterService.presentErrorToast('Information de connexion invalide'); }
           else if (error.error.code === '101009') { this.toasterService.presentErrorToast('Trop de tentative de connexion, veuillez attendre 5min avant de réassayer'); }
           else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+        },
+        complete: async () => {
+          await loading.dismiss();
+          this.router.navigate(['/tabs/tab3']);
         },
       });
     } else { this.toasterService.presentErrorToast('Email ou mot de passe manquants'); }

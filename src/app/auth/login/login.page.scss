@@ -1,15 +1,17 @@
 .logo-div {
-    height: 34vh;
+    height: 20vh;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    margin-top: 8vh;
+    padding: 0 1rem;
     img {
-        width: 85%;
+        width: 100%;
     }
 }
 
 .form-div {
-    padding: 0 35px;
+    padding: 0 1rem;
     margin-top: 3.2rem;
 }
 

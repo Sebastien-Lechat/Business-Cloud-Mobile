@@ -16,8 +16,14 @@ export class Tab5Page implements OnInit {
 
   logout() {
     this.authService.logout().subscribe({
-      next: () => { this.navigateTo('/auth/login'); },
-      error: () => { this.navigateTo('/auth/login'); },
+      next: () => {
+        localStorage.removeItem('currentUser');
+        this.navigateTo('/auth/login');
+      },
+      error: () => {
+        localStorage.removeItem('currentUser');
+        this.navigateTo('/auth/login');
+      },
     });
   }
 
