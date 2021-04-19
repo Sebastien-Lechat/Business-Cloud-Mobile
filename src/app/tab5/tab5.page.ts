@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-tab5',
@@ -8,12 +9,19 @@ import { Router } from '@angular/router';
 })
 export class Tab5Page implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => { this.navigateTo('/auth/login'); },
+      error: () => { this.navigateTo('/auth/login'); },
+    });
+  }
+
   navigateTo(path: string) {
-    this.router.navigate([path])
+    this.router.navigate([path]);
   }
 }
