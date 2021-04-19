@@ -1,10 +1,12 @@
 .logo-div {
-    height: 34vh;
+    height: 10vh;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
+    margin-top: 6vh;
+    padding: 0 1rem;
     img {
-        width: 85%;
+        width: 100%;
     }
 }
 

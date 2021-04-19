@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { ClientI } from 'src/interfaces/userInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  public url = 'https://businesscloud-api.herokuapp.com/';
+  private url = environment.API;
 
   constructor(private http: HttpClient) { }
+
+  register(data: ClientI) {
+    return this.http.post<any>(this.url + `auth/register`, data);
+  }
 
   login(email: string, password: string, code?: string) {
     return this.http.post<any>(this.url + `auth/login`, { email, password, code })
@@ -19,6 +25,10 @@ export class AuthService {
           return response;
         }),
       );
+  }
+
+  passwordRecoveryRequest(email: string) {
+    return this.http.post(this.url + `auth/request-password-lost`, { email });
   }
 
   verifyEmailRequest(email: string) {
@@ -33,8 +43,26 @@ export class AuthService {
     return this.http.post<any>(this.url + `auth/request-double-auth`, { email, password });
   }
 
+
+  getToken(): string {
+    if (localStorage.getItem('currentUser')) { return JSON.parse(localStorage.getItem('currentUser')); }
+    else { return ''; }
+  }
+
+  refreshToken() {
+    const currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
+    return this.http.post<any>(this.url + `auth/refresh-token`, { id: currentUser.id, refresh_token: currentUser.refresh_token })
+      .pipe(
+        map(response => {
+          if (response.user && response.user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
+          }
+          return response.user.token;
+        }),
+      );
+  }
+
   logout() {
-    localStorage.removeItem('currentUser');
     return this.http.delete<any>(this.url + `auth/disconnect`);
   }
 

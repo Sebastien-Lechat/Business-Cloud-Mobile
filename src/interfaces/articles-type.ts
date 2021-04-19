@@ -14,7 +14,7 @@ export const testData: Array<TArticles> = [
     { name: 'Formation Gestioen de projet', description: 'Cours python avec EEDDSI-DEV qui sont nul', prix: 410, quantity: 7, TVA: 20 },
 ];
 
-export type TArticles = {
+export interface TArticles {
     name: string;
     description: string;
     quantity: number;

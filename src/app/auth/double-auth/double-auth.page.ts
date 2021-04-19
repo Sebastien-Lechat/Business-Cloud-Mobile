@@ -35,7 +35,7 @@ export class DoubleAuthPage implements OnInit {
   ngOnInit() { }
 
   changeInputCode(value: string, index: number) {
-    if (parseInt(value, 10) >= 1 && parseInt(value, 10) <= 9) {
+    if (parseInt(value, 10) >= 0 && parseInt(value, 10) <= 9) {
       this.code = this.one + this.two + this.three + this.four + this.five + this.six;
       if (value.length === 1 && index !== 6) {
         document.getElementById((index + 1).toString()).focus();
@@ -60,15 +60,17 @@ export class DoubleAuthPage implements OnInit {
     this.authService.login(this.email, this.password, this.code).subscribe({
       next: async () => {
         await loading.dismiss();
-        this.router.navigate(['/']).then(() => {
-          this.toasterService.presentSuccessToast('Connexion réussie');
-        });
+        this.router.navigate(['/tabs/tab3']);
       },
       error: async (error: HttpErrorResponse) => {
         await loading.dismiss();
         if (error.error.code === '101006') { this.toasterService.presentErrorToast('Le code saisi est invalide'); }
         else if (error.error.code === '101007') { this.toasterService.presentErrorToast('Le code saisi est n\'est plus valide'); }
         else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+      },
+      complete: async () => {
+        await loading.dismiss();
+        this.router.navigate(['/tabs/tab3']);
       },
     });
   }

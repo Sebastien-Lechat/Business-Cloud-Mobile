@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TArticles, testData } from 'src/types/articles-type';
+import { TArticles, testData } from 'src/interfaces/articles-type';
 
 @Component({
   selector: 'app-show-quote',
