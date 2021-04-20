@@ -12,7 +12,7 @@ export class ToasterService {
   public async presentSuccessToast(messageToPrint: string, options: { toasterDuration?: number } = {}) {
     const toast = await this.toastController.create({
       message: messageToPrint,
-      duration: options.toasterDuration || 2000,
+      duration: options.toasterDuration || 1500,
       position: 'bottom',
       color: 'success',
       cssClass: 'toaster-div'
@@ -24,7 +24,7 @@ export class ToasterService {
     if (options.error) { console.log(options.error); }
     const toast = await this.toastController.create({
       message: messageToPrint,
-      duration: options.toasterDuration || 2000,
+      duration: options.toasterDuration || 1500,
       position: 'bottom',
       color: 'danger',
       cssClass: 'toaster-div'

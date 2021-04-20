@@ -580,3 +580,10 @@
     .btn-green {
         background-color: #009E0F;
     }
+    
+    .load-withTab {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        z-index: 999999;
+    }

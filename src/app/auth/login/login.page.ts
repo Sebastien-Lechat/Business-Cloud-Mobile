@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
       this.authService.login(userEmail, userPassword).subscribe({
         next: async () => {
           await loading.dismiss();
-          this.router.navigate(['/tabs/tab3']).then(data => console.log('data', data)).catch(error => console.log('error', error));
+          this.router.navigate(['/tabs/tab3']);
         },
         error: async (error: HttpErrorResponse) => {
           await loading.dismiss();

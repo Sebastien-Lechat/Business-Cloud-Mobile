@@ -1,17 +1,17 @@
 <ion-content class="background-div">
     <div class="background-div-rounded">
-        <div class="avatar-profile">
+        <div class="avatar-profile" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ (user) ? user.name : null }}&background=ececec&size=128&color=2865a2&bold=true');">
         </div>
         <ion-grid>
             <ion-row>
-                <ion-col size='12' class="center name-profile">
-                    <p>Pierre Jacques</p>
+                <ion-col size='12' class="center name-profile" *ngIf="user">
+                    <p>{{ user.name }}</p>
                 </ion-col>
-                <ion-col size='12' class="center">
-                    <p>pierrejacques@gmail.com</p>
+                <ion-col size='12' class="center" *ngIf="user">
+                    <p>{{ user.email }}</p>
                 </ion-col>
-                <ion-col size='12' class="center">
-                    <p>51 Avenue de Paris, Paris, 75015</p>
+                <ion-col size='12' class="center" *ngIf="user && user.address && user.city && user.zip">
+                    <p>{{ user.address + user.city + user.zip }}</p>
                 </ion-col>
                 <ion-col size='12' class="center first-profile-card">
                     <div class="profile-card pointer" (click)="navigateTo('/tabs/user-info')">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <ion-col size='12' class="center" *ngIf="user && (user.type === 'client' || user.role === 'Gérant')">
                     <div class="profile-card pointer" (click)="navigateTo('/tabs/user-change-address')">
                         <div class="icon-profile-card pointer" (click)="navigateTo('/tabs/user-change-address')">
                             <div class="icon-div center">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <ion-col size='12' class="center" *ngIf="user && (user.type === 'client' || user.role === 'Gérant')">
                     <div class="profile-card pointer" (click)="navigateTo('/tabs/user-change-enterprise')">
                         <div class="icon-profile-card pointer" (click)="navigateTo('/tabs/user-change-enterprise')">
                             <div class="icon-div center">
@@ -65,19 +65,6 @@
                         </div>
                     </div>
                 </ion-col>
-                <!-- <ion-col size='12' class="center">
-                    <div class="profile-card pointer" (click)="navigateTo('/tabs/user-avatar')">
-                        <div class="icon-profile-card pointer" (click)="navigateTo('/tabs/user-avatar')">
-                            <div class="icon-div center">
-                                <ion-icon name="image-outline" class="app-icon"></ion-icon>
-                            </div>
-                        </div>
-                        <div class="text-profile-card pointer" (click)="navigateTo('/tabs/user-avatar')">
-                            <p class="main-text"></p>
-                            <p class="sub-text hide-overflow">Mettre à jour votre photo de profil</p>
-                        </div>
-                    </div>
-                </ion-col> -->
                 <ion-col size='12' class="center">
                     <div class="profile-card pointer" (click)="navigateTo('/tabs/tab2')">
                         <div class="icon-profile-card pointer" (click)="navigateTo('/tabs/tab2')">

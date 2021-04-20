@@ -9,6 +9,7 @@
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
+        "commit": "git add . && git commit -am",
         "android": "ionic capacitor run android",
         "android-live": "ionic capacitor run android --livereload",
         "e2e": "ng e2e"

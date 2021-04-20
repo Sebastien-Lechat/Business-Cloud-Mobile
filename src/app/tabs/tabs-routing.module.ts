@@ -52,7 +52,7 @@ const routes: Routes = [
         loadChildren: () => import('./../pages/user-change-enterprise/user-change-enterprise.module').then(m => m.UserChangeEnterprisePageModule)
       },
       {
-        path: 'user-profile',
+        path: 'user-profile/:id',
         loadChildren: () => import('./../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
       },
       {
