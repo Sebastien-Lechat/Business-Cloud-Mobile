@@ -1,12 +1,14 @@
+import { ShortUserListI } from './userInterface';
+
 export interface ProjectI {
     projectNum: string;
     _id?: string;
     title: string;
     status: string;
-    clientId: string;
+    clientId: ShortUserListI;
     progression: number;
-    startDate: Date;
-    deadline: Date;
+    startDate: string;
+    deadline: string;
     employees: string[];
     fixedRate?: number;
     hourlyRate?: number;
@@ -20,10 +22,10 @@ export interface ProjectJsonI {
     id: string;
     title: string;
     status: string;
-    clientId: string;
+    clientId: ShortUserListI;
     progression: number;
-    startDate: Date;
-    deadline: Date;
+    startDate: string;
+    deadline: string;
     employees: string[];
     fixedRate?: number;
     hourlyRate?: number;

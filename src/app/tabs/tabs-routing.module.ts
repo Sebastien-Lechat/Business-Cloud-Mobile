@@ -56,24 +56,24 @@ const routes: Routes = [
         loadChildren: () => import('./../pages/user-profile/user-profile.module').then(m => m.UserProfilePageModule)
       },
       {
-        path: 'show-bill',
+        path: 'show-bill/:id',
         loadChildren: () => import('./../pages/show-bill/show-bill.module').then(m => m.ShowBillPageModule)
       },
       {
-        path: 'show-quote',
+        path: 'show-quote/:id',
         loadChildren: () => import('./../pages/show-quote/show-quote.module').then(m => m.ShowQuotePageModule)
       },
       {
-        path: 'show-expense',
+        path: 'show-expense/:id',
         loadChildren: () => import('./../pages/show-expense/show-expense.module').then(m => m.ShowExpensePageModule)
+      },
+      {
+        path: 'show-project/:id',
+        loadChildren: () => import('./../pages/show-project/show-project.module').then(m => m.ShowProjectPageModule)
       },
       {
         path: 'add-page',
         loadChildren: () => import('./../pages/add-page/add-page.module').then(m => m.AddPagePageModule)
-      },
-      {
-        path: 'show-project',
-        loadChildren: () => import('./../pages/show-project/show-project.module').then(m => m.ShowProjectPageModule)
       },
       {
         path: '',

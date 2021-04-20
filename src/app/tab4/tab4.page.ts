@@ -1,14 +1,14 @@
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user/user.service';
 import { ShortUserListI } from 'src/interfaces/userInterface';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
-export class Tab4Page implements OnInit {
+export class Tab4Page {
 
   users: ShortUserListI[] = [];
 
@@ -22,12 +22,6 @@ export class Tab4Page implements OnInit {
     private router: Router,
     private userService: UserService
   ) { }
-
-  ngOnInit() {
-    window.addEventListener('ionKeyboardDidShow', ev => {
-      console.log(ev);
-    });
-  }
 
   ionViewWillEnter() {
     this.loading = true;

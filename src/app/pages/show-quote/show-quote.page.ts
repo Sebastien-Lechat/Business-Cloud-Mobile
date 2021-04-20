@@ -17,8 +17,8 @@ export class ShowQuotePage implements OnInit {
   ngOnInit() {
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, id?: string) {
+    this.router.navigate([path, id]);
   }
 
   nagivateBack() {

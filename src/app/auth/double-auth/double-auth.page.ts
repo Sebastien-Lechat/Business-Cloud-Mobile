@@ -82,7 +82,7 @@ export class DoubleAuthPage implements OnInit {
     });
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, id?: string) {
+    this.router.navigate([path, id]);
   }
 }

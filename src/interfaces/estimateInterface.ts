@@ -1,10 +1,10 @@
 import { ArticleI } from './articleInterface';
-import { ClientI } from './userInterface';
+import { ClientI, ShortUserListI } from './userInterface';
 export interface EstimateI {
     estimateNum: string;
     id: string;
     status: string;
-    clientId: string | ClientI;
+    clientId: string | ClientI | ShortUserListI;
     enterpriseId: string;
     articles: EstimateArticleI[];
     currency?: string;

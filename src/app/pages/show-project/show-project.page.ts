@@ -14,8 +14,8 @@ export class ShowProjectPage implements OnInit {
 
   constructor(private router: Router, private location: Location, public modalController: ModalController, private routerOutlet: IonRouterOutlet) { }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, id?: string) {
+    this.router.navigate([path, id]);
   }
 
   nagivateBack() {

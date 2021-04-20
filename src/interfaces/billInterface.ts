@@ -1,11 +1,16 @@
 import { ArticleI } from './articleInterface';
-import { ClientI } from './userInterface';
+import { EstimateI } from './estimateInterface';
+import { ClientI, ShortUserListI } from './userInterface';
+
+export interface FileI<T extends (BillI | EstimateI)> {
+    data: T;
+}
 
 export interface BillI {
     billNum: string;
     id: string;
     status: string;
-    clientId: string | ClientI;
+    clientId: string | ClientI | ShortUserListI;
     enterpriseId: string;
     articles: BillArticleI[];
     currency?: string;

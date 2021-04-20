@@ -39,7 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
       });
     }
 
-    next.handle(req).pipe(
+    return next.handle(req).pipe(
       catchError(error => {
         if ((error.name === 'HttpErrorResponse' && error.status === 0 && error.statusText === 'Unknown Error')) {
           localStorage.removeItem('currentUser');
@@ -53,8 +53,6 @@ export class TokenInterceptor implements HttpInterceptor {
         return throwError(error);
       }),
     );
-
-    return next.handle(req);
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {

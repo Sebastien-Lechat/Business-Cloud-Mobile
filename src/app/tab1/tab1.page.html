@@ -5,7 +5,8 @@
         <ion-row>
             <ion-col size='5'>
                 <ion-item class="select-input">
-                    <ion-select placeholder="Statut">
+                    <ion-select id="status" placeholder="Statut..." value="0" (ionChange)="filterProjects($event)">
+                        <ion-select-option value="0">Statut...</ion-select-option>
                         <ion-select-option value="1">Fini</ion-select-option>
                         <ion-select-option value="2">En cours</ion-select-option>
                         <ion-select-option value="3">Dépassé</ion-select-option>
@@ -14,7 +15,8 @@
             </ion-col>
             <ion-col size='5'>
                 <ion-item class="select-input">
-                    <ion-select placeholder="Try">
+                    <ion-select id="sorting" placeholder="Tri..." value="0" (ionChange)="filterProjects($event)">
+                        <ion-select-option value="0">Tri...</ion-select-option>
                         <ion-select-option value="1">Date de début</ion-select-option>
                         <ion-select-option value="2">Date de fin</ion-select-option>
                         <ion-select-option value="3">Revenus</ion-select-option>
@@ -26,21 +28,21 @@
                 <ion-icon name="calendar-outline" class="app-icon calendar-icon"></ion-icon>
             </ion-col>
             <ion-col size='12' class="center">
-                <input type="text" class="input-with-icon" placeholder='Recherche'>
+                <input type="text" class="input-with-icon" placeholder='Recherche...' [(ngModel)]="searchValue" (keyup)="filterProjects()">
                 <ion-icon name="search-outline" class="input-icon"></ion-icon>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-content class="scroll-list">
         <ion-list>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-project')">
+            <ion-card class="app-card pointer" *ngFor="let project of projects" (click)="navigateTo('/tabs/show-project/', project.id)">
                 <ion-card-content>
                     <ion-grid>
                         <ion-row>
                             <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">Projet Facebook</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
+                                <h2 class="card-title hide-overflow">{{ project.title }}</h2>
+                                <p class="card-text-client hide-overflow">{{ project.clientId.name }}</p>
+                                <p class="card-text-date hide-overflow">Fin: {{ project.deadline }}</p>
                             </ion-col>
                             <ion-col size='3'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>
@@ -48,112 +50,10 @@
                                 <p class="card-text-time">355h</p>
                             </ion-col>
                             <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-project')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">Projet Google</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-profit">3,578 €</p>
-                                <p class="card-text-time">285h</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-project')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">Projet entreprise</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 12/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-profit">12,578 €</p>
-                                <p class="card-text-time">465h</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-project')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">Projet Facebook</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-loss">-3,578 €</p>
-                                <p class="card-text-time">355h</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-project')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">Projet Google</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-profit">3,578 €</p>
-                                <p class="card-text-time">285h</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-project')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">Projet entreprise</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 12/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-profit">12,578 €</p>
-                                <p class="card-text-time">465h</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
+                                <div *ngIf="project.status === 'En attente'" class="status-div-warning"></div>
+                                <div *ngIf="project.status === 'En cours'" class="status-div-warning"></div>
+                                <div *ngIf="project.status === 'En retard'" class="status-div-danger"></div>
+                                <div *ngIf="project.status === 'Terminé'" class="status-div-success"></div>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
