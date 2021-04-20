@@ -7,9 +7,9 @@
                 <ion-item class="select-input">
                     <ion-select id="status" placeholder="Statut..." value="0" (ionChange)="filterProjects($event)">
                         <ion-select-option value="0">Statut...</ion-select-option>
-                        <ion-select-option value="1">Fini</ion-select-option>
-                        <ion-select-option value="2">En cours</ion-select-option>
-                        <ion-select-option value="3">Dépassé</ion-select-option>
+                        <ion-select-option value="1">Terminé</ion-select-option>
+                        <ion-select-option value="2">En retard</ion-select-option>
+                        <ion-select-option value="3">En attente / En cours</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
@@ -17,10 +17,14 @@
                 <ion-item class="select-input">
                     <ion-select id="sorting" placeholder="Tri..." value="0" (ionChange)="filterProjects($event)">
                         <ion-select-option value="0">Tri...</ion-select-option>
-                        <ion-select-option value="1">Date de début</ion-select-option>
-                        <ion-select-option value="2">Date de fin</ion-select-option>
-                        <ion-select-option value="3">Revenus</ion-select-option>
-                        <ion-select-option value="4">Temps total</ion-select-option>
+                        <ion-select-option value="1">Date de début &#9660;</ion-select-option>
+                        <ion-select-option value="2">Date de début &#9650;</ion-select-option>
+                        <ion-select-option value="3">Date de fin &#9660;</ion-select-option>
+                        <ion-select-option value="4">Date de fin &#9650;</ion-select-option>
+                        <ion-select-option value="5">Revenus &#9660;</ion-select-option>
+                        <ion-select-option value="6">Revenus &#9650;</ion-select-option>
+                        <ion-select-option value="7">Temps total &#9660;</ion-select-option>
+                        <ion-select-option value="8">Temps total &#9650;</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
@@ -35,14 +39,14 @@
     </ion-grid>
     <ion-content class="scroll-list">
         <ion-list>
-            <ion-card class="app-card pointer" *ngFor="let project of projects" (click)="navigateTo('/tabs/show-project/', project.id)">
+            <ion-card class="app-card pointer" *ngFor="let project of filteredProjects" (click)="navigateTo('/tabs/show-project/', project.id)">
                 <ion-card-content>
                     <ion-grid>
                         <ion-row>
                             <ion-col size='7'>
                                 <h2 class="card-title hide-overflow">{{ project.title }}</h2>
                                 <p class="card-text-client hide-overflow">{{ project.clientId.name }}</p>
-                                <p class="card-text-date hide-overflow">Fin: {{ project.deadline }}</p>
+                                <p class="card-text-date hide-overflow">Fin: {{ project.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                             </ion-col>
                             <ion-col size='3'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>

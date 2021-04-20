@@ -42,7 +42,7 @@
                             <ion-col size='7'>
                                 <h2 *ngIf="file.estimateNum" class="card-title hide-overflow">{{ file.estimateNum }}</h2>
                                 <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
-                                <p class="card-text-date hide-overflow">Fin: {{ file.deadline }} </p>
+                                <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                             </ion-col>
                             <ion-col size='3'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>
@@ -64,7 +64,7 @@
                             <ion-col size='7'>
                                 <h2 *ngIf="file.billNum" class="card-title hide-overflow">{{ file.billNum }}</h2>
                                 <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
-                                <p class="card-text-date hide-overflow">Fin: {{ file.deadline }}</p>
+                                <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                             </ion-col>
                             <ion-col size='3'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>

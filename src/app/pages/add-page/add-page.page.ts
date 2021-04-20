@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-page',
@@ -9,23 +10,33 @@ import { Router } from '@angular/router';
 })
 export class AddPagePage implements OnInit {
 
-  selected = '1';
+  selected: string;
 
-  constructor(private router: Router, private location: Location) { }
+  subscribeCreate: Subscription;
+
+  constructor(private router: Router, private globalService: GlobalService) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.subscribeCreate = this.globalService.creationSubject.subscribe({
+      next: (index: number) => this.selected = index.toString(),
+    });
+  }
+
+  ionViewWillLeave() {
+    this.selected = undefined;
+    this.subscribeCreate.unsubscribe();
   }
 
   navigateTo(path: string, id?: string) {
     this.router.navigate([path, id]);
   }
 
-  nagivateBack() {
-    this.location.back();
-  }
-
-
   onSelectedChange($event) {
     this.selected = $event.detail?.value;
   }
+
+
 }

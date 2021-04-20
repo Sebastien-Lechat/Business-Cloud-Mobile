@@ -59,6 +59,6 @@ import { ArticleTableComponent } from './table/article-table/article-table.compo
     TimeProjectComponent,
     CalendarProjectComponent,
     LoadBarComponent,
-  ]
+  ],
 })
 export class ComponentsModule { }

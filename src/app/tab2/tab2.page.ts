@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BillI } from 'src/interfaces/billInterface';
@@ -45,7 +44,6 @@ export class Tab2Page implements OnInit {
     this.billService.getBillList().subscribe({
       next: (data: { error: false, bills: BillI[] }) => {
         data.bills.map((bill) => {
-          bill.deadline = formatDate(bill.deadline, 'longDate', 'fr-FR', 'Europe/France');
           this.bills.push(bill);
           this.files.push(bill);
         });
@@ -56,7 +54,6 @@ export class Tab2Page implements OnInit {
     this.estimateService.getEstimateList().subscribe({
       next: (data: { error: false, estimates: EstimateI[] }) => {
         data.estimates.map((estimate) => {
-          estimate.deadline = formatDate(estimate.deadline, 'longDate', 'fr-FR', 'Europe/France');
           this.estimates.push(estimate);
           this.files.push(estimate);
         });
