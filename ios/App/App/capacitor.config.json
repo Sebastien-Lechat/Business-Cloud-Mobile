@@ -1,13 +1,13 @@
 {
-    "appId": "fr.business.cloud.mobile",
-    "appName": "BusinessCloud",
-    "bundledWebRuntime": false,
-    "npmClient": "npm",
-    "webDir": "www",
-    "plugins": {
-        "SplashScreen": {
-            "launchShowDuration": 0
-        }
-    },
-    "cordova": {}
+  "appId": "fr.business.cloud.mobile",
+  "appName": "BusinessCloud",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
 }

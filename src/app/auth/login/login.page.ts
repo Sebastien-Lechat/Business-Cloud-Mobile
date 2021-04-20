@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
               });
             });
           }
-          else if (error.error.code === '101205') {
+          else if (error.error.code === '101005') {
             this.router.navigate(['/auth/double-auth'], { state: { email: userEmail, password: userPassword } }).then(() => {
               this.authService.doubleAuthentificationRequest(userEmail, userPassword).subscribe({
                 error: () => this.toasterService.presentErrorToast('Erreur lors de l\'envoi de l\'email'),

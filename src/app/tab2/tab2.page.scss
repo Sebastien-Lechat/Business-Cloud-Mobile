@@ -1,11 +1,5 @@
 .scroll-list {
-    height: calc(100vh - 63px - 100px - 50px - 2rem);
-    --offset-bottom: auto!important;
-    --overflow: hidden;
-    overflow: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    height: calc(100% - 110px - 50px - 2rem);
     ion-list {
         padding: 0;
     }

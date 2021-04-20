@@ -31,13 +31,7 @@
     }
     
     ion-content {
-        --offset-bottom: auto!important;
-        --overflow: hidden;
         background: white;
-        overflow: auto;
-        &::-webkit-scrollbar {
-            display: none;
-        }
         p {
             margin: 0;
         }
@@ -83,8 +77,8 @@
     
     .background-div-rounded {
         width: 100vw;
-        margin-top: 15vh;
-        min-height: calc(100vh - 15vh - 63px);
+        margin-top: 6.15rem;
+        min-height: calc(100% - 6.15rem);
         background-color: white;
         border-radius: 50px 50px 0px 0px;
         box-shadow: 0px 2px 11px #00000090;
@@ -98,7 +92,7 @@
     .input-with-icon {
         background: white;
         border: 1px solid #00000040;
-        height: 35px;
+        height: 40px;
         width: 100%;
         border-radius: 10px;
         padding: 0 calc(16px + var(--ion-safe-area-left, 0px));
@@ -109,7 +103,7 @@
     .input-without-icon {
         background: white;
         border: 1px solid #00000040;
-        height: 35px;
+        height: 40px;
         width: 100%;
         border-radius: 10px;
         padding: 0 calc(16px + var(--ion-safe-area-left, 0px));
@@ -439,7 +433,8 @@
     }
     
     .input-div-profile {
-        min-height: calc(100vh - 15vh - 63px);
+        padding: 2.75rem 0;
+        min-height: calc(100% - 6.15rem);
         width: 100%;
         // padding-top: 2rem;
     }
@@ -511,7 +506,7 @@
         border: 1px solid #00000040;
         --border-width: 0;
         border-radius: 10px;
-        height: 35px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -24,6 +24,9 @@ export class Tab4Page implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.addEventListener('ionKeyboardDidShow', ev => {
+      console.log(ev);
+    });
   }
 
   ionViewWillEnter() {
