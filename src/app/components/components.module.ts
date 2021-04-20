@@ -13,6 +13,7 @@ import { AddExpenseComponent } from './add-page/add-expense/add-expense.componen
 import { AddProjectComponent } from './add-page/add-project/add-project.component';
 import { AddQuoteComponent } from './add-page/add-quote/add-quote.component';
 import { HeaderComponent } from './header/header.component';
+import { LoadBarComponent } from './load-bar/load-bar.component';
 import { CalendarProjectComponent } from './modals/calendar-project/calendar-project.component';
 import { TimeProjectComponent } from './modals/time-project/time-project.component';
 import { ArticleTableRowComponent } from './table/article-table/article-table-row/article-table-row.component';
@@ -34,6 +35,7 @@ import { ArticleTableComponent } from './table/article-table/article-table.compo
     AddExpenseAccountComponent,
     TimeProjectComponent,
     CalendarProjectComponent,
+    LoadBarComponent,
   ],
   imports: [
     IonicModule,
@@ -56,6 +58,7 @@ import { ArticleTableComponent } from './table/article-table/article-table.compo
     AddExpenseAccountComponent,
     TimeProjectComponent,
     CalendarProjectComponent,
+    LoadBarComponent,
   ]
 })
 export class ComponentsModule { }

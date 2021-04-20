@@ -1,11 +1,5 @@
 .scroll-list {
-    height: 77vh;
-    --offset-bottom: auto!important;
-    --overflow: hidden;
-    overflow: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    height: calc(100% - 2rem - 0.7rem - 45px);
     ion-list {
         padding: 0;
     }
@@ -87,7 +81,7 @@
     background-color: var(--color-3);
     color: white;
     border-radius: 10px;
-    height: 35px;
+    height: 40px;
     font-size: 1.085rem;
     font-weight: 400;
 }

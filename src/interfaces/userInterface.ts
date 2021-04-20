@@ -4,6 +4,7 @@ export interface UserObject {
 }
 
 export interface UserI {
+    type?: 'user' | 'client';
     name: string;
     email: string;
     phone?: string;
@@ -15,6 +16,8 @@ export interface UserI {
     currency?: string;
     role?: string;
     isActive?: boolean;
+    needVerifyEmail?: boolean;
+    doubleAuthentification?: boolean;
 }
 
 export interface ClientI extends UserI {
@@ -28,3 +31,23 @@ export interface ClientI extends UserI {
     numRCS?: string;
     userId?: string;
 }
+
+export interface ShortUserListI {
+    type: string;
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    avatar?: string;
+    createdAt: Date;
+    updatedAt: Date;
+    role?: string;
+    userId?: string;
+}
+
+export interface UserInfoUpdateI { name?: string; email?: string; phone?: string; birthdayDate?: string; }
+
+export interface UserPasswordUpdateI { email: string; oldPassword: string; newPassword: string; }
+
+export interface UserDoubleAuthUpdateI { isActive: boolean; }
+

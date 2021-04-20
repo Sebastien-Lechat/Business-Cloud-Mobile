@@ -54,7 +54,7 @@ export class RegisterPage implements OnInit {
 
     if (toRegister.name && toRegister.email && toRegister.password && toRegister.confirmPassword) {
       if (this.segment === 'entreprise' && toRegister.numRCS && toRegister.numSIRET && toRegister.numTVA && toRegister.activity) { this.toasterService.presentErrorToast('Champs obligatoires manquants'); }
-      else if (toRegister.password !== toRegister.confirmPassword) { this.toasterService.presentErrorToast('Les mots de passe sont différents'); }
+      else if (toRegister.password !== toRegister.confirmPassword) { this.toasterService.presentErrorToast('Les mots de passe doivent être identiques'); }
       else {
         const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Inscription...' });
         await loading.present();

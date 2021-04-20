@@ -1,11 +1,5 @@
 .scroll-list {
-    height: calc(100vh - 63px - 100px - 50px - 2rem);
-    --offset-bottom: auto!important;
-    --overflow: hidden;
-    overflow: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    height: calc(100% - 110px - 50px - 2rem);
     ion-list {
         padding: 0;
     }
@@ -15,7 +9,6 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-image: url(./../../assets/img/avatar-icon.jpg);
     background-size: cover;
     background-position: center;
 }

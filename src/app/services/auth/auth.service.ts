@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ClientI } from 'src/interfaces/userInterface';
+import { AccountService } from '../account/account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
 
   private url = environment.API;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private accountService: AccountService) { }
 
   register(data: ClientI) {
     return this.http.post<any>(this.url + `auth/register`, data);
@@ -21,7 +22,10 @@ export class AuthService {
     return this.http.post<any>(this.url + `auth/login`, { email, password, code })
       .pipe(
         map(response => {
-          if (response.user && response.user.token) { localStorage.setItem('currentUser', JSON.stringify(response.user)); }
+          if (response.user && response.user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
+            this.accountService.setAccountProfile(response.user);
+          }
           return response;
         }),
       );

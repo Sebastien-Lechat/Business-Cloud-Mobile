@@ -23,7 +23,7 @@ export class Tab3Page {
   }
 
   ionViewDidEnter() {
-    this.createBarChart();
+    // this.createBarChart();
   }
 
   createBarChart() {
@@ -55,7 +55,7 @@ export class Tab3Page {
             ticks: {
               max: 15000,
               min: -10000,
-              display: false //this will remove only the label
+              display: false // This will remove only the label
             },
             gridLines: {
               display: true,

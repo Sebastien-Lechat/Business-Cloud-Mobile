@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
       this.authService.login(userEmail, userPassword).subscribe({
         next: async () => {
           await loading.dismiss();
-          this.router.navigate(['/tabs/tab3']).then(data => console.log('data', data)).catch(error => console.log('error', error));
+          this.router.navigate(['/tabs/tab3']);
         },
         error: async (error: HttpErrorResponse) => {
           await loading.dismiss();
@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
               });
             });
           }
-          else if (error.error.code === '101205') {
+          else if (error.error.code === '101005') {
             this.router.navigate(['/auth/double-auth'], { state: { email: userEmail, password: userPassword } }).then(() => {
               this.authService.doubleAuthentificationRequest(userEmail, userPassword).subscribe({
                 error: () => this.toasterService.presentErrorToast('Erreur lors de l\'envoi de l\'email'),

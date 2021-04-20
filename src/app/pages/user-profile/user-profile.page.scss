@@ -29,12 +29,6 @@ p {
 
 .scroll-list {
     height: 36.5vh;
-    --offset-bottom: auto!important;
-    --overflow: hidden;
-    overflow: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
     ion-list {
         padding: 0;
         background: white;

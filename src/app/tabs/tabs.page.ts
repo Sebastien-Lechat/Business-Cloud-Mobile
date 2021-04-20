@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AccountService } from '../services/account/account.service';
 
 @Component({
   selector: 'app-tabs',
@@ -9,7 +10,7 @@ export class TabsPage {
 
   selected: string;
 
-  constructor() {
+  constructor(public accountService: AccountService) {
     if (window.location.href?.split('http://localhost:8100/tabs/')[1]) {
       const url = window.location.href.split('http://localhost:8100/tabs/')[1];
       if (url === 'tab1') {

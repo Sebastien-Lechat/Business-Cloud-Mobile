@@ -1,134 +1,45 @@
 <ion-content>
     <app-header></app-header>
     <app-add-btn></app-add-btn>
+    <app-load-bar [active]="loading"></app-load-bar>
     <ion-grid>
         <ion-row>
             <ion-col size='12'>
                 <ion-item class="select-input">
-                    <ion-select placeholder="Rôle">
+                    <ion-select value="0" (ionChange)="filterUsers($event)">
+                        <ion-select-option value="0">Sélectionnez un rôle...</ion-select-option>
                         <ion-select-option value="1">Employé</ion-select-option>
                         <ion-select-option value="2">Client</ion-select-option>
-                        <ion-select-option value="3">Prospect</ion-select-option>
+                        <!-- <ion-select-option value="3">Prospect</ion-select-option> -->
                     </ion-select>
                 </ion-item>
             </ion-col>
             <ion-col size='12' class="center">
-                <input type="text" class="input-with-icon" placeholder='Recherche'>
+                <input type="text" class="input-with-icon" placeholder='Recherche' [(ngModel)]="searchValue" (keyup)="filterUsers()">
                 <ion-icon name="search-outline" class="input-icon"></ion-icon>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-content class="scroll-list">
-        <ion-list>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/user-profile')">
+        <ion-list *ngIf="users">
+            <ion-card class="app-card pointer" *ngFor="let user of filteredUsers" (click)="navigateTo('/tabs/user-profile', user.id)">
                 <ion-card-content>
                     <ion-grid>
                         <ion-row>
                             <ion-col size='3' class="center">
-                                <div class="avatar-list">
+                                <div class="avatar-list" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');">
                                 </div>
                             </ion-col>
                             <ion-col size='7' class="start">
-                                <h2 class="card-title hide-overflow">Jacques Pierre</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
+                                <h2 class="card-title hide-overflow">{{ this.capitalize(user.name) }}</h2>
+                                <p *ngIf="user.type === 'client'" class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
+                                <p *ngIf="user.type === 'user' && !user.role" class="card-text-date hide-overflow" style="margin-top:-8px;">Employé</p>
+                                <p *ngIf="user.type === 'user'  && user.role" class="card-text-date hide-overflow" style="margin-top:-8px;">{{ this.capitalize(user.role) }}</p>
                             </ion-col>
                             <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/user-profile')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='3' class="center">
-                                <div class="avatar-list">
-                                </div>
-                            </ion-col>
-                            <ion-col size='7' class="start">
-                                <h2 class="card-title hide-overflow">Jacques Pierre</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/user-profile')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='3' class="center">
-                                <div class="avatar-list">
-                                </div>
-                            </ion-col>
-                            <ion-col size='7' class="start">
-                                <h2 class="card-title hide-overflow">Jacques Pierre</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/user-profile')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='3' class="center">
-                                <div class="avatar-list">
-                                </div>
-                            </ion-col>
-                            <ion-col size='7' class="start">
-                                <h2 class="card-title hide-overflow">Jacques Pierre</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/user-profile')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='3' class="center">
-                                <div class="avatar-list">
-                                </div>
-                            </ion-col>
-                            <ion-col size='7' class="start">
-                                <h2 class="card-title hide-overflow">Jacques Pierre</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/user-profile')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='3' class="center">
-                                <div class="avatar-list">
-                                </div>
-                            </ion-col>
-                            <ion-col size='7' class="start">
-                                <h2 class="card-title hide-overflow">Jacques Pierre</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
+                                <div *ngIf="user.type === 'client'" class="status-div-danger"></div>
+                                <!-- <div class="status-div-warning"></div> -->
+                                <!-- <div class="status-div-success"></div> -->
                             </ion-col>
                         </ion-row>
                     </ion-grid>

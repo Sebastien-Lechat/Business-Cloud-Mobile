@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -15,10 +16,12 @@ import { TokenInterceptor } from './services/interceptor/token.interceptor';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
-  { provide: DEFAULT_TIMEOUT, useValue: 30000 },
-  { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    ScreenOrientation,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
+    { provide: DEFAULT_TIMEOUT, useValue: 30000 },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
