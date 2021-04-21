@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class GlobalService {
 
-  creationSubject: BehaviorSubject<number> = new BehaviorSubject(5);
+  creationSubject: BehaviorSubject<number> = new BehaviorSubject(6);
 
   constructor() { }
 
