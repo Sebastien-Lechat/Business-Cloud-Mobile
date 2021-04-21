@@ -28,7 +28,7 @@ p {
 }
 
 .scroll-list {
-    height: 36.5vh;
+    height: calc(100% - 2rem - 0.7rem - 45px);
     ion-list {
         padding: 0;
         background: white;

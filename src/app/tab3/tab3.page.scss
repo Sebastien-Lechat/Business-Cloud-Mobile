@@ -30,7 +30,8 @@
 }
 
 .text-stat-card {
-    margin: auto;
+    margin: auto 0;
+    margin-left: 5px;
     .main-text {
         color: var(--color-3);
         font-size: 16px;

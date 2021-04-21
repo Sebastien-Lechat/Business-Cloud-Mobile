@@ -40,7 +40,8 @@ export class Tab5Page implements OnInit {
     });
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, id?: string) {
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 }

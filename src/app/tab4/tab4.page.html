@@ -6,7 +6,7 @@
         <ion-row>
             <ion-col size='12'>
                 <ion-item class="select-input">
-                    <ion-select value="0" (ionChange)="filterUsers($event)">
+                    <ion-select value="0" (ionChange)="filterUsers($event)" okText="Ok" cancelText="Fermer">
                         <ion-select-option value="0">Sélectionnez un rôle...</ion-select-option>
                         <ion-select-option value="1">Employé</ion-select-option>
                         <ion-select-option value="2">Client</ion-select-option>
@@ -15,12 +15,16 @@
                 </ion-item>
             </ion-col>
             <ion-col size='12' class="center">
-                <input type="text" class="input-with-icon" placeholder='Recherche' [(ngModel)]="searchValue" (keyup)="filterUsers()">
+                <input type="text" class="input-with-icon" placeholder='Recherche...' [(ngModel)]="searchValue" (keyup)="filterUsers()">
                 <ion-icon name="search-outline" class="input-icon"></ion-icon>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-content class="scroll-list">
+        <ion-refresher slot="fixed" (ionRefresh)="this.refreshData($event)">
+            <ion-refresher-content pullingIcon="none" refreshingSpinner="circles">
+            </ion-refresher-content>
+        </ion-refresher>
         <ion-list *ngIf="users">
             <ion-card class="app-card pointer" *ngFor="let user of filteredUsers" (click)="navigateTo('/tabs/user-profile', user.id)">
                 <ion-card-content>

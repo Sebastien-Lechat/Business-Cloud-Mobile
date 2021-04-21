@@ -7,7 +7,6 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 })
 export class AppComponent {
   constructor(private screenOrientation: ScreenOrientation) {
-    console.log(this.screenOrientation);
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    if (typeof window.orientation !== 'undefined') { this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT); }
   }
 }

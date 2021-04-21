@@ -44,6 +44,13 @@
         background: white;
     }
     
+    ion-refresher {
+        z-index: 99999;
+        ion-refresher-content {
+            --color: var(--color-3) !important;
+        }
+    }
+    
     .min-100 {
         min-height: 100vh;
     }
@@ -53,11 +60,13 @@
     }
     
     .loading-div {
-        font-size: 16px !important;
+        font-size: 18px !important;
+        color: var(--color-3) !important;
     }
     
     .header-div {
-        margin-top: 2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
     }
     
     .header-div-snd {
@@ -157,7 +166,7 @@
         height: 20px;
         color: var(--color-3);
         fill: var(--color-3);
-        bottom: 12px;
+        bottom: 15px;
     }
     
     .input-label {
@@ -288,7 +297,7 @@
         background-color: var(--color-3);
         color: white;
         border-radius: 10px;
-        height: 35px;
+        height: 40px;
         font-size: 1.085rem;
         font-weight: 400;
         box-shadow: 1px 3px 4px #0000000a;
@@ -302,7 +311,7 @@
         background-color: var(--color-3);
         color: white;
         border-radius: 10px;
-        height: 35px;
+        height: 40px;
         font-size: 1.085rem;
         font-weight: 400;
         box-shadow: 1px 3px 4px #0000000a;
@@ -316,7 +325,7 @@
         background-color: #F20C0C;
         color: white;
         border-radius: 10px;
-        height: 35px;
+        height: 40px;
         font-size: 1.085rem;
         font-weight: 400;
         box-shadow: 1px 3px 4px #0000000a;

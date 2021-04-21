@@ -18,6 +18,7 @@ import { CalendarProjectComponent } from './modals/calendar-project/calendar-pro
 import { TimeProjectComponent } from './modals/time-project/time-project.component';
 import { ArticleTableRowComponent } from './table/article-table/article-table-row/article-table-row.component';
 import { ArticleTableComponent } from './table/article-table/article-table.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ArticleTableComponent } from './table/article-table/article-table.compo
     IonicModule,
     FormsModule,
     CommonModule,
-    MglTimelineModule
+    MglTimelineModule,
+    MatAutocompleteModule
   ],
   exports: [
     HeaderComponent,
@@ -59,6 +61,6 @@ import { ArticleTableComponent } from './table/article-table/article-table.compo
     TimeProjectComponent,
     CalendarProjectComponent,
     LoadBarComponent,
-  ]
+  ],
 })
 export class ComponentsModule { }

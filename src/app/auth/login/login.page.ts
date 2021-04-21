@@ -63,7 +63,8 @@ export class LoginPage implements OnInit {
     } else { this.toasterService.presentErrorToast('Email ou mot de passe manquants'); }
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, id?: string) {
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 }

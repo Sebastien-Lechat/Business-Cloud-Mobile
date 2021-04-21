@@ -85,8 +85,9 @@ export class RegisterPage implements OnInit {
     } else { this.toasterService.presentErrorToast('Champs obligatoires manquants'); }
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(path: string, id?: string) {
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 
   segmentChanged(event) {

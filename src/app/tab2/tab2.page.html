@@ -1,24 +1,26 @@
 <ion-content>
     <app-header></app-header>
     <app-add-btn></app-add-btn>
+    <app-load-bar [active]="loading"></app-load-bar>
     <ion-grid>
         <ion-row>
             <ion-col size='5'>
                 <ion-item class="select-input">
-                    <ion-select placeholder="Statut">
-                        <ion-select-option value="1">Payée</ion-select-option>
-                        <ion-select-option value="2">Partiellement payé</ion-select-option>
-                        <ion-select-option value="3">Impayé non dépassé</ion-select-option>
-                        <ion-select-option value="4">Impayé</ion-select-option>
+                    <ion-select id="status" placeholder="Statut" value="0" (ionChange)="filterFiles($event)" okText="Ok" cancelText="Fermer">
+                        <ion-select-option value="0">Statut...</ion-select-option>
+                        <ion-select-option value="1">Payée / Accepté</ion-select-option>
+                        <ion-select-option value="2">En retard / Refusé</ion-select-option>
+                        <ion-select-option value="3">Non payé/ En attente</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
             <ion-col size='5'>
                 <ion-item class="select-input">
-                    <ion-select placeholder="Type">
-                        <ion-select-option value="3">Demande de devis</ion-select-option>
-                        <ion-select-option value="2">Devis</ion-select-option>
+                    <ion-select id="type" placeholder="Type" value="0" (ionChange)="filterFiles($event)" okText="Ok" cancelText="Fermer">
+                        <!-- <ion-select-option value="3">Demande de devis</ion-select-option> -->
+                        <ion-select-option value="0">Type...</ion-select-option>
                         <ion-select-option value="1">Facture</ion-select-option>
+                        <ion-select-option value="2">Devis</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
@@ -26,134 +28,58 @@
                 <ion-icon name="calendar-outline" class="app-icon calendar-icon"></ion-icon>
             </ion-col>
             <ion-col size='12' class="center">
-                <input type="text" class="input-with-icon" placeholder='Recherche'>
+                <input type="text" class="input-with-icon" placeholder='Recherche...' [(ngModel)]="searchValue" (keyup)="filterFiles()">
                 <ion-icon name="search-outline" class="input-icon"></ion-icon>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-content class="scroll-list">
-        <ion-list>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-quote')">
-                <ion-card-content>
+        <ion-refresher slot="fixed" (ionRefresh)="this.refreshData($event)">
+            <ion-refresher-content pullingIcon="none" refreshingSpinner="circles">
+            </ion-refresher-content>
+        </ion-refresher>
+        <ion-list *ngIf="filteredFiles">
+            <ion-card class="app-card pointer" *ngFor="let file of filteredFiles">
+                <ion-card-content *ngIf="file.estimateNum" (click)="navigateTo('/tabs/show-quote/', file.id)">
                     <ion-grid>
                         <ion-row>
                             <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">DEV1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
+                                <h2 *ngIf="file.estimateNum" class="card-title hide-overflow">{{ file.estimateNum }}</h2>
+                                <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
+                                <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                             </ion-col>
                             <ion-col size='3'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
+                                <p class="card-text-rest">{{ file.totalTTC }} €</p>
                                 <p class="card-text-time">&nbsp;</p>
                             </ion-col>
                             <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
+                                <div *ngIf="file.status === 'En attente'" class="status-div-warning"></div>
+                                <div *ngIf="file.status === 'Refusé'" class="status-div-danger"></div>
+                                <div *ngIf="file.status === 'En retard'" class="status-div-danger"></div>
+                                <div *ngIf="file.status === 'Accepté'" class="status-div-success"></div>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
                 </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
+                <ion-card-content *ngIf="file.billNum" (click)="navigateTo('/tabs/show-bill/', file.id)">
                     <ion-grid>
                         <ion-row>
                             <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
+                                <h2 *ngIf="file.billNum" class="card-title hide-overflow">{{ file.billNum }}</h2>
+                                <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
+                                <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                             </ion-col>
                             <ion-col size='3'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
+                                <p class="card-text-rest">{{ file.totalTTC }} €</p>
                                 <p class="card-text-time">&nbsp;</p>
                             </ion-col>
                             <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-expense')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">EXP1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Accepté: 12/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">49 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-quote')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">DEV1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-quote')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">DEV1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='7'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 12/12/2021</p>
-                            </ion-col>
-                            <ion-col size='3'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">12,578 €</p>
-                                <p class="card-text-time">&nbsp; </p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-success"></div>
+                                <div *ngIf="file.status === 'Non payée'" class="status-div-warning"></div>
+                                <div *ngIf="file.status === 'Partiellement payée'" class="status-div-danger"></div>
+                                <div *ngIf="file.status === 'En retard'" class="status-div-danger"></div>
+                                <div *ngIf="file.status === 'Payée'" class="status-div-success"></div>
                             </ion-col>
                         </ion-row>
                     </ion-grid>

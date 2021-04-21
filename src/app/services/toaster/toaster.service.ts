@@ -15,7 +15,7 @@ export class ToasterService {
       duration: options.toasterDuration || 1500,
       position: 'bottom',
       color: 'success',
-      cssClass: 'toaster-div'
+      // cssClass: 'toaster-div'
     });
     toast.present();
   }
@@ -27,7 +27,7 @@ export class ToasterService {
       duration: options.toasterDuration || 1500,
       position: 'bottom',
       color: 'danger',
-      cssClass: 'toaster-div'
+      // cssClass: 'toaster-div'
     });
     toast.present();
   }

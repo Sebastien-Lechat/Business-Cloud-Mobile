@@ -1,7 +1,7 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user/user.service';
+import { Router } from '@angular/router';
 import { ShortUserListI } from 'src/interfaces/userInterface';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   selector: 'app-tab4',
@@ -23,13 +23,11 @@ export class Tab4Page implements OnInit {
     private userService: UserService
   ) { }
 
-  ngOnInit() {
-    window.addEventListener('ionKeyboardDidShow', ev => {
-      console.log(ev);
-    });
+  ngOnInit(): void {
+    this.initData();
   }
 
-  ionViewWillEnter() {
+  initData() {
     this.loading = true;
     this.userService.getUsersList().subscribe({
       next: (data: { error: false, users: ShortUserListI[] }) => {
@@ -37,7 +35,6 @@ export class Tab4Page implements OnInit {
         this.filteredUsers = data.users;
         this.loading = false;
       },
-      error: () => { },
     });
   }
 
@@ -65,12 +62,20 @@ export class Tab4Page implements OnInit {
   }
 
   navigateTo(path: string, id?: string) {
-    this.router.navigate([path, id]);
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 
   capitalize(s: any) {
     if (typeof s !== 'string') { return ''; }
     return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  refreshData(event: any) {
+    this.initData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 
 }

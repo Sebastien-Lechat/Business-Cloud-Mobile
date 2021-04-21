@@ -11,13 +11,13 @@
         </ion-col>
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Nom de l'article<span class="red-star">*</span></label>
-            <input type="text" id="articleName" class="input-with-icon" placeholder="Nom de l'article">
+            <input type="text" id="articleName" class="input-with-icon" placeholder="Entrez un nom..." [(ngModel)]="name">
             <ion-icon name="cart-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Classe de numéro de compte<span class="red-star">*</span></label>
             <ion-item class="select-input">
-                <ion-select placeholder="Séléctionner numéro de compte">
+                <ion-select placeholder="Séléctionnez une classe de numéro de compte..." okText="Ok" cancelText="Fermer">
                     <ion-select-option value="1">1 - Capital</ion-select-option>
                     <ion-select-option value="2">2 - Immobilisations</ion-select-option>
                     <ion-select-option value="3">3 - Stocks et en-cours</ion-select-option>
@@ -31,7 +31,7 @@
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Numéro de compte de l'article<span class="red-star">*</span></label>
             <ion-item class="select-input">
-                <ion-select placeholder="Séléctionner numéro de compte">
+                <ion-select placeholder="Séléctionnez un numéro de compte..." okText="Ok" cancelText="Fermer">
                     <ion-select-option value="3">609100 - Achats de matières premières</ion-select-option>
                     <ion-select-option value="2">607000 - Achats de marchandises (achat pour revente)</ion-select-option>
                     <ion-select-option value="1">609100 - Achats de matières premières</ion-select-option>
@@ -40,20 +40,20 @@
         </ion-col>
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Prix<span class="red-star">*</span></label>
-            <input type="text" id="price" class="input-with-icon" placeholder='Prix'>
+            <input type="number" step="10" id="price" class="input-with-icon" placeholder='Entrez un prix...' [(ngModel)]="price">
             <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-2">
             <label class="input-label">TVA<span class="red-star">*</span></label>
-            <input type="text" id="tva" class="input-without-icon" placeholder="TVA">
+            <input type="number" step="1" id="tva" class="input-with-icon" placeholder="TVA" [(ngModel)]="tva">
             <ion-icon src="/assets/icon/percentage.svg" class="input-icon-with-label percent-icon"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-4">
             <label class="input-label">Description<span class="red-star">*</span></label>
-            <textarea type="text" id="description" class="textarea-without-icon" placeholder="Description de l'article"></textarea>
+            <textarea type="text" id="description" class="textarea-without-icon" placeholder="Description de l'article" [(ngModel)]="description"></textarea>
         </ion-col>
         <ion-col size='12' class="start mb-2">
-            <button class="app-btn pointer"><ion-icon name="add"></ion-icon>&nbsp;&nbsp;Créer un article</button>
+            <button class="app-btn pointer" (click)="createArticle()"><ion-icon name="add"></ion-icon>&nbsp;&nbsp;Créer un article</button>
         </ion-col>
     </ion-row>
 </ion-grid>

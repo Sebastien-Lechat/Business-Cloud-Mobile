@@ -1,13 +1,15 @@
+import { ShortUserListI } from './userInterface';
+
 export interface ProjectI {
     projectNum: string;
     _id?: string;
     title: string;
     status: string;
-    clientId: string;
+    clientId: ShortUserListI;
     progression: number;
-    startDate: Date;
-    deadline: Date;
-    employees: string[];
+    startDate: string;
+    deadline: string;
+    employees: { id: string }[];
     fixedRate?: number;
     hourlyRate?: number;
     estimateHour: number;
@@ -15,16 +17,30 @@ export interface ProjectI {
     updatedAt: Date;
 }
 
-export interface ProjectJsonI {
+export interface ProjectCreateI {
     projectNum: string;
-    id: string;
     title: string;
     status: string;
     clientId: string;
     progression: number;
     startDate: Date;
     deadline: Date;
-    employees: string[];
+    employees: { id: string }[];
+    fixedRate?: number;
+    hourlyRate?: number;
+    estimateHour: number;
+}
+
+export interface ProjectJsonI {
+    projectNum: string;
+    id: string;
+    title: string;
+    status: string;
+    clientId: ShortUserListI;
+    progression: number;
+    startDate: string;
+    deadline: string;
+    employees: { id: string }[];
     fixedRate?: number;
     hourlyRate?: number;
     estimateHour: number;

@@ -8,3 +8,12 @@ export interface ArticleI {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface ArticleCreateI {
+    name: string;
+    price: number;
+    accountNumber: number;
+    tva: number;
+    description?: string;
+}
+
