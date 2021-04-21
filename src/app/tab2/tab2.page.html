@@ -6,7 +6,7 @@
         <ion-row>
             <ion-col size='5'>
                 <ion-item class="select-input">
-                    <ion-select id="status" placeholder="Statut" value="0" (ionChange)="filterFiles($event)">
+                    <ion-select id="status" placeholder="Statut" value="0" (ionChange)="filterFiles($event)" okText="Ok" cancelText="Fermer">
                         <ion-select-option value="0">Statut...</ion-select-option>
                         <ion-select-option value="1">Payée / Accepté</ion-select-option>
                         <ion-select-option value="2">En retard / Refusé</ion-select-option>
@@ -16,7 +16,7 @@
             </ion-col>
             <ion-col size='5'>
                 <ion-item class="select-input">
-                    <ion-select id="type" placeholder="Type" value="0" (ionChange)="filterFiles($event)">
+                    <ion-select id="type" placeholder="Type" value="0" (ionChange)="filterFiles($event)" okText="Ok" cancelText="Fermer">
                         <!-- <ion-select-option value="3">Demande de devis</ion-select-option> -->
                         <ion-select-option value="0">Type...</ion-select-option>
                         <ion-select-option value="1">Facture</ion-select-option>

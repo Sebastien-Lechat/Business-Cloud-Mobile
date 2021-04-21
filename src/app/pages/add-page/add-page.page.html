@@ -4,7 +4,7 @@
         <ion-row>
             <ion-col size='12'>
                 <ion-item class="select-input">
-                    <ion-select placeholder="Séléctionner une option..." (ionChange)="onSelectedChange($event)" [value]="selected">
+                    <ion-select placeholder="Séléctionner une option..." (ionChange)="onSelectedChange($event)" [value]="selected" okText="Ok" cancelText="Fermer">
                         <ion-select-option value="1">Devis</ion-select-option>
                         <ion-select-option value="2">Facture</ion-select-option>
                         <ion-select-option value="3">Article</ion-select-option>

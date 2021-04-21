@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -40,6 +41,7 @@ export class AddProjectComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private globalService: GlobalService,
     private userService: UserService,
     private toasterService: ToasterService,
     private projectService: ProjectService,
@@ -109,7 +111,6 @@ export class AddProjectComponent implements OnInit {
   }
 
   async createProject() {
-    // console.log(this.projectNum, this.title, this.selectedEmployeeList.length === 0, this.selectedClient.selectedId, this.startDate, this.deadline);
     if (!this.projectNum || !this.title || this.selectedEmployeeList.length === 0 || !this.selectedClient.selectedId || !this.startDate || !this.deadline) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
     } else {
@@ -134,8 +135,6 @@ export class AddProjectComponent implements OnInit {
         creationData.employees.push({ id: employee.selectedId.toString() });
       });
 
-      console.log(creationData);
-
       this.projectService.create(creationData).subscribe({
         next: async (data: { error: false, project: ProjectJsonI }) => {
           await loading.dismiss();
@@ -158,6 +157,11 @@ export class AddProjectComponent implements OnInit {
         }
       });
     }
+  }
+
+  navigateTo(path: string, index: number) {
+    this.globalService.creationSubject.next(index);
+    this.router.navigate([path]);
   }
 
 }

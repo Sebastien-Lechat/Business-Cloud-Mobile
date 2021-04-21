@@ -7,12 +7,25 @@ export interface EstimateI {
     clientId: string | ClientI | ShortUserListI;
     enterpriseId: string;
     articles: EstimateArticleI[];
-    currency?: string;
     totalHT: number;
     totalTTC: number;
     deadline: string;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface EstimateCreateI {
+    estimateNum: string;
+    status: string;
+    clientId: string;
+    enterpriseId: string;
+    articles: EstimateArticleI[];
+    reduction: number;
+    totalHT: number;
+    totalTTC: number;
+    deadline: Date;
+    amountPaid?: number;
+    payementDate?: Date;
 }
 
 export interface EstimateArticleI {

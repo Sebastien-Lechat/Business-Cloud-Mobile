@@ -19,7 +19,7 @@ import { TimeProjectComponent } from './modals/time-project/time-project.compone
 import { ArticleTableRowComponent } from './table/article-table/article-table-row/article-table-row.component';
 import { ArticleTableComponent } from './table/article-table/article-table.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -43,7 +43,6 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     FormsModule,
     CommonModule,
     MglTimelineModule,
-    AutocompleteLibModule,
     MatAutocompleteModule
   ],
   exports: [

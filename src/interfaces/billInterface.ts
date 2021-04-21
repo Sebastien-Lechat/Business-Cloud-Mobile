@@ -13,7 +13,7 @@ export interface BillI {
     clientId: string | ClientI | ShortUserListI;
     enterpriseId: string;
     articles: BillArticleI[];
-    currency?: string;
+    reduction: number;
     totalHT: number;
     totalTTC: number;
     deadline: string;
@@ -21,6 +21,20 @@ export interface BillI {
     payementDate?: Date;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface BillCreateI {
+    billNum: string;
+    status: string;
+    clientId: string;
+    enterpriseId: string;
+    articles: BillArticleI[];
+    reduction: number;
+    totalHT: number;
+    totalTTC: number;
+    deadline: Date;
+    amountPaid?: number;
+    payementDate?: Date;
 }
 
 export interface BillArticleI {
