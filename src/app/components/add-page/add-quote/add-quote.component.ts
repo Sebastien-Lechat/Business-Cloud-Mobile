@@ -63,14 +63,14 @@ export class AddQuoteComponent implements OnInit {
   }
 
   async createEstimate() {
-    if (!this.estimateNum || !this.selectedClient.selectedId || !this.deadline) {
+    if (!this.estimateNum.trim() || !this.selectedClient.selectedId || !this.deadline) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
     } else {
       const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Création...' });
       await loading.present();
 
       const creationData: EstimateCreateI = {
-        estimateNum: this.estimateNum,
+        estimateNum: this.estimateNum.trim(),
         clientId: this.selectedClient.selectedId,
         enterpriseId: '606de2cd8522d42a44aa9a9b',
         status: 'En attente',
@@ -89,7 +89,6 @@ export class AddQuoteComponent implements OnInit {
           });
         },
         error: async (error: HttpErrorResponse) => {
-          console.log(error);
           await loading.dismiss();
           if (error.error.code === '105151') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
           else if (error.error.code === '105152') { this.toasterService.presentErrorToast('Statut de devis invalide'); }

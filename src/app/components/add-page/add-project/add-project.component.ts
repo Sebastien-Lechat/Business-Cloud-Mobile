@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { AccountService } from 'src/app/services/account/account.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
@@ -41,6 +42,7 @@ export class AddProjectComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private accountService: AccountService,
     private globalService: GlobalService,
     private userService: UserService,
     private toasterService: ToasterService,
@@ -57,8 +59,8 @@ export class AddProjectComponent implements OnInit {
       next: (data: { error: false, users: ShortUserListI[] }) => {
         this.customersList = data.users.filter(user => user.type === 'client');
         this.filteredCustomersList = data.users.filter(user => user.type === 'client');
-        this.employeesList = data.users.filter(user => user.type === 'user' && (user.role !== 'Gérant' || user.role === undefined));
-        this.filteredEmployeesList = data.users.filter(user => user.type === 'user' && (user.role !== 'Gérant' || user.role === undefined));
+        this.employeesList = data.users.filter(user => user.type === 'user' && user.id !== this.accountService.user.id);
+        this.filteredEmployeesList = data.users.filter(user => user.type === 'user' && user.id !== this.accountService.user.id);
       },
     });
   }
@@ -111,16 +113,16 @@ export class AddProjectComponent implements OnInit {
   }
 
   async createProject() {
-    if (!this.projectNum || !this.title || this.selectedEmployeeList.length === 0 || !this.selectedClient.selectedId || !this.startDate || !this.deadline) {
+    if (!this.projectNum.trim() || !this.title.trim() || this.selectedEmployeeList.length === 0 || !this.selectedClient.selectedId || !this.startDate || !this.deadline) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
     } else {
       const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Création...' });
       await loading.present();
 
       const creationData: ProjectCreateI = {
-        projectNum: this.projectNum,
-        title: this.title,
-        clientId: this.selectedClient.selectedId,
+        projectNum: this.projectNum.trim(),
+        title: this.title.trim(),
+        clientId: this.selectedClient.selectedId.trim(),
         status: 'En cours',
         startDate: new Date(this.startDate),
         deadline: new Date(this.deadline),
@@ -143,7 +145,6 @@ export class AddProjectComponent implements OnInit {
           });
         },
         error: async (error: HttpErrorResponse) => {
-          console.log(error);
           await loading.dismiss();
           if (error.error.code === '108151') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
           else if (error.error.code === '108152') { this.toasterService.presentErrorToast('Statut de projet invalide'); }

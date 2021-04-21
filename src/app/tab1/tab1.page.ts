@@ -67,7 +67,6 @@ export class Tab1Page implements OnInit {
   }
 
   sortProject(array: Array<any>, value: string, direction: 0 | 1) {
-    console.log(array);
     (direction === 0) ? array.sort((a, b) => new Date(b[value]).getTime() - new Date(a[value]).getTime()) : array.sort((a, b) => new Date(a[value]).getTime() - new Date(b[value]).getTime());
   }
 

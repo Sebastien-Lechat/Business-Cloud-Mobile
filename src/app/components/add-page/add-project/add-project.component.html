@@ -78,7 +78,7 @@
             </ion-col>
         </ion-row>
         <ion-col size='9' class="start mb-2">
-            <input type="text" id="employe" class="input-with-icon" placeholder='Séléctionnez un employé...' [(ngModel)]="selectedEmployee.name" [matAutocomplete]="employeeAutocomplete" (keyup)="filterCustomer()">
+            <input type="text" id="employe" class="input-with-icon" placeholder='Séléctionnez un employé...' [(ngModel)]="selectedEmployee.name" [matAutocomplete]="employeeAutocomplete" (keyup)="filterEmployee()">
             <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <mat-autocomplete #employeeAutocomplete="matAutocomplete" (optionSelected)="filterEmployee($event)">

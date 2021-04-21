@@ -29,18 +29,18 @@ export class AddArticleComponent implements OnInit {
   ngOnInit() { }
 
   async createArticle() {
-    if (!this.name || !this.price || !this.accountNumber || !this.tva) {
+    if (!this.name.trim() || !this.price || !this.accountNumber || !this.tva) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
     } else {
       const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Création...' });
       await loading.present();
 
       const creationData: ArticleCreateI = {
-        name: this.name,
+        name: this.name.trim(),
         accountNumber: this.accountNumber,
         price: this.price,
         tva: this.tva,
-        description: this.description,
+        description: this.description.trim(),
       };
 
       this.articleService.create(creationData).subscribe({
@@ -51,7 +51,6 @@ export class AddArticleComponent implements OnInit {
           });
         },
         error: async (error: HttpErrorResponse) => {
-          console.log(error);
           await loading.dismiss();
           if (error.error.code === '106101') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
           else if (error.error.code === '106102') { this.toasterService.presentErrorToast('Format du numéro de compte invalide'); }

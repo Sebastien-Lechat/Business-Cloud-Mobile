@@ -63,14 +63,14 @@ export class AddBillComponent implements OnInit {
   }
 
   async createBill() {
-    if (!this.billNum || !this.selectedClient.selectedId || !this.deadline) {
+    if (!this.billNum.trim() || !this.selectedClient.selectedId || !this.deadline) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
     } else {
       const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Création...' });
       await loading.present();
 
       const creationData: BillCreateI = {
-        billNum: this.billNum,
+        billNum: this.billNum.trim(),
         clientId: this.selectedClient.selectedId,
         enterpriseId: '606de2cd8522d42a44aa9a9b',
         status: 'Non payée',
@@ -89,7 +89,6 @@ export class AddBillComponent implements OnInit {
           });
         },
         error: async (error: HttpErrorResponse) => {
-          console.log(error);
           await loading.dismiss();
           if (error.error.code === '104151') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
           else if (error.error.code === '104152') { this.toasterService.presentErrorToast('Statut de facture invalide'); }
