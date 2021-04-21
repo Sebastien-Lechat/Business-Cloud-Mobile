@@ -11,19 +11,24 @@
         </ion-col>
         <ion-col size='12' class="start mb-2">
             <label class="input-label" for="ref">Ref no<span class="red-star">*</span></label>
-            <input type="text" id="ref" class="input-with-icon" placeholder='Ref No' value="PRO64864681368">
+            <input type="text" id="ref" class="input-with-icon" placeholder='Entrez un numéro...' [(ngModel)]="projectNum">
             <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Titre du projet<span class="red-star">*</span></label>
-            <input type="text" id="name" class="input-with-icon" placeholder='Titre du projet'>
+            <input type="text" id="name" class="input-with-icon" placeholder='Entrez un titre...' [(ngModel)]="title">
             <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='9' class="start mb-2">
             <label class="input-label" for="client">Client<span class="red-star">*</span></label>
-            <input type="text" id="client" class="input-with-icon" placeholder='Client'>
+            <input type="text" id="client" class="input-with-icon" placeholder='Séléctionnez un client...' [(ngModel)]="selectedClient.name" [matAutocomplete]="customerAutocomplete" (keyup)="filterCustomer()">
             <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
+        <mat-autocomplete #customerAutocomplete="matAutocomplete" (optionSelected)="filterCustomer($event)">
+            <mat-option *ngFor="let customer of filteredCustomersList" [value]="customer.id">
+                {{customer.name}}
+            </mat-option>
+        </mat-autocomplete>
         <ion-col size='3' class="start mb-2">
             <label class="input-label" for="client">&nbsp;</label>
             <button class="app-btn pointer"><ion-icon name="add"></ion-icon></button>
@@ -31,7 +36,7 @@
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Progression</label>
             <div class="progress-input">
-                <ion-range min="0" max="100" step="5">
+                <ion-range min="0" max="100" step="5" (ionChange)="updateProgression($event)">
                     <ion-label slot="start">0</ion-label>
                     <ion-label slot="end">100</ion-label>
                 </ion-range>
@@ -39,17 +44,17 @@
         </ion-col>
         <ion-col size='6' class="start mb-2">
             <label class="input-label" for="dateD">Date de début<span class="red-star">*</span></label>
-            <input type="date" id="dateD" class="input-without-icon" placeholder="Date d'échéance">
+            <input type="date" id="dateD" class="input-without-icon" placeholder="Date d'échéance" [(ngModel)]="startDate">
             <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='6' class="start mb-2">
             <label class="input-label" for="dateE">Date d'échéance<span class="red-star">*</span></label>
-            <input type="date" id="dateE" class="input-without-icon" placeholder="Date d'échéance">
+            <input type="date" id="dateE" class="input-without-icon" placeholder="Date d'échéance" [(ngModel)]="deadline">
             <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-3">
             <label class="input-label">Description du projet</label>
-            <textarea type="text" id="description" class="textarea-without-icon" placeholder='Description du projet'></textarea>
+            <textarea type="text" id="description" class="textarea-without-icon" placeholder='Décrire le projet...' [(ngModel)]="description"></textarea>
         </ion-col>
         <ion-col size='3' class="center mb-2">
             <div class="separate-div"></div>
@@ -63,26 +68,26 @@
         <ion-col size='12' class="start">
             <label class="input-label">Attribué à<span class="red-star">*</span></label>
         </ion-col>
+        <ion-row class="w-100" *ngFor="let employee of selectedEmployeeList">
+            <ion-col size='9' class="start mb-2">
+                <input type="text" class="input-with-icon" [value]="employee.name" readonly="true">
+                <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
+            </ion-col>
+            <ion-col size='3' class="start mb-2">
+                <button class="app-btn-delete pointer" (click)="deleteEmployee(employee.selectedId)"><ion-icon name="trash"></ion-icon></button>
+            </ion-col>
+        </ion-row>
         <ion-col size='9' class="start mb-2">
-            <input type="text" id="employe" class="input-with-icon" placeholder='Employé'>
+            <input type="text" id="employe" class="input-with-icon" placeholder='Séléctionnez un employé...' [(ngModel)]="selectedEmployee.name" [matAutocomplete]="employeeAutocomplete" (keyup)="filterCustomer()">
             <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
+        <mat-autocomplete #employeeAutocomplete="matAutocomplete" (optionSelected)="filterEmployee($event)">
+            <mat-option *ngFor="let employee of filteredEmployeesList" [value]="employee.id">
+                {{employee.name}}
+            </mat-option>
+        </mat-autocomplete>
         <ion-col size='3' class="start mb-2">
-            <button class="app-btn-delete pointer"><ion-icon name="trash"></ion-icon></button>
-        </ion-col>
-        <ion-col size='9' class="start mb-2">
-            <input type="text" id="employe1" class="input-with-icon" placeholder='Employé'>
-            <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
-        </ion-col>
-        <ion-col size='3' class="start mb-2">
-            <button class="app-btn-delete pointer"><ion-icon name="trash"></ion-icon></button>
-        </ion-col>
-        <ion-col size='9' class="start mb-2">
-            <input type="text" id="employe2" class="input-with-icon" placeholder='Employé'>
-            <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
-        </ion-col>
-        <ion-col size='3' class="start mb-2">
-            <button class="app-btn pointer"><ion-icon name="link"></ion-icon></button>
+            <button class="app-btn pointer" (click)="addEmployee()" type="button"><ion-icon name="link"></ion-icon></button>
         </ion-col>
         <ion-col size='4' class="center mb-2">
             <div class="separate-div"></div>
@@ -93,23 +98,23 @@
         <ion-col size='4' class="center mb-2">
             <div class="separate-div"></div>
         </ion-col>
-        <ion-col size='12' class="start mb-2">
+        <ion-col size='12' class="start mb-2" *ngIf="fixedRate === 0">
             <label class="input-label">Taux horaire</label>
-            <input type="text" id="tauxH" class="input-with-icon" placeholder='Taux horaire'>
+            <input type="number" step="50" class="input-with-icon" placeholder='Taux horaire' [(ngModel)]="hourlyRate">
             <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
         </ion-col>
-        <ion-col size='12' class="start mb-2">
+        <ion-col size='12' class="start mb-2" *ngIf="hourlyRate === 0">
             <label class="input-label">Taux fixe</label>
-            <input type="text" id="tauxF" class="input-with-icon" placeholder='Taux fixe'>
+            <input type="number" step="50" class="input-with-icon" placeholder='Taux fixe' [(ngModel)]="fixedRate">
             <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-4">
             <label class="input-label">Heures estimées</label>
-            <input type="text" id="defaultPrice" class="input-with-icon" placeholder='Heures estimées'>
+            <input type="number" step="0.5" id="defaultPrice" class="input-with-icon" placeholder='Heures estimées' [(ngModel)]="estimateHours">
             <ion-icon name="time-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
         <ion-col size='12' class="start mb-2">
-            <button class="app-btn pointer"><ion-icon name="add"></ion-icon>&nbsp;&nbsp;Créer un projet</button>
+            <button class="app-btn pointer" (click)="createProject()" type="button"><ion-icon name="add" ></ion-icon>&nbsp;&nbsp;Créer un projet</button>
         </ion-col>
     </ion-row>
 </ion-grid>

@@ -63,7 +63,8 @@ export class Tab2Page implements OnInit {
   }
 
   navigateTo(path: string, id?: string) {
-    this.router.navigate([path, id]);
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 
   sortFiles(count: number) {
@@ -133,6 +134,13 @@ export class Tab2Page implements OnInit {
         }
       });
     }
+  }
+
+  refreshData(event: any) {
+    this.initData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 
 }

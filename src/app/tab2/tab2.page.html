@@ -34,6 +34,10 @@
         </ion-row>
     </ion-grid>
     <ion-content class="scroll-list">
+        <ion-refresher slot="fixed" (ionRefresh)="this.refreshData($event)">
+            <ion-refresher-content pullingIcon="none" refreshingSpinner="circles">
+            </ion-refresher-content>
+        </ion-refresher>
         <ion-list *ngIf="filteredFiles">
             <ion-card class="app-card pointer" *ngFor="let file of filteredFiles">
                 <ion-card-content *ngIf="file.estimateNum" (click)="navigateTo('/tabs/show-quote/', file.id)">

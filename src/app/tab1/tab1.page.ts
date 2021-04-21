@@ -26,8 +26,10 @@ export class Tab1Page implements OnInit {
   }
 
   initData() {
+    this.loading = true;
     this.projectService.getProjectList().subscribe({
       next: (data: { error: false, projects: ProjectJsonI[] }) => {
+        this.loading = false;
         this.sortProject(this.filteredProjects, 'createdAt', 0);
         this.projects = data.projects;
         this.filteredProjects = data.projects;
@@ -69,7 +71,15 @@ export class Tab1Page implements OnInit {
     (direction === 0) ? array.sort((a, b) => new Date(b[value]).getTime() - new Date(a[value]).getTime()) : array.sort((a, b) => new Date(a[value]).getTime() - new Date(b[value]).getTime());
   }
 
+  refreshData(event: any) {
+    this.initData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
   navigateTo(path: string, id?: string) {
-    this.router.navigate([path, id]);
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 }

@@ -15,7 +15,8 @@ export class UserProfilePage implements OnInit {
   }
 
   navigateTo(path: string, id?: string) {
-    this.router.navigate([path, id]);
+    if (id) { this.router.navigate([path, id]); }
+    else { this.router.navigate([path]); }
   }
 
   nagivateBack() {

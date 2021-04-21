@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { ProjectCreateI } from 'src/interfaces/projectInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +14,9 @@ export class ProjectService {
 
   getProjectList() {
     return this.http.get<any>(this.url + `projects`);
+  }
+
+  create(data: ProjectCreateI) {
+    return this.http.post<any>(this.url + `project`, data);
   }
 }
