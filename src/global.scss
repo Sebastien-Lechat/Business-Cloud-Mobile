@@ -317,6 +317,10 @@
         box-shadow: 1px 3px 4px #0000000a;
     }
     
+    .app-btn:disabled {
+        background-color: #719ac2;
+    }
+    
     .app-btn-delete {
         width: 100%;
         display: flex;
