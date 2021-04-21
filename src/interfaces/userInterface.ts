@@ -36,6 +36,7 @@ export interface ClientI extends UserI {
 export interface ShortUserListI {
     type: string;
     id: string;
+    _id?: string;
     name: string;
     email: string;
     phone?: string;
