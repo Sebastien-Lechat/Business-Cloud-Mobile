@@ -19,8 +19,8 @@ export interface BillI {
     deadline: string;
     amountPaid?: number;
     payementDate?: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | string;
+    updatedAt: Date | string;
 }
 
 export interface BillCreateI {
@@ -37,7 +37,18 @@ export interface BillCreateI {
     payementDate?: Date;
 }
 
+export interface BillUpdateI {
+    id: string;
+    billNum?: string;
+    status?: string;
+    articles?: { articleId: string, quantity: number }[];
+    reduction?: number;
+    deadline?: Date;
+    amountPaid?: number;
+    payementDate?: Date;
+}
+
 export interface BillArticleI {
-    articleId: string | ArticleI;
+    articleId: ArticleI;
     quantity: number;
 }

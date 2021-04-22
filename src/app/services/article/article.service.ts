@@ -12,7 +12,7 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  getBillList() {
+  getArticleList() {
     return this.http.get<any>(this.url + `articles`);
   }
 

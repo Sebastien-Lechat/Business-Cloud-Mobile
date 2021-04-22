@@ -24,6 +24,9 @@ export class Tab4Page implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ionViewWillEnter(): void {
     this.initData();
   }
 
@@ -33,6 +36,7 @@ export class Tab4Page implements OnInit {
       next: (data: { error: false, users: ShortUserListI[] }) => {
         this.users = data.users;
         this.filteredUsers = data.users;
+        this.filterUsers();
         this.loading = false;
       },
     });
@@ -75,7 +79,7 @@ export class Tab4Page implements OnInit {
     this.initData();
     setTimeout(() => {
       event.target.complete();
-    }, 1000);
+    }, 500);
   }
 
 }

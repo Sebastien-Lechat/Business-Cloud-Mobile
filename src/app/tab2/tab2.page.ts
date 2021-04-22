@@ -27,7 +27,10 @@ export class Tab2Page implements OnInit {
 
   constructor(private router: Router, private billService: BillService, private estimateService: EstimateService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+  }
+
+  ionViewWillEnter(): void {
     this.initData();
   }
 
@@ -72,6 +75,7 @@ export class Tab2Page implements OnInit {
       this.filteredFiles = this.files;
       this.files.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       this.filteredFiles.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      this.filterFiles();
       this.loading = false;
     }
   }
@@ -140,7 +144,7 @@ export class Tab2Page implements OnInit {
     this.initData();
     setTimeout(() => {
       event.target.complete();
-    }, 1000);
+    }, 500);
   }
 
 }

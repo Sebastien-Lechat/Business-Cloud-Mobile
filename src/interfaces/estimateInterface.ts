@@ -10,8 +10,8 @@ export interface EstimateI {
     totalHT: number;
     totalTTC: number;
     deadline: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | string;
+    updatedAt: Date | string;
 }
 
 export interface EstimateCreateI {
@@ -28,7 +28,18 @@ export interface EstimateCreateI {
     payementDate?: Date;
 }
 
+export interface EstimateUpdateI {
+    id: string;
+    estimateNum?: string;
+    status?: string;
+    articles?: { articleId: string, quantity: number }[];
+    reduction?: number;
+    deadline?: Date;
+    amountPaid?: number;
+    payementDate?: Date;
+}
+
 export interface EstimateArticleI {
-    articleId: string | ArticleI;
+    articleId: ArticleI;
     quantity: number;
 }
