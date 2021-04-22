@@ -22,6 +22,9 @@ export class Tab1Page implements OnInit {
   constructor(private router: Router, private projectService: ProjectService) { }
 
   ngOnInit(): void {
+  }
+
+  ionViewWillEnter(): void {
     this.initData();
   }
 
@@ -29,10 +32,11 @@ export class Tab1Page implements OnInit {
     this.loading = true;
     this.projectService.getProjectList().subscribe({
       next: (data: { error: false, projects: ProjectJsonI[] }) => {
-        this.loading = false;
         this.sortProject(this.filteredProjects, 'createdAt', 0);
         this.projects = data.projects;
         this.filteredProjects = data.projects;
+        this.filterProjects();
+        this.loading = false;
       },
     });
   }
@@ -74,7 +78,7 @@ export class Tab1Page implements OnInit {
     this.initData();
     setTimeout(() => {
       event.target.complete();
-    }, 1000);
+    }, 500);
   }
 
   navigateTo(path: string, id?: string) {

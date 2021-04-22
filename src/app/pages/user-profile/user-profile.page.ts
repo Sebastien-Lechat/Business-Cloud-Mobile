@@ -22,6 +22,8 @@ export class UserProfilePage implements OnInit {
 
   requestEnd = 0;
 
+  updateFile = false;
+
   constructor(
     private router: Router,
     private location: Location,
@@ -42,6 +44,7 @@ export class UserProfilePage implements OnInit {
         this.user = data.user;
 
         if (this.user.type === 'client') {
+          this.updateFile = true;
           this.billService.getBillList().subscribe({
             next: (data2: { error: false, bills: BillI[] }) => {
               console.log(data2);
@@ -74,6 +77,7 @@ export class UserProfilePage implements OnInit {
 
   sortFiles(count: number) {
     if (count === 2) {
+      this.updateFile = false;
       this.files.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     }
   }

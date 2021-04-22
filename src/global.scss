@@ -510,6 +510,14 @@
         border-radius: 10px;
     }
     
+    .ligth-separate-grey {
+        background-color: #c9c9c96e;
+        height: 1px;
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+    
     .separate-text {
         color: var(--color-3);
         font-size: 20px;
@@ -594,4 +602,20 @@
         bottom: 0;
         width: 100%;
         z-index: 999999;
+    }
+    
+    .alert-class {
+        .alert-message.sc-ion-alert-md {
+            padding: 24px !important;
+            color: black;
+            --color: black;
+        }
+        .alert-button-group.sc-ion-alert-md {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 15px;
+            .alert-button {
+                margin: 0;
+            }
+        }
     }
