@@ -29,6 +29,6 @@ export interface UserExpenseJsonI {
     description: string;
     userId: string;
     accountNumber: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | string;
+    updatedAt: Date | string;
 }

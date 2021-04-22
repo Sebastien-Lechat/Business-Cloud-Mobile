@@ -12,6 +12,10 @@ export class ExpenseService {
 
   constructor(private http: HttpClient) { }
 
+  getOneExpense(id: string) {
+    return this.http.get<any>(this.url + `expense/` + id);
+  }
+
   create(data: ExpenseCreateI) {
     return this.http.post<any>(this.url + `expense`, data);
   }

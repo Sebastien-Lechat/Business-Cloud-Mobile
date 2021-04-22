@@ -5,7 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
-import { ExpenseCreateI } from 'src/interfaces/expenseInterface';
+import { ExpenseCreateI, ExpenseJsonI } from 'src/interfaces/expenseInterface';
 import { ProjectJsonI } from 'src/interfaces/projectInterface';
 
 @Component({
@@ -82,9 +82,9 @@ export class AddExpenseComponent implements OnInit {
       };
 
       this.expenseService.create(creationData).subscribe({
-        next: async () => {
+        next: async (data: { error: false, expense: ExpenseJsonI }) => {
           await loading.dismiss();
-          this.router.navigate(['/tabs/tab3']).then(() => {
+          this.router.navigate(['/tabs/show-expense/', data.expense.id]).then(() => {
             this.toasterService.presentSuccessToast('Création réussie');
           });
         },
