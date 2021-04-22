@@ -15,11 +15,14 @@
         <ion-grid>
             <ion-row>
                 <ion-col size='2' class="center pb-4 pe-0">
-                    <ion-icon src="assets/icon/edit.svg" class="app-icon edit-icon pointer"></ion-icon>
                 </ion-col>
                 <ion-col size='8' class="center bill-title">
-                    <p>PRO1458697456</p>
-                    <span class="badge status-green">Terminé</span>
+                    <p *ngIf="project">{{ project.projectNum }}</p>
+                    <ion-skeleton-text *ngIf="!project" style="width:100%;height: 33px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <span *ngIf="project && project.status === 'Terminé'" class="badge status-success">{{ project.status }}</span>
+                    <span *ngIf="project && project.status === 'En retard'" class="badge status-danger">{{ project.status }}</span>
+                    <span *ngIf="project && (project.status === 'En attente' || project.status === 'En cours')" class="badge status-warning">{{ project.status }}</span>
+                    <ion-skeleton-text *ngIf="!project" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="center pb-4 ps-0">
                     <ion-icon name="trash-outline" class="app-icon trash-icon"></ion-icon>
@@ -40,10 +43,8 @@
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Progression</label>
                     <div class="progress-input">
-                        <ion-range min="0" max="100" step="5">
-                            <ion-label slot="start">0</ion-label>
-                            <ion-label slot="end">100</ion-label>
-                        </ion-range>
+                        <ion-progress-bar *ngIf="project" [value]="project.progression / 100"></ion-progress-bar>
+                        <ion-skeleton-text *ngIf="!project" style="width:100%;height: 13px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
                     </div>
                 </ion-col>
                 <ion-col size='12' class="center">
@@ -132,32 +133,38 @@
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Client</label>
-                    <input type="text" id="client" class="input-with-icon" placeholder='Client'>
+                    <input *ngIf="client" type="text" id="client" class="input-with-icon" placeholder='Sélectionnez un client...' [(ngModel)]="client.name" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Email</label>
-                    <input type="email" id="email" class="input-with-icon" placeholder='Email'>
+                    <input *ngIf="client" type="email" id="email" class="input-with-icon" placeholder='Entrez un email...' [(ngModel)]="client.email" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Téléphone</label>
-                    <input type="tel" id="phone" class="input-with-icon" placeholder='Téléphone'>
+                    <input *ngIf="client" type="tel" id="phone" class="input-with-icon" placeholder='Entrez un téléphone...' [(ngModel)]="client.phone" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="call-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mb-2">
                     <label class="input-label">Création</label>
-                    <input type="date" id="dateC" class="input-without-icon" placeholder='Création'>
+                    <input *ngIf="project" type="date" id="dateC" class="input-without-icon" placeholder='Création' [(ngModel)]="project.createdAt" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!project" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mb-2">
                     <label class="input-label">Échéance</label>
-                    <input type="date" id="dateE" class="input-without-icon" placeholder='Échéance'>
+                    <input *ngIf="project" type="date" id="dateE" class="input-without-icon" placeholder='Échéance' [(ngModel)]="project.deadline" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!project" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-3">
                     <label class="input-label">Description du projet</label>
-                    <textarea type="text" id="description" class="textarea-without-icon" placeholder='Description du projet'></textarea>
+                    <textarea *ngIf="project" type="text" id="description" class="textarea-without-icon" placeholder='Entrez une description...' [(ngModel)]="project.description" [readonly]="edit"></textarea>
+                    <ion-skeleton-text *ngIf="!project" style="width:100%;height: 150px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                 </ion-col>
             </ion-row>
         </ion-grid>

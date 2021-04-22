@@ -16,6 +16,10 @@ export class ProjectService {
     return this.http.get<any>(this.url + `projects`);
   }
 
+  getOneProject(id: string) {
+    return this.http.get<any>(this.url + `project/` + id);
+  }
+
   create(data: ProjectCreateI) {
     return this.http.post<any>(this.url + `project`, data);
   }

@@ -131,6 +131,7 @@ export class AddProjectComponent implements OnInit {
         estimateHour: this.estimateHours,
         fixedRate: (this.hourlyRate === 0 && this.fixedRate !== 0) ? this.fixedRate : undefined,
         hourlyRate: (this.fixedRate === 0 && this.hourlyRate !== 0) ? this.hourlyRate : undefined,
+        description: this.description,
       };
 
       this.selectedEmployeeList.map(employee => {

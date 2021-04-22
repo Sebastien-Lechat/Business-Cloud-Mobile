@@ -19,7 +19,7 @@
                 </ion-col>
                 <ion-col size='8' class="center bill-title">
                     <p *ngIf="estimate">{{ estimate.estimateNum }}</p>
-                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 33px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 33px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <span *ngIf="estimate && estimate.status === 'Accepté'" class="badge status-success">{{ estimate.status }}</span>
                     <span *ngIf="estimate && estimate.status === 'En attente'" class="badge status-warning">{{ estimate.status }}</span>
                     <span *ngIf="estimate && (estimate.status === 'Refusé' || estimate.status === 'En retard')" class="badge status-danger">{{ estimate.status }}</span>
@@ -44,31 +44,31 @@
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Client</label>
                     <input *ngIf="client" type="text" id="client" class="input-with-icon" placeholder='Sélectionnez un client...' [(ngModel)]="client.name" [readonly]="edit">
-                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Email</label>
                     <input *ngIf="client" type="email" id="email" class="input-with-icon" placeholder='Entrez un email...' [(ngModel)]="client.email" [readonly]="edit">
-                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Téléphone</label>
                     <input *ngIf="client" type="tel" id="phone" class="input-with-icon" placeholder='Entrez un téléphone...' [(ngModel)]="client.phone" [readonly]="edit">
-                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="call-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mb-2">
                     <label class="input-label">Création</label>
                     <input *ngIf="estimate" type="date" id="dateC" class="input-without-icon" placeholder='Création' [(ngModel)]="estimate.createdAt" [readonly]="edit">
-                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mb-2">
                     <label class="input-label">Échéance</label>
                     <input *ngIf="estimate" type="date" id="dateE" class="input-without-icon" placeholder='Échéance' [(ngModel)]="estimate.deadline" [readonly]="edit">
-                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
@@ -79,7 +79,7 @@
                         {{ client.city }}
                         {{ client.country }}
                     </textarea>
-                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 150px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 150px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='4' class="center mb-2">
                     <div class="separate-div"></div>
@@ -140,13 +140,13 @@
                 <ion-col size='6' class="start mt-2 mb-2">
                     <label class="input-label">Total HT</label>
                     <input *ngIf="estimate" type="text" id="totalHT" class="input-with-icon" placeholder='Total HT' [value]="estimate.totalHT + ' €'">
-                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mt-2 mb-2">
                     <label class="input-label">Total TTC</label>
                     <input *ngIf="estimate" type="text" id="totalTTC" class="input-with-icon" placeholder='Total TTC' [value]="estimate.totalTTC + ' €'">
-                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="center mt-2 mb-2">

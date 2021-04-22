@@ -38,12 +38,12 @@ export class AddExpenseAccountComponent implements OnInit {
       await loading.present();
 
       const creationData: UserExpenseCreateI = {
-        userExpenseNum: this.userExpenseNum,
+        userExpenseNum: this.userExpenseNum.trim(),
         price: this.price,
         accountNumber: this.accountNumber,
         category: this.category,
         file: this.file,
-        description: this.description,
+        description: (this.description.trim()) ? this.description.trim() : '',
       };
 
       this.userExpenseService.create(creationData).subscribe({

@@ -71,12 +71,12 @@ export class AddExpenseComponent implements OnInit {
       await loading.present();
 
       const creationData: ExpenseCreateI = {
-        expenseNum: this.expenseNum,
+        expenseNum: this.expenseNum.trim(),
         price: this.price,
         accountNumber: this.accountNumber,
         category: this.category,
         file: this.file,
-        description: this.description,
+        description: (this.description.trim()) ? this.description.trim() : '',
         projectId: this.selectedProject.selectedId,
         billable: this.billable,
       };

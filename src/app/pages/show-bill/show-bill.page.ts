@@ -61,6 +61,10 @@ export class ShowBillPage implements OnInit {
             await loading.dismiss();
           }
         });
+      },
+      error: async (error: HttpErrorResponse) => {
+        await loading.dismiss();
+        this.toasterService.presentErrorToast('Impossible de récupérer cette facture.', { error });
       }
     });
   }
