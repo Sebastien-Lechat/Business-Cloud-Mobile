@@ -47,7 +47,6 @@ export class UserProfilePage implements OnInit {
           this.updateFile = true;
           this.billService.getBillList().subscribe({
             next: (data2: { error: false, bills: BillI[] }) => {
-              console.log(data2);
               data2.bills = data2.bills.filter(bill => {
                 return (bill.clientId as ShortUserListI).id === this.user.id;
               });
@@ -83,7 +82,6 @@ export class UserProfilePage implements OnInit {
   }
 
   navigateTo(path: string, id?: string) {
-    console.log(id);
     if (id) { this.router.navigate([path, id]); }
     else { this.router.navigate([path]); }
   }

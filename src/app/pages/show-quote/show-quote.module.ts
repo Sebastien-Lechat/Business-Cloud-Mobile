@@ -8,6 +8,7 @@ import { ShowQuotePageRoutingModule } from './show-quote-routing.module';
 
 import { ShowQuotePage } from './show-quote.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     FormsModule,
     IonicModule,
     ShowQuotePageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    MatAutocompleteModule,
   ],
   declarations: [ShowQuotePage]
 })

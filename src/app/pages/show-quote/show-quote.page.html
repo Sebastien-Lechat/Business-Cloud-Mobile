@@ -15,14 +15,18 @@
         <ion-grid>
             <ion-row>
                 <ion-col size='2' class="center pb-4 pe-0">
-                    <ion-icon src="assets/icon/edit.svg" class="app-icon edit-icon pointer"></ion-icon>
+                    <!-- <ion-icon src="assets/icon/edit.svg" class="app-icon edit-icon pointer" (click)="editMode()"></ion-icon> -->
                 </ion-col>
                 <ion-col size='8' class="center bill-title">
-                    <p>DEV1458697456</p>
-                    <span class="badge status-green">Acceptée</span>
+                    <p *ngIf="estimate">{{ estimate.estimateNum }}</p>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 33px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <span *ngIf="estimate && estimate.status === 'Accepté'" class="badge status-success">{{ estimate.status }}</span>
+                    <span *ngIf="estimate && estimate.status === 'En attente'" class="badge status-warning">{{ estimate.status }}</span>
+                    <span *ngIf="estimate && (estimate.status === 'Refusé' || estimate.status === 'En retard')" class="badge status-danger">{{ estimate.status }}</span>
+                    <ion-skeleton-text *ngIf="!estimate" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="center pb-4 ps-0">
-                    <ion-icon name="trash-outline" class="app-icon trash-icon"></ion-icon>
+                    <ion-icon name="trash-outline" class="app-icon trash-icon pointer" (click)="deleteEstimate()"></ion-icon>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -39,27 +43,43 @@
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Client</label>
-                    <input type="text" id="client" class="input-with-icon" placeholder='Client'>
+                    <input *ngIf="client" type="text" id="client" class="input-with-icon" placeholder='Sélectionnez un client...' [(ngModel)]="client.name" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Email</label>
-                    <input type="email" id="email" class="input-with-icon" placeholder='Email'>
+                    <input *ngIf="client" type="email" id="email" class="input-with-icon" placeholder='Entrez un email...' [(ngModel)]="client.email" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='6' class="start mb-2">
+                <ion-col size='12' class="start mb-2">
                     <label class="input-label">Téléphone</label>
-                    <input type="tel" id="phone" class="input-with-icon" placeholder='Téléphone'>
+                    <input *ngIf="client" type="tel" id="phone" class="input-with-icon" placeholder='Entrez un téléphone...' [(ngModel)]="client.phone" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="call-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mb-2">
                     <label class="input-label">Création</label>
-                    <input type="date" id="dateC" class="input-without-icon" placeholder='Création'>
+                    <input *ngIf="estimate" type="date" id="dateC" class="input-without-icon" placeholder='Création' [(ngModel)]="estimate.createdAt" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='6' class="start mb-2">
+                    <label class="input-label">Échéance</label>
+                    <input *ngIf="estimate" type="date" id="dateE" class="input-without-icon" placeholder='Échéance' [(ngModel)]="estimate.deadline" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Adresses de facturation</label>
-                    <textarea type="text" id="billAddress" class="textarea-without-icon" placeholder="Adresses de facturation"></textarea>
+                    <textarea *ngIf="client" type="text" id="billAddress" class="textarea-without-icon" placeholder="Saisissez une adresse..." [readonly]="edit">
+                        {{ client.address }}
+                        {{ client.zip }}
+                        {{ client.city }}
+                        {{ client.country }}
+                    </textarea>
+                    <ion-skeleton-text *ngIf="!client" style="width:100%;height: 150px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='4' class="center mb-2">
                     <div class="separate-div"></div>
@@ -71,7 +91,7 @@
                     <div class="separate-div"></div>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
-                    <button class="app-btn pointer"><ion-icon name="mail"></ion-icon>&nbsp;&nbsp;Relancer</button>
+                    <button class="app-btn pointer" (click)="sendMail()" type="button"><ion-icon name="mail"></ion-icon>&nbsp;&nbsp;Relancer</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
                     <button class="app-btn pointer"><ion-icon name="cloud-download"></ion-icon>&nbsp;&nbsp;Télécharger</button>
@@ -85,62 +105,84 @@
                 <ion-col size='4' class="center mb-2">
                     <div class="separate-div"></div>
                 </ion-col>
-                <ion-col size='7' class="start mb-2">
-                    <input type="text" id="articleName1" class="input-with-icon" placeholder='Nom article'>
-                    <ion-icon name="cart-outline" class="input-icon"></ion-icon>
-                </ion-col>
-                <ion-col size='5' class="start mb-2">
-                    <input type="text" id="quantity1" class="input-with-icon" placeholder='Quantité'>
-                    <ion-icon src="/assets/icon/box.svg" class="input-icon"></ion-icon>
-                </ion-col>
-                <ion-col size='5' class="start mb-2">
-                    <input type="text" id="price1" class="input-with-icon" placeholder='Prix'>
-                    <ion-icon src="/assets/icon/money.svg" class="input-icon"></ion-icon>
-                </ion-col>
-                <ion-col size='5' class="start mb-2">
-                    <input type="text" id="tva1" class="input-with-icon" placeholder='TVA'>
-                    <ion-icon src="/assets/icon/percentage.svg" class="input-icon percent-icon"></ion-icon>
-                </ion-col>
-                <ion-col size='2' class="start mb-2">
-                    <button class="app-btn btn-red pointer"><ion-icon name="trash-outline"></ion-icon></button>
+                <div *ngIf="estimate" class="w-100">
+                    <ion-row class="w-100" *ngFor="let article of estimate.articles; let i = index">
+                        <ion-col size='8' class="start mb-2">
+                            <input type="text" class="input-with-icon" placeholder='Nom article' [value]="article.articleId.name">
+                            <ion-icon name="cart-outline" class="input-icon"></ion-icon>
+                        </ion-col>
+                        <ion-col size='4' class="start mb-2">
+                            <input type="text" class="input-with-icon" placeholder='Quantité' [value]="article.quantity">
+                            <ion-icon src="/assets/icon/box.svg" class="input-icon"></ion-icon>
+                        </ion-col>
+                        <ion-col size='5' class="start mb-2">
+                            <input type="text" class="input-with-icon" placeholder='Prix' [value]="article.articleId.price + ' €'">
+                            <ion-icon src="/assets/icon/money.svg" class="input-icon"></ion-icon>
+                        </ion-col>
+                        <ion-col size='5' class="start mb-2">
+                            <input type="text" class="input-with-icon" placeholder='TVA' [value]="article.articleId.tva">
+                            <ion-icon src="/assets/icon/percentage.svg" class="input-icon percent-icon"></ion-icon>
+                        </ion-col>
+                        <ion-col size='2' class="start mb-2">
+                            <button class="app-btn btn-red pointer" (click)="deleteArticle(i)"><ion-icon name="trash-outline"></ion-icon></button>
+                        </ion-col>
+                        <ion-col *ngIf="estimate.articles.length - 1 !== i" size='12' class="center">
+                            <div class="ligth-separate-grey"></div>
+                        </ion-col>
+                    </ion-row>
+                </div>
+                <ion-col *ngIf="estimate && estimate.articles.length === 0" size='12' class="center text-center mt-3 mb-3">
+                    <span>Aucun article enregistré pour ce devis</span>
                 </ion-col>
                 <ion-col size='12' class="center mt-2 mb-2">
                     <div class="ligth-separate-div"></div>
                 </ion-col>
                 <ion-col size='6' class="start mt-2 mb-2">
                     <label class="input-label">Total HT</label>
-                    <input type="text" id="totalHT" class="input-with-icon" placeholder='Total HT'>
+                    <input *ngIf="estimate" type="text" id="totalHT" class="input-with-icon" placeholder='Total HT' [value]="estimate.totalHT + ' €'">
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mt-2 mb-2">
                     <label class="input-label">Total TTC</label>
-                    <input type="text" id="totalTTC" class="input-with-icon" placeholder='Total TTC'>
+                    <input *ngIf="estimate" type="text" id="totalTTC" class="input-with-icon" placeholder='Total TTC' [value]="estimate.totalTTC + ' €'">
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="center mt-2 mb-2">
                     <div class="ligth-separate-div"></div>
                 </ion-col>
-                <ion-col size='12' class="start mb-2">
-                    <label class="input-label">Nom article</label>
-                    <input type="text" id="articleName" class="input-with-icon" placeholder='Nom article'>
+                <ion-col size='7' class="start mb-2">
+                    <label class="input-label">Nom article<span class="red-star">*</span></label>
+                    <input type="text" id="articleName" class="input-with-icon" placeholder='Entrez un nom...' [(ngModel)]="selectedArticle.name" [matAutocomplete]="articlesAutocomplete" (keyup)="filterArticle()">
                     <ion-icon name="cart-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='6' class="start mb-2">
-                    <label class="input-label">Quantité</label>
-                    <input type="text" id="quantity" class="input-with-icon" placeholder='Quantité'>
+                <mat-autocomplete #articlesAutocomplete="matAutocomplete" (optionSelected)="filterArticle($event)">
+                    <mat-option *ngFor="let article of filteredArticlesList" [value]="article.id">
+                        {{article.name}} - {{article.price}} €
+                    </mat-option>
+                </mat-autocomplete>
+                <ion-col size='5' class="start mb-2">
+                    <label class="input-label">Quantité<span class="red-star">*</span></label>
+                    <input type="number" step="11" id="quantity" class="input-with-icon" placeholder='Entrez une quantité...' [(ngModel)]="selectedArticle.quantity">
                     <ion-icon src="/assets/icon/box.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='6' class="start mb-2">
-                    <label class="input-label">TVA</label>
-                    <input type="text" id="tva" class="input-with-icon" placeholder='TVA'>
+                    <label class="input-label">Prix<span class="red-star">*</span></label>
+                    <input type="number" step="10" id="price" class="input-with-icon" placeholder='Entrez un prix...' [(ngModel)]="selectedArticle.price">
+                    <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='6' class="start mb-2">
+                    <label class="input-label">TVA<span class="red-star">*</span></label>
+                    <input type="number" step="1" id="tva" class="input-with-icon" placeholder='Entrez une tva...' [(ngModel)]="selectedArticle.tva">
                     <ion-icon src="/assets/icon/percentage.svg" class="input-icon-with-label percent-icon"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Description</label>
-                    <textarea type="text" id="description" class="textarea-without-icon" placeholder="Description de l'article"></textarea>
+                    <textarea type="text" id="description" class="textarea-without-icon" placeholder="Entrez une description..." [(ngModel)]="selectedArticle.description"></textarea>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
-                    <button class="app-btn pointer"><ion-icon name="add"></ion-icon>&nbsp;&nbsp;Ajouter un article</button>
+                    <button class="app-btn pointer" (click)="updateEstimatesArticles()" type="button"><ion-icon name="add"></ion-icon>&nbsp;&nbsp;Ajouter un article</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

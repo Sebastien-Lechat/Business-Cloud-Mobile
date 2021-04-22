@@ -61,6 +61,10 @@ export class ShowBillPage implements OnInit {
             await loading.dismiss();
           }
         });
+      },
+      error: async (error: HttpErrorResponse) => {
+        await loading.dismiss();
+        this.toasterService.presentErrorToast('Impossible de récupérer cette facture.', { error });
       }
     });
   }
@@ -70,7 +74,6 @@ export class ShowBillPage implements OnInit {
       next: (data: { error: false, articles: ArticleI[] }) => {
         this.articlesList = data.articles;
         this.filteredArticlesList = data.articles;
-        console.log(data.articles);
       },
     });
   }
@@ -140,12 +143,8 @@ export class ShowBillPage implements OnInit {
         });
       }
     } else {
-      this.updateBill(this.generateArticleUpdateList(this.selectedArticle.selectedId), 'Ajout...');
+      this.updateBill(this.generateArticleUpdateList(this.selectedArticle.selectedId), 'Ajout...', 'Article ajouté à la facture');
     }
-  }
-
-  editMode() {
-    this.edit = !this.edit;
   }
 
   async deleteBill() {
@@ -191,7 +190,7 @@ export class ShowBillPage implements OnInit {
       if (index !== i) { articles.push({ articleId: (article.articleId._id) ? article.articleId._id : article.articleId.id, quantity: article.quantity }); }
     });
 
-    this.updateBill(articles, 'Suppression...');
+    this.updateBill(articles, 'Suppression...', 'Article supprimé de la facture');
   }
 
   generateArticleUpdateList(id: string) {
@@ -203,7 +202,7 @@ export class ShowBillPage implements OnInit {
     return articles;
   }
 
-  async updateBill(articleList: { articleId: string, quantity: number }[], loadingText: string) {
+  async updateBill(articleList: { articleId: string, quantity: number }[], loadingText: string, toasterText: string) {
     const loading = await this.loadingController.create({ cssClass: 'loading-div', message: loadingText });
     await loading.present();
     this.billService.update({ id: this.bill.id, articles: articleList }).subscribe({
@@ -211,7 +210,7 @@ export class ShowBillPage implements OnInit {
         this.bill = data.bill;
         this.selectedArticle = { name: '', selectedId: '', quantity: 0, tva: 0, price: 0, description: '', accountNumber: 999999 };
         await loading.dismiss();
-        this.toasterService.presentSuccessToast('Article supprimé de la facture');
+        this.toasterService.presentSuccessToast(toasterText);
       },
       error: async (error: HttpErrorResponse) => {
         await loading.dismiss();
@@ -221,6 +220,10 @@ export class ShowBillPage implements OnInit {
         else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
       }
     });
+  }
+
+  sendMail() {
+    this.toasterService.presentSuccessToast('Email envoyé');
   }
 
   navigateTo(path: string, id?: string) {

@@ -77,9 +77,7 @@ export class Tab4Page implements OnInit {
 
   refreshData(event: any) {
     this.initData();
-    setTimeout(() => {
-      event.target.complete();
-    }, 500);
+    event.target.complete();
   }
 
 }

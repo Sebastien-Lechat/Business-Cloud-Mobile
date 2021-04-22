@@ -22,7 +22,7 @@
     </ion-grid>
     <ion-content class="scroll-list">
         <ion-refresher slot="fixed" (ionRefresh)="this.refreshData($event)">
-            <ion-refresher-content pullingIcon="none" refreshingSpinner="circles">
+            <ion-refresher-content pullingIcon="circular" refreshingSpinner="circles">
             </ion-refresher-content>
         </ion-refresher>
         <ion-list *ngIf="users">
