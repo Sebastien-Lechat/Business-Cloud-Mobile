@@ -12,6 +12,10 @@ export class UserExpenseService {
 
   constructor(private http: HttpClient) { }
 
+  getOneUserExpense(id: string) {
+    return this.http.get<any>(this.url + `expense-employee/` + id);
+  }
+
   create(data: UserExpenseCreateI) {
     return this.http.post<any>(this.url + `expense-employee`, data);
   }

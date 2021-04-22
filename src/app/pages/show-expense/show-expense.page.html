@@ -17,11 +17,14 @@
                 <ion-col size='2'>
                 </ion-col>
                 <ion-col size='8' class="center bill-title">
-                    <p>EXP1458697456</p>
-                    <span class="badge status-green">Acceptée</span>
+                    <p *ngIf="expense && expense.expenseNum">{{ expense.expenseNum }}</p>
+                    <p *ngIf="expense && expense.userExpenseNum">{{ expense.userExpenseNum }}</p>
+                    <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 33px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <span *ngIf="expense" class="badge status-warning">En attente</span>
+                    <ion-skeleton-text *ngIf="!expense" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="center mb-3">
-                    <!-- <ion-icon src="assets/icon/edit.svg" class="app-icon edit-icon pointer"></ion-icon> -->
+                    <ion-icon name="trash-outline" class="app-icon trash-icon pointer"></ion-icon>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -38,42 +41,49 @@
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Employé</label>
-                    <input type="text" id="employe" class="input-with-icon" placeholder='Employé'>
+                    <input *ngIf="employee" type="text" id="client" class="input-with-icon" placeholder='Sélectionnez un client...' [(ngModel)]="employee.name" [readonly]="true">
+                    <ion-skeleton-text *ngIf="!employee" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="person-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Email</label>
-                    <input type="email" id="email" class="input-with-icon" placeholder='Email'>
+                    <input *ngIf="employee" type="email" id="email" class="input-with-icon" placeholder='Entrez un email...' [(ngModel)]="employee.email" [readonly]="true">
+                    <ion-skeleton-text *ngIf="!employee" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="mail-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='12' class="start mb-2">
+                <ion-col size='6' class="start mb-2">
+                    <label class="input-label">Téléphone</label>
+                    <input *ngIf="employee" type="tel" id="phone" class="input-with-icon" placeholder='Entrez un téléphone...' [(ngModel)]="employee.phone" [readonly]="true">
+                    <ion-skeleton-text *ngIf="!employee" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <ion-icon name="call-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='6' class="start mb-2">
                     <label class="input-label">Création</label>
-                    <input type="date" id="dateC" class="input-without-icon" placeholder='Création'>
+                    <input *ngIf="expense" type="date" id="dateC" class="input-without-icon" placeholder='Création' [(ngModel)]="expense.createdAt" [readonly]="true">
+                    <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='5' class="start mb-2">
+                <ion-col size='6' class="start mb-2">
                     <label class="input-label">Montant</label>
-                    <input type="text" id="price" class="input-with-icon" placeholder='Montant'>
+                    <input *ngIf="expense" type="text" id="price" class="input-with-icon" placeholder='Entrez un montant...' [(ngModel)]="expense.price" [readonly]="true">
+                    <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon src="assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='7' class="start mb-2">
+                <ion-col size='6' class="start mb-2">
                     <label class="input-label">Catégorie</label>
-                    <ion-item class="select-input">
-                        <ion-select placeholder="Catégorie" okText="Ok" cancelText="Fermer">
-                            <ion-select-option value="3">Restaurant</ion-select-option>
-                            <ion-select-option value="2">Déplacement</ion-select-option>
-                            <ion-select-option value="1">Achats divers</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col size='12' class="start mb-2">
-                    <label class="input-label">Document</label>
-                    <div class="picture-div">
-                    </div>
+                    <input *ngIf="expense" type="text" id="category" class="input-with-icon" placeholder='Entrez un montant...' [(ngModel)]="expense.category" [readonly]="true">
+                    <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-3">
                     <label class="input-label">Description de la note de frais</label>
-                    <textarea type="text" id="description" class="textarea-without-icon" placeholder='Description de la note de frais'></textarea>
+                    <textarea *ngIf="expense" type="text" id="description" class="textarea-without-icon" placeholder='Entrez une description...' [(ngModel)]="expense.description" [readonly]="true"></textarea>
+                    <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 150px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                </ion-col>
+                <ion-col size='12' class="start mb-2" *ngIf="expense && expense.file">
+                    <label class="input-label">Document</label>
+                    <div class="picture-div">
+                    </div>
                 </ion-col>
             </ion-row>
         </ion-grid>

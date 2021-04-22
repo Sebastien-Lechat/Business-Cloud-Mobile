@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { UserExpenseService } from 'src/app/services/userExpense/user-expense.service';
-import { UserExpenseCreateI } from 'src/interfaces/userExpense';
+import { UserExpenseCreateI, UserExpenseJsonI } from 'src/interfaces/userExpense';
 
 @Component({
   selector: 'app-add-expense-account',
@@ -47,9 +47,9 @@ export class AddExpenseAccountComponent implements OnInit {
       };
 
       this.userExpenseService.create(creationData).subscribe({
-        next: async () => {
+        next: async (data: { error: false, expense: UserExpenseJsonI }) => {
           await loading.dismiss();
-          this.router.navigate(['/tabs/tab3']).then(() => {
+          this.router.navigate(['/tabs/show-expense/', data.expense.id]).then(() => {
             this.toasterService.presentSuccessToast('Création réussie');
           });
         },

@@ -35,7 +35,7 @@ export interface ExpenseJsonI {
     userId: string;
     projectId?: string;
     billable: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: Date | string;
+    updatedAt: Date | string;
 }
 
