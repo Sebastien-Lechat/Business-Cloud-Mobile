@@ -20,7 +20,9 @@
                 <ion-col size='8' class="center bill-title">
                     <p *ngIf="bill">{{ bill.billNum }}</p>
                     <ion-skeleton-text *ngIf="!bill" style="width:100%;height: 33px;border-radius: 10px;" animated></ion-skeleton-text>
-                    <span *ngIf="bill" class="badge status-green">{{ bill.status }}</span>
+                    <span *ngIf="bill && bill.status === 'Payée'" class="badge status-success">{{ bill.status }}</span>
+                    <span *ngIf="bill && bill.status === 'En retard'" class="badge status-danger">{{ bill.status }}</span>
+                    <span *ngIf="bill && (bill.status === 'Partiellement payée' || bill.status === 'Non payée')" class="badge status-warning">{{ bill.status }}</span>
                     <ion-skeleton-text *ngIf="!bill" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="center pb-4 ps-0">
@@ -89,7 +91,7 @@
                     <div class="separate-div"></div>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
-                    <button class="app-btn pointer"><ion-icon name="mail"></ion-icon>&nbsp;&nbsp;Relancer</button>
+                    <button class="app-btn pointer" (click)="sendMail()" type="button"><ion-icon name="mail"></ion-icon>&nbsp;&nbsp;Relancer</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
                     <button class="app-btn pointer"><ion-icon name="cloud-download"></ion-icon>&nbsp;&nbsp;Télécharger</button>
