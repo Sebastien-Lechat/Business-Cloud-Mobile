@@ -14,116 +14,20 @@
     </ion-grid>
     <ion-content class="scroll-list">
         <ion-list>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/messages')">
+            <ion-card *ngFor="let notification of notifications" class="notif-card pointer" (click)="navigateTo('/messages')">
                 <div class="icon-notif-card">
                     <div class="icon-div center">
-                        <ion-icon name="chatbox-outline" class="app-icon"></ion-icon>
+                        <ion-icon *ngIf="notification.category === 'Message'" name="chatbox-outline" class="app-icon"></ion-icon>
+                        <ion-icon *ngIf="notification.category === 'Facture' || notification.category === 'Devis'" name="document-text-outline" class="app-icon"></ion-icon>
+                        <ion-icon *ngIf="notification.category === 'Projet'" name="pie-chart-outline" class="app-icon"></ion-icon>
                     </div>
                 </div>
                 <div class="text-notif-card">
-                    <p class="main-text">Nouveau Message</p>
-                    <p class="sub-text hide-overflow">Vous avez reçu un message de la part de Pierre Jacques</p>
+                    <p class="main-text">{{ notification.title }}</p>
+                    <p class="sub-text hide-overflow">{{ notification.message }}</p>
                 </div>
                 <div class="time-notif-card center">
                     <p class="sub-text">4m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/tabs/tab2')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="document-text-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Nouvelle facture payée</p>
-                    <p class="sub-text hide-overflow">Un client vient de payer une facture</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">13m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/messages')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="chatbox-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Nouveau Message</p>
-                    <p class="sub-text hide-overflow">Vous avez reçu un message de la part de Pierre Jacques</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">24m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/tabs/tab2')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="document-text-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Facture à relancer</p>
-                    <p class="sub-text hide-overflow">Une facture arrive bientôt à la date limite de payement</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">35m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/messages')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="chatbox-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Nouveau Message</p>
-                    <p class="sub-text hide-overflow">Vous avez reçu un message de la part de Pierre Jacques</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">4m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/tabs/tab2')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="document-text-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Nouvelle facture payée</p>
-                    <p class="sub-text hide-overflow">Un client vient de payer une facture</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">13m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer" (click)="navigateTo('/messages')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="chatbox-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Nouveau Message</p>
-                    <p class="sub-text hide-overflow">Vous avez reçu un message de la part de Pierre Jacques</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">24m</p>
-                </div>
-            </ion-card>
-            <ion-card class="notif-card pointer mb-3" (click)="navigateTo('/tabs/tab2')">
-                <div class="icon-notif-card">
-                    <div class="icon-div center">
-                        <ion-icon name="document-text-outline" class="app-icon"></ion-icon>
-                    </div>
-                </div>
-                <div class="text-notif-card">
-                    <p class="main-text">Facture à relancer</p>
-                    <p class="sub-text hide-overflow">Une facture arrive bientôt à la date limite de payement</p>
-                </div>
-                <div class="time-notif-card center">
-                    <p class="sub-text">35m</p>
                 </div>
             </ion-card>
         </ion-list>

@@ -7,16 +7,16 @@
                 <ion-col size='12' class="center name-profile">
                     <p *ngIf="user && user.type === 'client'">{{ user.name }}</p>
                     <p *ngIf="user && user.type === 'user'">{{ user.name }} - {{ (user.role) ? user.role : 'Employé' }}</p>
-                    <ion-skeleton-text *ngIf="!user" style="width:100%;height: 40px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!user" style="width:100%;height: 30px;border-radius: 10px;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='12' class="center">
                     <p *ngIf="user">{{ user.email }}</p>
-                    <ion-skeleton-text *ngIf="!user" style="width:100%;height: 34px;border-radius: 10px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text *ngIf="!user" style="width:100%;height: 24px;border-radius: 10px;" animated></ion-skeleton-text>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <!-- <ion-col size='12' class="center">
                     <p *ngIf="user && user.address && user.city && user.zip">{{ user.address + user.city + user.zip }}</p>
                     <ion-skeleton-text *ngIf="!user" style="width:100%;height: 34px;border-radius: 10px;" animated></ion-skeleton-text>
-                </ion-col>
+                </ion-col> -->
                 <ion-col size='12' class="center first-profile-card">
                     <div class="profile-card pointer" (click)="navigateTo('/tabs/user-info')">
                         <div class="icon-profile-card pointer" (click)="navigateTo('/tabs/user-info')">

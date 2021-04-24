@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ClientI } from 'src/interfaces/userInterface';
 import { AccountService } from '../services/account/account.service';
 import { AuthService } from '../services/auth/auth.service';
+import { SocketService } from '../services/global/socket.service';
 
 @Component({
   selector: 'app-tab5',
@@ -11,15 +12,23 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class Tab5Page implements OnInit {
 
-  user: ClientI;
+  user: ClientI = this.accountService.user;
 
-  constructor(private router: Router, private authService: AuthService, private accountService: AccountService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private accountService: AccountService,
+    private socketService: SocketService,
+  ) { }
 
   ngOnInit() {
-
   }
 
   ionViewWillEnter() {
+    this.initData();
+  }
+
+  initData() {
     this.accountService.getAccountProfile().subscribe({
       next: (data: { error: false, user: ClientI }) => {
         this.user = data.user;
@@ -28,6 +37,7 @@ export class Tab5Page implements OnInit {
   }
 
   logout() {
+    this.socketService.disconnect();
     this.authService.logout().subscribe({
       next: () => {
         localStorage.removeItem('currentUser');
