@@ -1,5 +1,5 @@
 {
-  "appId": "fr.business.cloud.mobile",
+  "appId": "com.business.cloud.mobile",
   "appName": "BusinessCloud",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -9,5 +9,9 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.1.47:8101",
+    "cleartext": true
+  }
 }

@@ -6,7 +6,9 @@
                     <ion-icon name="chevron-back-outline" class="app-icon pointer" (click)="nagivateBack()"></ion-icon>
                 </ion-col>
                 <ion-col size='8'>
-                    <h2 class="header-title text-center hide-overflow">Note de frais</h2>
+                    <h2 *ngIf="expense && expense.expenseNum" class="header-title text-center hide-overflow">Dépense</h2>
+                    <h2 *ngIf="expense && expense.userExpenseNum" class="header-title text-center hide-overflow">Note de frais</h2>
+                    <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 29px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="end">
                 </ion-col>
@@ -80,11 +82,11 @@
                     <textarea *ngIf="expense" type="text" id="description" class="textarea-without-icon" placeholder='Entrez une description...' [(ngModel)]="expense.description" [readonly]="true"></textarea>
                     <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 150px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                 </ion-col>
-                <ion-col size='12' class="start mb-2" *ngIf="expense && expense.file">
+                <!-- <ion-col size='12' class="start mb-2" *ngIf="expense && expense.file">
                     <label class="input-label">Document</label>
                     <div class="picture-div">
                     </div>
-                </ion-col>
+                </ion-col> -->
             </ion-row>
         </ion-grid>
     </div>

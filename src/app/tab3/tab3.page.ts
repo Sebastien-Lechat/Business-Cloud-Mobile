@@ -1,18 +1,22 @@
-import { Component, ViewChild } from '@angular/core';
-import { Chart } from 'chart.js';
 import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
+
 
   @ViewChild('chart') chart: any;
 
   constructor(private router: Router, private location: Location) { }
+
+  ngOnInit(): void {
+  }
 
   navigateTo(path: string, id?: string) {
     if (id) { this.router.navigate([path, id]); }
@@ -72,4 +76,6 @@ export class Tab3Page {
       }
     });
   }
+
+
 }
