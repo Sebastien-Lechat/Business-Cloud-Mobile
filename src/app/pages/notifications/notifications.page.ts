@@ -18,33 +18,32 @@ export class NotificationsPage implements OnInit {
   ngOnInit() {
     this.notificationService.getNotificationList().subscribe({
       next: (data: { error: false, notifications: NotificationJsonI[] }) => {
+        data.notifications.map((notification: NotificationJsonI) => {
+          notification.createdAt = this.formatCreatedAt(notification.createdAt as string);
+        });
         this.notifications = data.notifications;
-        console.log(this.notifications);
       }
     });
   }
 
-  navigateTo(path: string) {
-    this.router.navigate([path]);
+  navigateTo(category: string, id: string) {
+    if (category === 'Facture') { this.router.navigate(['/tabs/show-bill/', id]); }
+    if (category === 'Projet') { this.router.navigate(['/tabs/show-project/', id]); }
+    if (category === 'Devis') { this.router.navigate(['/tabs/show-quote/', id]); }
+    if (category === 'Message') { console.log('Add navigation'); }
   }
 
   nagivateBack() {
     this.location.back();
   }
 
+  formatCreatedAt(date: string): string {
+    const s = (Date.now() - new Date(date).getTime()) / 1000;
+    const day = Math.floor(s / (3600 * 24));
+    const hours = Math.floor(s % (3600 * 24) / 3600);
+    const minutes = Math.floor(s % 3600 / 60);
+    const seconds = Math.floor(s % 60);
+    return (day) ? day + 'j' : (hours) ? hours + 'h' : (minutes) ? minutes + 'm' : seconds + 's';
+  }
 }
 
-
-// function secondsToDhms(seconds) {
-//   seconds = Number(seconds);
-//   var d = Math.floor(seconds / (3600*24));
-//   var h = Math.floor(seconds % (3600*24) / 3600);
-//   var m = Math.floor(seconds % 3600 / 60);
-//   var s = Math.floor(seconds % 60);
-
-//   var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
-//   var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-//   var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-//   var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-//   return dDisplay + hDisplay + mDisplay + sDisplay;
-//   }

@@ -15,6 +15,10 @@ export class NotificationService {
     return this.http.get<any>(this.url + `notifications`);
   }
 
+  count() {
+    return this.http.get<any>(this.url + `notifications/count`);
+  }
+
   delete(id: string) {
     return this.http.delete<any>(this.url + `notification/` + id);
   }

@@ -14,7 +14,7 @@
     </ion-grid>
     <ion-content class="scroll-list">
         <ion-list>
-            <ion-card *ngFor="let notification of notifications" class="notif-card pointer" (click)="navigateTo('/messages')">
+            <ion-card *ngFor="let notification of notifications" class="notif-card pointer" (click)="navigateTo(notification.category, notification.targetId)">
                 <div class="icon-notif-card">
                     <div class="icon-div center">
                         <ion-icon *ngIf="notification.category === 'Message'" name="chatbox-outline" class="app-icon"></ion-icon>
@@ -27,7 +27,7 @@
                     <p class="sub-text hide-overflow">{{ notification.message }}</p>
                 </div>
                 <div class="time-notif-card center">
-                    <p class="sub-text">4m</p>
+                    <p class="sub-text">{{ notification.createdAt }}</p>
                 </div>
             </ion-card>
         </ion-list>

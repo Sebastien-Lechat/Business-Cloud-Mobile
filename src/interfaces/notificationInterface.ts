@@ -3,6 +3,7 @@ export interface NotificationJsonI {
     userId: string;
     title: string;
     message: string;
+    targetId: string;
     seen: boolean;
     category: string;
     createdAt: Date | string;
