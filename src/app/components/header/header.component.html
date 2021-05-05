@@ -5,7 +5,9 @@
             <img class="logo-header" src="./../../../assets/img/logo-text.png" alt="">
 
             <div class="header-btn center pointer" (click)="navigateTo('/tabs/notifications')">
-                <ion-icon name="notifications-outline" class="app-icon pointer"></ion-icon>
+                <ion-icon name="notifications-outline" class="app-icon pointer">
+                </ion-icon>
+                <ion-badge *ngIf="notificationCount > 0" class="notifications-badge" color="danger">{{ notificationCount }}</ion-badge>
             </div>
         </ion-col>
     </ion-row>
