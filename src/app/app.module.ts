@@ -8,6 +8,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { Device } from '@ionic-native/device/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from './services/interceptor/http.interceptor';
@@ -17,7 +18,14 @@ registerLocaleData(localeFr);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, BrowserAnimationsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    NgCircleProgressModule.forRoot(),
+  ],
   providers: [
     ScreenOrientation,
     Device,

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
@@ -27,6 +27,14 @@ export class AddExpenseComponent implements OnInit {
   filteredProjectList: ProjectJsonI[] = [];
   selectedProject = { name: '', selectedId: '' };
 
+  @Input('id') set id(value: string) {
+    if (value) {
+      this.selectedProject.selectedId = value;
+      this.initAutocomplete();
+    } else {
+      this.initAutocomplete();
+    }
+  }
 
   constructor(
     private router: Router,
@@ -37,7 +45,6 @@ export class AddExpenseComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initAutocomplete();
   }
 
   initAutocomplete() {
@@ -45,6 +52,10 @@ export class AddExpenseComponent implements OnInit {
       next: (data: { error: false, projects: ProjectJsonI[] }) => {
         this.projectList = data.projects;
         this.filteredProjectList = data.projects;
+        if (this.selectedProject.selectedId) {
+          this.selectedProject.name = this.projectList.find(project => project.id === this.selectedProject.selectedId)?.title;
+          console.log(this.selectedProject);
+        }
       },
     });
   }

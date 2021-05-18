@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonRouterOutlet, LoadingController, ModalController } from '@ionic/angular';
 import { CalendarProjectComponent } from 'src/app/components/modals/calendar-project/calendar-project.component';
+import { ExpenseListComponent } from 'src/app/components/modals/expense-list/expense-list.component';
 import { TimeProjectComponent } from 'src/app/components/modals/time-project/time-project.component';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
@@ -68,7 +69,10 @@ export class ShowProjectPage implements OnInit {
     const modal = await this.modalController.create({
       component: TimeProjectComponent,
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        projectId: this.id,
+      }
     });
     return await modal.present();
   }
@@ -80,6 +84,19 @@ export class ShowProjectPage implements OnInit {
       presentingElement: this.routerOutlet.nativeEl
     });
     return await modal.present();
+  }
+
+  async showListExpenseModal() {
+    const modal = await this.modalController.create({
+      component: ExpenseListComponent,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl
+    });
+    return await modal.present();
+  }
+
+  redirectToExpense() {
+    this.router.navigate(['/tabs/add-page'], { state: { projectId: this.id } });
   }
 
   navigateTo(path: string, id?: string) {
