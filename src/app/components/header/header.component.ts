@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
@@ -13,11 +14,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   intervalCount: any;
 
-  constructor(private router: Router, private notificationService: NotificationService) { }
+  constructor(private router: Router, private notificationService: NotificationService, private globalService: GlobalService) { }
 
   ngOnInit() {
-    this.getNotificationCount();
-    this.intervalCount = setInterval(() => { this.getNotificationCount(); }, 5000);
+    if (!this.globalService.headerNotificationsCountAlreadyExist) {
+      this.globalService.headerNotificationsCountAlreadyExist = true;
+      this.intervalCount = setInterval(() => {
+        this.getNotificationCount();
+      }, 7000);
+    }
   }
 
   getNotificationCount() {
@@ -34,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.globalService.headerNotificationsCountAlreadyExist = false;
     clearInterval(this.intervalCount);
   }
 

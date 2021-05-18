@@ -14,13 +14,21 @@
     </ion-grid>
     <ion-grid>
         <ion-row>
-            <ion-col size='12' class="center mb-2">
-                <div class="time-div">
-                    {{ time | date: 'hh:mm:ss' }}
-                </div>
+            <ion-col size='12' class="center mb-1">
+                <circle-progress [backgroundPadding]="10" [title]="timer" [titleColor]="'#2865a2'" [titleFontSize]="'2rem'" [showUnits]="false" [showSubtitle]="false" [percent]="(second * 100 / 60)" [radius]="100" [outerStrokeWidth]="4" [innerStrokeWidth]="2" [innerStrokeColor]="'#2865a260'"
+                    [outerStrokeColor]="'#2865a2'" [startFromZero]="false" [animation]="false" [animationDuration]="1" [renderOnClick]="false"></circle-progress>
             </ion-col>
-            <ion-col size='12' class="start mb-4">
-                <button class="app-btn pointer"><ion-icon name="time"></ion-icon>&nbsp;&nbsp;Enregister du temps</button>
+            <ion-col size='12' class="center mb-4" *ngIf="!counter">
+                <button class="app-btn pointer btn-green" (click)="startTimer()"><ion-icon name="play"></ion-icon>&nbsp;&nbsp;Enregister du temps</button>
+            </ion-col>
+            <ion-col size='12' class="center" *ngIf="counter">
+                <button class="app-btn pointer" (click)="startTimer()"><ion-icon name="pause"></ion-icon>&nbsp;&nbsp;Mettre en pause</button>
+            </ion-col>
+            <ion-col size='6' class="center mb-4" *ngIf="counter">
+                <button class="app-btn pointer btn-red" (click)="clearTimer(false)"><ion-icon name="close"></ion-icon>&nbsp;&nbsp;Annuler</button>
+            </ion-col>
+            <ion-col size='6' class="center mb-4" *ngIf="counter">
+                <button class="app-btn pointer" (click)="clearTimer(true)"><ion-icon name="stop"></ion-icon>&nbsp;&nbsp;Enregistrer</button>
             </ion-col>
             <ion-col size='1' class="center mb-2">
                 <div class="separate-div"></div>
@@ -31,27 +39,34 @@
             <ion-col size='1' class="center mb-2">
                 <div class="separate-div"></div>
             </ion-col>
-            <ion-col size='12' class="start">
-                <input type="text" id="employe" class="input-with-icon" placeholder='Employé'>
-                <ion-icon name="person-outline" class="input-icon"></ion-icon>
-            </ion-col>
-            <ion-col size='6' class="start">
-                <input type="date" id="date" class="input-with-icon" placeholder="Date d'enrgistrement">
-                <ion-icon name="calendar-outline" class="input-icon"></ion-icon>
-            </ion-col>
-            <ion-col size='6' class="start">
-                <input type="text" id="temps" class="input-with-icon" placeholder="Temps">
-                <ion-icon name="time-outline" class="input-icon"></ion-icon>
-            </ion-col>
-            <ion-col size='4' class="start">
-                <button class="app-btn pointer"><ion-icon src="assets/icon/edit.svg" class="edit-icon"></ion-icon></button>
-            </ion-col>
-            <ion-col size='4' class="start">
-                <button class="app-btn btn-green pointer"><ion-icon name="document-text"></ion-icon></button>
-            </ion-col>
-            <ion-col size='4' class="start">
-                <button class="app-btn btn-red pointer"><ion-icon name="trash-outline"></ion-icon></button>
-            </ion-col>
+            <div *ngIf="times" class="w-100">
+                <ion-row class="w-100" *ngFor="let time of times; let i = index">
+                    <ion-col size='9' class="start">
+                        <input type="text" class="input-with-icon" placeholder='Employé' value="{{ time.userId.name }}" title="{{ time.userId.name }}" readonly>
+                        <ion-icon name="person-outline" class="input-icon"></ion-icon>
+                    </ion-col>
+                    <ion-col size='3' class="start" *ngIf="time.billable">
+                        <button class="app-btn pointer" title="facturable" (click)="editTime(time.id, !time.billable)"><ion-icon name="card"></ion-icon></button>
+                    </ion-col>
+                    <ion-col size='3' class="start" *ngIf="!time.billable">
+                        <button class="app-btn btn-orange pointer" title="non-facturable" (click)="editTime(time.id, !time.billable)"><ion-icon name="card"></ion-icon></button>
+                    </ion-col>
+                    <ion-col size='5' class="start">
+                        <input type="date" class="input-without-icon" placeholder="Date d'enrgistrement" value="{{ time.createdAt }}" readonly>
+                        <ion-icon name="calendar-outline" class="input-icon"></ion-icon>
+                    </ion-col>
+                    <ion-col size='4' class="start">
+                        <input type="text" class="input-with-icon" placeholder="Temps" value="{{ time.durationFormated }}" readonly>
+                        <ion-icon name="time-outline" class="input-icon"></ion-icon>
+                    </ion-col>
+                    <ion-col size='3' class="start">
+                        <button class="app-btn btn-red pointer" (click)="deleteTime(time.id)"><ion-icon name="trash-outline"></ion-icon></button>
+                    </ion-col>
+                    <ion-col *ngIf="times.length - 1 !== i" size='12' class="center mt-2">
+                        <div class="light-separate-grey"></div>
+                    </ion-col>
+                </ion-row>
+            </div>
         </ion-row>
     </ion-grid>
 </ion-content>

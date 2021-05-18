@@ -13,6 +13,7 @@ const { PushNotifications, Device } = Plugins;
 export class GlobalService {
 
   creationSubject: BehaviorSubject<number> = new BehaviorSubject(6);
+  headerNotificationsCountAlreadyExist = false;
 
   private url = environment.API;
   private deviceInfo: DeviceInfo;

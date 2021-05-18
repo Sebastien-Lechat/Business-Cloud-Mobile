@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../services/account/account.service';
-import { GlobalService } from '../services/global/global.service';
 import { SocketService } from '../services/global/socket.service';
 
 @Component({
@@ -13,7 +12,7 @@ export class TabsPage implements OnInit, OnDestroy {
 
   selected: string;
 
-  constructor(private router: Router, public accountService: AccountService, private socketService: SocketService, private globalService: GlobalService) {
+  constructor(private router: Router, public accountService: AccountService, private socketService: SocketService/*, private globalService: GlobalService*/) {
     const url = this.router.routerState.snapshot.url;
     if (url === '/tabs/tab1' || url.includes('/tabs/show-project/')) {
       this.selected = 'projet';
@@ -31,7 +30,7 @@ export class TabsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.globalService.registerFCM();
+    // this.globalService.registerFCM();
     this.socketService.connect();
   }
 

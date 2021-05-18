@@ -127,7 +127,7 @@
                             <button class="app-btn btn-red pointer" (click)="deleteArticle(i)"><ion-icon name="trash-outline"></ion-icon></button>
                         </ion-col>
                         <ion-col *ngIf="estimate.articles.length - 1 !== i" size='12' class="center">
-                            <div class="ligth-separate-grey"></div>
+                            <div class="light-separate-grey"></div>
                         </ion-col>
                     </ion-row>
                 </div>
@@ -135,7 +135,7 @@
                     <span>Aucun article enregistré pour ce devis</span>
                 </ion-col>
                 <ion-col size='12' class="center mt-2 mb-2">
-                    <div class="ligth-separate-div"></div>
+                    <div class="light-separate-div"></div>
                 </ion-col>
                 <ion-col size='6' class="start mt-2 mb-2">
                     <label class="input-label">Total HT</label>
@@ -150,7 +150,7 @@
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="center mt-2 mb-2">
-                    <div class="ligth-separate-div"></div>
+                    <div class="light-separate-div"></div>
                 </ion-col>
                 <ion-col size='7' class="start mb-2">
                     <label class="input-label">Nom article<span class="red-star">*</span></label>
@@ -158,8 +158,8 @@
                     <ion-icon name="cart-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <mat-autocomplete #articlesAutocomplete="matAutocomplete" (optionSelected)="filterArticle($event)">
-                    <mat-option *ngFor="let article of filteredArticlesList" [value]="article.id">
-                        {{article.name}} - {{article.price}} €
+                    <mat-option *ngFor="let article of filteredArticlesList" [value]="article.id" title="{{article.name}} - {{article.price}}€ - {{ article.tva }}%">
+                        {{article.name}} - {{article.price}}€ - {{ article.tva }}%
                     </mat-option>
                 </mat-autocomplete>
                 <ion-col size='5' class="start mb-2">

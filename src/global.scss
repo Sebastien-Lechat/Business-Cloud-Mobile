@@ -350,7 +350,7 @@
     
     .alert-head.sc-ion-alert-md {
         padding: 0;
-        padding-top: 10px;
+        padding-bottom: 10px;
     }
     
     .alert-button-group.sc-ion-alert-md {
@@ -510,14 +510,14 @@
         border-radius: 10px;
     }
     
-    .ligth-separate-div {
+    .light-separate-div {
         background-color: #2865a26e;
         height: 1px;
         width: 100%;
         border-radius: 10px;
     }
     
-    .ligth-separate-grey {
+    .light-separate-grey {
         background-color: #c9c9c96e;
         height: 1px;
         width: 100%;
@@ -606,6 +606,10 @@
         background-color: #009E0F;
     }
     
+    .btn-orange {
+        background-color: #FF8800;
+    }
+    
     .load-withTab {
         position: absolute;
         bottom: 0;
@@ -615,7 +619,9 @@
     
     .alert-class {
         .alert-message.sc-ion-alert-md {
-            padding: 24px !important;
+            padding-left: 24px !important;
+            padding-right: 24px !important;
+            text-align: center;
             color: black;
             --color: black;
         }

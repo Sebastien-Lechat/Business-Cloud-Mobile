@@ -19,6 +19,9 @@ import { TimeProjectComponent } from './modals/time-project/time-project.compone
 import { ArticleTableRowComponent } from './table/article-table/article-table-row/article-table-row.component';
 import { ArticleTableComponent } from './table/article-table/article-table.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ExpenseListComponent } from './modals/expense-list/expense-list.component';
+import { UserExpenseListComponent } from './modals/user-expense-list/user-expense-list.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -37,13 +40,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     TimeProjectComponent,
     CalendarProjectComponent,
     LoadBarComponent,
+    ExpenseListComponent,
+    UserExpenseListComponent,
   ],
   imports: [
     IonicModule,
     FormsModule,
     CommonModule,
     MglTimelineModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgCircleProgressModule.forRoot(),
   ],
   exports: [
     HeaderComponent,
@@ -61,6 +67,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     TimeProjectComponent,
     CalendarProjectComponent,
     LoadBarComponent,
+    ExpenseListComponent,
+    UserExpenseListComponent,
   ],
 })
 export class ComponentsModule { }

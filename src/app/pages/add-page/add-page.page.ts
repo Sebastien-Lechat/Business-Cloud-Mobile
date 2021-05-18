@@ -11,12 +11,16 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class AddPagePage implements OnInit {
 
   selected: string;
-
   subscribeCreate: Subscription;
+
+  expenseProjectId: string;
 
   constructor(private router: Router, private globalService: GlobalService) { }
 
   ngOnInit() {
+    if (this.router.getCurrentNavigation().extras.state.projectId) {
+      this.expenseProjectId = this.router.getCurrentNavigation().extras.state.projectId;
+    }
   }
 
   ionViewWillEnter() {

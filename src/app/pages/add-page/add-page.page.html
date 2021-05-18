@@ -23,7 +23,7 @@
     <app-add-article *ngIf="selected === '3'"></app-add-article>
     <app-add-client *ngIf="selected === '4'"></app-add-client>
     <app-add-employee *ngIf="selected === '5'"></app-add-employee>
-    <app-add-expense *ngIf="selected === '6'"></app-add-expense>
+    <app-add-expense *ngIf="selected === '6'" [id]="expenseProjectId"></app-add-expense>
     <app-add-expense-account *ngIf="selected === '7'"></app-add-expense-account>
     <app-add-project *ngIf="selected === '8'"></app-add-project>
 </ion-content>
