@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ConversationsPage implements OnInit {
 
+  loading = false;
+
   constructor(private router: Router, private location: Location) { }
 
   ngOnInit() {

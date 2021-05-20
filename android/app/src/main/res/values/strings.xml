@@ -4,4 +4,7 @@
     <string name="title_activity_main">BusinessCloud</string>
     <string name="package_name">fr.business.cloud.mobile</string>
     <string name="custom_url_scheme">fr.business.cloud.mobile</string>
+    <string name="server_client_id">616972391210-aghr24t7utpfbu3ij1oov5n31vb2u6m5.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">770902680462017</string>
+    <string name="fb_login_protocol_scheme">fb770902680462017</string>
 </resources>

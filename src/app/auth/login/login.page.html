@@ -19,17 +19,14 @@
                     <span class="password-lost-text pointer" (click)="navigateTo('/auth/password-lost')">Mot de passe oublié ?</span>
                 </ion-col>
                 <ion-col size='12' class="mt-3 mb-4 center">
-                    <button class="app-btn-auth pointer" (click)="login()">Connexion</button>
-                </ion-col>
-                <ion-col size='12' class="mb-4 around">
-                    <div class="center social-div facebook-div pointer">
-                        <ion-icon name="logo-facebook"></ion-icon>
+                    <button class="app-btn-auth pointer mb-3" (click)="login()">Connexion</button>
+                    <div class="center app-btn-auth facebook-div pointer mb-3" (click)="facebookLogin()">
+                        Connexion avec&nbsp;&nbsp;
+                        <ion-icon src="assets/icon/facebook.svg" class="social-icon"></ion-icon>
                     </div>
-                    <div class="center social-div google-div pointer">
-                        <ion-icon name="logo-google"></ion-icon>
-                    </div>
-                    <div class="center social-div linkedin-div pointer">
-                        <ion-icon name="logo-linkedin"></ion-icon>
+                    <div class="center app-btn-auth google-div pointer" (click)="googleLogin()">
+                        Connexion avec&nbsp;&nbsp;
+                        <ion-icon src="assets/icon/google.svg" class="social-icon"></ion-icon>
                     </div>
                 </ion-col>
                 <ion-col size='12' class="mb-4 center">

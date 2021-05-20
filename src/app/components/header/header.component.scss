@@ -1,27 +1,55 @@
 .header-btn {
-    margin-left: 10px;
-    width: 40px;
     ion-icon {
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
     }
 }
 
-.logo-header {
-    width: calc(100% - 50px);
+.header-avatar {
+    width: 35px;
     height: 35px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.header-avatar-skeleton {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin: 0;
+}
+
+.header-text {
+    color: var(--color-3);
+    font-size: 1.45rem;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 .notifications-badge {
     background-color: red;
     position: absolute;
-    top: -3px;
-    right: 0px;
-    width: 24px;
-    height: 24px;
+    top: -1px;
+    right: -4px;
+    width: 20px;
+    height: 20px;
     border-radius: 100%;
     font-size: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.shadow-header {
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    box-shadow: 0px -2px 5px 2px #00000040;
+    top: 64px;
+}
+
+.fill-div {
+    height: 64px;
+    width: 100%;
 }
