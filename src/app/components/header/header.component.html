@@ -1,14 +1,21 @@
 <ion-grid class="header-div">
     <ion-row>
-        <ion-col size='12' class="center">
-            <!-- <h2 class="header-title pointer" (click)="navigateTo('/')">BUSINESS CLOUD</h2> -->
-            <img class="logo-header" src="./../../../assets/img/logo-text.png" alt="">
-
-            <div class="header-btn center pointer" (click)="navigateTo('/tabs/notifications')">
-                <ion-icon name="notifications-outline" class="app-icon pointer">
-                </ion-icon>
-                <ion-badge *ngIf="notificationCount > 0" class="notifications-badge" color="danger">{{ notificationCount }}</ion-badge>
+        <ion-col size='8' class="start mb-1 py-0">
+            <div *ngIf="headerText" class="header-text">
+                {{ headerText }}
             </div>
+        </ion-col>
+        <ion-col size='2' class="end mb-1 py-0 pe-0">
+            <ion-icon (click)="navigateTo('/tabs/notifications')" src="assets/icon/notification.svg" class="app-icon pointer">
+            </ion-icon>
+            <ion-badge *ngIf="notificationCount !== undefined" class="notifications-badge" [ngStyle]="{'background-color': notificationCount === 0 ? '#e85555' : 'red' }">{{ notificationCount }}</ion-badge>
+        </ion-col>
+        <ion-col size='2' class="end mb-1 py-0 ps-0">
+            <div *ngIf="user" (click)="navigateToProfile('/tabs/tab5')" class="header-avatar" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');">
+            </div>
+            <ion-skeleton-text *ngIf="!user" class="header-avatar-skeleton" animated></ion-skeleton-text>
         </ion-col>
     </ion-row>
 </ion-grid>
+<div class="shadow-header"></div>
+<div class="fill-div mb-2"></div>

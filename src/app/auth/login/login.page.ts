@@ -17,7 +17,12 @@ export class LoginPage implements OnInit {
 
   public loading = false;
 
-  constructor(private router: Router, private authService: AuthService, private toasterService: ToasterService, private loadingController: LoadingController) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toasterService: ToasterService,
+    private loadingController: LoadingController
+  ) { }
 
   ngOnInit() {
   }
@@ -61,6 +66,35 @@ export class LoginPage implements OnInit {
         },
       });
     } else { this.toasterService.presentErrorToast('Email ou mot de passe manquants'); }
+  }
+
+  async facebookLogin() {
+    const request = await this.authService.loginToFacebook();
+    if (!request) {
+      this.toasterService.presentErrorToast('Connexion à Facebook impossible');
+    } else {
+      request.subscribe({
+        next: (data: { email: string, birthday: string, picture: any, id: string }) => {
+          console.log(data);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+          this.toasterService.presentErrorToast('Connexion à Facebook impossible');
+        }
+      });
+    }
+  }
+
+  async googleLogin() {
+    (await this.authService.loginToGoogle()).subscribe({
+      next: (data: any) => {
+        console.log(data);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
+        this.toasterService.presentErrorToast('Connexion à Google impossible');
+      }
+    });
   }
 
   navigateTo(path: string, id?: string) {

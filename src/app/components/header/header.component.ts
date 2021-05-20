@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from 'src/app/services/account/account.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { UserI } from 'src/interfaces/userInterface';
 
 @Component({
   selector: 'app-header',
@@ -10,11 +12,13 @@ import { NotificationService } from 'src/app/services/notification/notification.
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  user: UserI;
   notificationCount = 0;
-
   intervalCount: any;
 
-  constructor(private router: Router, private notificationService: NotificationService, private globalService: GlobalService) { }
+  @Input() headerText: string;
+
+  constructor(private router: Router, private notificationService: NotificationService, private globalService: GlobalService, private accountService: AccountService) { }
 
   ngOnInit() {
     if (!this.globalService.headerNotificationsCountAlreadyExist) {
@@ -23,6 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getNotificationCount();
       }, 7000);
     }
+    this.user = this.accountService.user;
   }
 
   getNotificationCount() {
@@ -36,6 +41,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateTo(path: string) {
     this.router.navigate([path]);
+  }
+
+  navigateToProfile(path: string) {
+    this.router.navigate([path]);
+    this.globalService.tabsSubject.next('profil');
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 <ion-content>
-    <app-header></app-header>
+    <app-header [headerText]="'Projets'"></app-header>
     <app-add-btn></app-add-btn>
     <app-load-bar [active]="loading"></app-load-bar>
     <ion-grid>
@@ -30,7 +30,7 @@
                 </ion-item>
             </ion-col>
             <ion-col size='2' class="center">
-                <button class="app-btn pointer" type="button"><ion-icon name="calendar" class="app-icon calendar-icon"></ion-icon></button>
+                <button class="app-btn-outline pointer" type="button"><ion-icon name="calendar-outline" class="app-icon calendar-icon"></ion-icon></button>
             </ion-col>
             <ion-col size='12' class="center">
                 <input type="text" class="input-with-icon" placeholder='Recherche...' [(ngModel)]="searchValue" (keyup)="filterProjects()">
@@ -43,7 +43,10 @@
             <ion-refresher-content pullingIcon="circular" refreshingSpinner="circles">
             </ion-refresher-content>
         </ion-refresher>
-        <ion-list>
+        <ion-list *ngIf="loading">
+            <ion-skeleton-text *ngFor="let item of [].constructor(10);" class="skeleton-card" animated></ion-skeleton-text>
+        </ion-list>
+        <ion-list *ngIf="filteredProjects && !loading">
             <ion-card class="app-card pointer" *ngFor="let project of filteredProjects" (click)="navigateTo('/tabs/show-project/', project.id)">
                 <ion-card-content>
                     <ion-grid>
@@ -70,8 +73,4 @@
             </ion-card>
         </ion-list>
     </ion-content>
-    <!-- <ion-infinite-scroll threshold="50px" (ionInfinite)="loadData($event)">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll> -->
 </ion-content>

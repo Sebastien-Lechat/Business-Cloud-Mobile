@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ClientI } from 'src/interfaces/userInterface';
@@ -68,6 +70,32 @@ export class AuthService {
 
   logout() {
     return this.http.delete<any>(this.url + `auth/disconnect`);
+  }
+
+  /* -------------- Facebook Function -------------- */
+
+  async loginToFacebook(): Promise<Observable<any> | null> {
+    const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos'];
+    const result = await Plugins.FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
+    if (result && result.accessToken) {
+      return from(Plugins.FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)'] }) as Promise<any>);
+    } else {
+      return null;
+    }
+  }
+
+  async logoutFromFacebook(): Promise<void> {
+    await Plugins.FacebookLogin.logout();
+  }
+
+  /* -------------- Google Function -------------- */
+
+  async loginToGoogle(): Promise<Observable<any>> {
+    return from(Plugins.GoogleAuth.signIn(null) as Promise<any>);
+  }
+
+  async logoutFromGoogle(): Promise<void> {
+    await Plugins.GoogleAuth.signOut(null);
   }
 
 }

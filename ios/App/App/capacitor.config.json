@@ -1,5 +1,5 @@
 {
-  "appId": "com.business.cloud.mobile",
+  "appId": "fr.business.cloud.mobile",
   "appName": "BusinessCloud",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -7,11 +7,15 @@
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
+    },
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "616972391210-aghr24t7utpfbu3ij1oov5n31vb2u6m5.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   },
-  "cordova": {},
-  "server": {
-    "url": "http://192.168.1.47:8101",
-    "cleartext": true
-  }
+  "cordova": {}
 }

@@ -1,68 +1,35 @@
 {
-  "project_info": {
-    "project_number": "616972391210",
-    "project_id": "businesscloud-mobile",
-    "storage_bucket": "businesscloud-mobile.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:616972391210:android:4bfc8d3628d20b2a144453",
-        "android_client_info": {
-          "package_name": "com.business.cloud.mobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "616972391210-rhr775i51062lv6ktaalur4suum5c7jl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA9Hbp-w13B3gOgCZIjBKF4JHmkTAjXxDI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "616972391210-rhr775i51062lv6ktaalur4suum5c7jl.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
+    "project_info": {
+        "project_number": "616972391210",
+        "project_id": "businesscloud-mobile",
+        "storage_bucket": "businesscloud-mobile.appspot.com"
     },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:616972391210:android:82b49e7f0e50df5c144453",
-        "android_client_info": {
-          "package_name": "fr.business.cloud.mobile"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "616972391210-rhr775i51062lv6ktaalur4suum5c7jl.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA9Hbp-w13B3gOgCZIjBKF4JHmkTAjXxDI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "616972391210-rhr775i51062lv6ktaalur4suum5c7jl.apps.googleusercontent.com",
-              "client_type": 3
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:616972391210:android:82b49e7f0e50df5c144453",
+            "android_client_info": {
+                "package_name": "fr.business.cloud.mobile"
             }
-          ]
+        },
+        "oauth_client": [{
+            "client_id": "616972391210-btu54ikei4lf981k538vrttiqer8ofmq.apps.googleusercontent.com",
+            "client_type": 1,
+            "android_info": {
+                "package_name": "fr.business.cloud.mobile",
+                "certificate_hash": "15537db819941f1b0a70a9af3ae0cd8ce3440ee4"
+            }
+        }],
+        "api_key": [{
+            "current_key": "AIzaSyA9Hbp-w13B3gOgCZIjBKF4JHmkTAjXxDI"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "616972391210-aghr24t7utpfbu3ij1oov5n31vb2u6m5.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
         }
-      }
-    }
-  ],
-  "configuration_version": "1"
+    }],
+    "configuration_version": "1"
 }
