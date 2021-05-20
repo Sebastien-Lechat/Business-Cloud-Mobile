@@ -17,9 +17,5 @@
       "forceCodeForRefreshToken": false
     }
   },
-  "cordova": {},
-  "server": {
-    "url": "http://10.10.10.175:8101",
-    "cleartext": true
-  }
+  "cordova": {}
 }
