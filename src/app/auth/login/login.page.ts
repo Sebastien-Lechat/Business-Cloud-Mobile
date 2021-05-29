@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
+import { FacebookDataI, GoogleDataI } from 'src/interfaces/globalInterface';
 
 @Component({
   selector: 'app-login',
@@ -69,16 +70,35 @@ export class LoginPage implements OnInit {
   }
 
   async facebookLogin() {
-    const request = await this.authService.loginToFacebook();
+    const { request, token } = await this.authService.loginToFacebook();
     if (!request) {
       this.toasterService.presentErrorToast('Connexion à Facebook impossible');
     } else {
       request.subscribe({
-        next: (data: { email: string, birthday: string, picture: any, id: string }) => {
-          console.log(data);
+        next: async (data: FacebookDataI) => {
+          const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Vérification...' });
+          await loading.present();
+          this.authService.externalLogin('facebook', data.id, data.email, token).subscribe({
+            next: async () => {
+              await loading.dismiss();
+              this.router.navigate(['/tabs/tab3']);
+            },
+            error: async (error: HttpErrorResponse) => {
+              await loading.dismiss();
+              if (error.error.code === '101401') { this.toasterService.presentErrorToast('Erreur lors de la connexion'); }
+              else if (error.error.code === '101402') { this.toasterService.presentErrorToast('Adresse email invalide'); }
+              else if (error.error.code === '101403') {
+                this.router.navigate(['/auth/register'], { state: { email: data.email, name: data.name, avatar: data.picture.data.url, birthday: data.birthday, facebookAuth: { id: data.id, token } } }).then(() => {
+                  this.toasterService.presentSuccessToast('Connexion réussie, compléter votre compte avec les informations nécessaires.');
+                });
+              }
+              else if (error.error.code === '101405') { this.toasterService.presentErrorToast('Un compte existe déjà à cette addresse'); }
+              else if (error.error.code === '101406') { this.toasterService.presentErrorToast('Compte de connexion invalide'); }
+              else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+            },
+          });
         },
-        error: (error: HttpErrorResponse) => {
-          console.log(error);
+        error: () => {
           this.toasterService.presentErrorToast('Connexion à Facebook impossible');
         }
       });
@@ -87,11 +107,31 @@ export class LoginPage implements OnInit {
 
   async googleLogin() {
     (await this.authService.loginToGoogle()).subscribe({
-      next: (data: any) => {
-        console.log(data);
+      next: async (data: GoogleDataI) => {
+        const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Vérification...' });
+        await loading.present();
+        this.authService.externalLogin('google', data.id, data.email, data.idToken).subscribe({
+          next: async () => {
+            await loading.dismiss();
+            this.router.navigate(['/tabs/tab3']);
+          },
+          error: async (error: HttpErrorResponse) => {
+            console.log(error.error.code);
+            await loading.dismiss();
+            if (error.error.code === '101401') { this.toasterService.presentErrorToast('Erreur lors de la connexion'); }
+            else if (error.error.code === '101402') { this.toasterService.presentErrorToast('Adresse email invalide'); }
+            else if (error.error.code === '101403') {
+              this.router.navigate(['/auth/register'], { state: { id: data.id, email: data.email, avatar: data.imageUrl, name: data.familyName + ' ' + data.givenName, googleAuth: { id: data.id, token: data.idToken } } }).then(() => {
+                this.toasterService.presentSuccessToast('Connexion réussie, compléter votre compte avec les informations nécessaires.');
+              });
+            }
+            else if (error.error.code === '101405') { this.toasterService.presentErrorToast('Un compte existe déjà à cette addresse'); }
+            else if (error.error.code === '101406') { this.toasterService.presentErrorToast('Compte de connexion invalide'); }
+            else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+          },
+        });
       },
-      error: (error: HttpErrorResponse) => {
-        console.log(error);
+      error: () => {
         this.toasterService.presentErrorToast('Connexion à Google impossible');
       }
     });
