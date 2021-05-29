@@ -33,6 +33,19 @@ export class AuthService {
       );
   }
 
+  externalLogin(type: string, id: string, email: string, token: string) {
+    return this.http.post<any>(this.url + `auth/external/login`, { type, id, email, token })
+      .pipe(
+        map(response => {
+          if (response.user && response.user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(response.user));
+            this.accountService.setAccountProfile(response.user);
+          }
+          return response;
+        }),
+      );
+  }
+
   passwordRecoveryRequest(email: string) {
     return this.http.post(this.url + `auth/request-password-lost`, { email });
   }
@@ -74,11 +87,11 @@ export class AuthService {
 
   /* -------------- Facebook Function -------------- */
 
-  async loginToFacebook(): Promise<Observable<any> | null> {
+  async loginToFacebook(): Promise<{ request: Observable<any>, token: string } | null> {
     const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos'];
     const result = await Plugins.FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result && result.accessToken) {
-      return from(Plugins.FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)'] }) as Promise<any>);
+      return { request: from(Plugins.FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)', 'name'] }) as Promise<any>), token: 'string' };
     } else {
       return null;
     }
