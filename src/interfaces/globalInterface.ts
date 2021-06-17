@@ -20,3 +20,16 @@ export interface GoogleDataI {
     familyName: string;
     givenName: string;
 }
+
+export interface HistoryI {
+    _id: string;
+    action: {
+        name?: string;
+        method: string;
+        route: string;
+    };
+    userEmail: string;
+    success: boolean;
+    createdAt: Date | string;
+    updatedAt: Date | string;
+}

@@ -22,6 +22,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ExpenseListComponent } from './modals/expense-list/expense-list.component';
 import { UserExpenseListComponent } from './modals/user-expense-list/user-expense-list.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { UserHistoryComponent } from './modals/user-history/user-history.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     LoadBarComponent,
     ExpenseListComponent,
     UserExpenseListComponent,
+    UserHistoryComponent
   ],
   imports: [
     IonicModule,
@@ -69,6 +71,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     LoadBarComponent,
     ExpenseListComponent,
     UserExpenseListComponent,
+    UserHistoryComponent
   ],
 })
 export class ComponentsModule { }

@@ -18,7 +18,7 @@ export class AddPagePage implements OnInit {
   constructor(private router: Router, private globalService: GlobalService) { }
 
   ngOnInit() {
-    if (this.router.getCurrentNavigation().extras.state.projectId) {
+    if (this.router.getCurrentNavigation().extras?.state?.projectId) {
       this.expenseProjectId = this.router.getCurrentNavigation().extras.state.projectId;
     }
   }

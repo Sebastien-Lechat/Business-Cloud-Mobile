@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.globalService.headerNotificationsCountAlreadyExist = true;
       this.intervalCount = setInterval(() => {
         this.getNotificationCount();
-      }, 7000);
+      }, 20000);
     }
     this.user = this.accountService.user;
   }
