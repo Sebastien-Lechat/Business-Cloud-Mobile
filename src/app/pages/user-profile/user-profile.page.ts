@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { UserHistoryComponent } from 'src/app/components/modals/user-history/user-history.component';
 import { BillService } from 'src/app/services/bill/bill.service';
 import { EstimateService } from 'src/app/services/estimate/estimate.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -31,6 +33,8 @@ export class UserProfilePage implements OnInit {
     private userService: UserService,
     private billService: BillService,
     private estimateService: EstimateService,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
   ) { }
 
   ngOnInit() {
@@ -84,6 +88,18 @@ export class UserProfilePage implements OnInit {
   navigateTo(path: string, id?: string) {
     if (id) { this.router.navigate([path, id]); }
     else { this.router.navigate([path]); }
+  }
+
+  async showHistory() {
+    const modal = await this.modalController.create({
+      component: UserHistoryComponent,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        id: this.id,
+      }
+    });
+    return await modal.present();
   }
 
   nagivateBack() {

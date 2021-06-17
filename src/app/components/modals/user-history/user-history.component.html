@@ -1,0 +1,37 @@
+<ion-content>
+    <ion-grid class="header-div-snd">
+        <ion-row>
+            <ion-col size='3' class="start">
+                <ion-icon name="chevron-back-outline" class="app-icon pointer" (click)="dismiss()"></ion-icon>
+            </ion-col>
+            <ion-col size='6'>
+                <h2 class="header-title text-center">Historique</h2>
+            </ion-col>
+            <ion-col size='3' class="end">
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-content class="scroll-list">
+        <ion-list *ngIf="loading">
+            <ion-skeleton-text *ngFor="let item of [].constructor(10);" class="skeleton-card" animated></ion-skeleton-text>
+        </ion-list>
+        <ion-list *ngIf="history && !loading">
+            <ion-card class="app-card pointer" *ngFor="let item of history">
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size='10'>
+                                <h2 class="card-title hide-overflow">{{ item.action.name }}</h2>
+                                <p class="card-text-date hide-overflow">{{ item.createdAt | date: 'medium' : 'Europe/France' : 'fr-FR'}}</p>
+                            </ion-col>
+                            <ion-col size='2' class="center">
+                                <div *ngIf="!item.success" class="status-div-danger"></div>
+                                <div *ngIf="item.success" class="status-div-success"></div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </ion-content>
+</ion-content>

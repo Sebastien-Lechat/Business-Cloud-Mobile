@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { BackGuard } from './guards/back.guard';
 
 const routes: Routes = [
   {
@@ -10,23 +11,28 @@ const routes: Routes = [
   },
   {
     path: 'auth/login',
-    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule),
+    canActivate: [BackGuard],
   },
   {
     path: 'auth/register',
-    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule)
+    loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule),
+    canActivate: [BackGuard],
   },
   {
     path: 'auth/password-lost',
-    loadChildren: () => import('./auth/password-lost/password-lost.module').then(m => m.PasswordLostPageModule)
+    loadChildren: () => import('./auth/password-lost/password-lost.module').then(m => m.PasswordLostPageModule),
+    canActivate: [BackGuard],
   },
   {
     path: 'auth/verify-email',
-    loadChildren: () => import('./auth/email-verify/email-verify.module').then(m => m.EmailVerifyPageModule)
+    loadChildren: () => import('./auth/email-verify/email-verify.module').then(m => m.EmailVerifyPageModule),
+    canActivate: [BackGuard],
   },
   {
     path: 'auth/double-auth',
-    loadChildren: () => import('./auth/double-auth/double-auth.module').then(m => m.DoubleAuthPageModule)
+    loadChildren: () => import('./auth/double-auth/double-auth.module').then(m => m.DoubleAuthPageModule),
+    canActivate: [BackGuard],
   },
   {
     path: 'messages',

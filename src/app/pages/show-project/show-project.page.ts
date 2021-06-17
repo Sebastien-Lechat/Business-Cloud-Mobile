@@ -26,7 +26,7 @@ export class ShowProjectPage implements OnInit {
   edit = true;
 
   constructor(
-    public modalController: ModalController,
+    private modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
     private router: Router,
     private location: Location,

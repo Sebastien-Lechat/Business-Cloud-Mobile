@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  API: 'http://localhost:8081/api/',
-  SOCKET: 'http://localhost:8081/',
-  // API: 'https://businesscloud-api.herokuapp.com/api/',
-  // SOCKET: 'https://businesscloud-api.herokuapp.com/',
+  // API: 'http://localhost:8081/api/',
+  // SOCKET: 'http://localhost:8081/',
+  API: 'https://businesscloud-api.herokuapp.com/api/',
+  SOCKET: 'https://businesscloud-api.herokuapp.com/',
   production: false
 };
 

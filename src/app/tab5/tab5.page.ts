@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { ClientI } from 'src/interfaces/userInterface';
+import { UserHistoryComponent } from '../components/modals/user-history/user-history.component';
 import { AccountService } from '../services/account/account.service';
 import { AuthService } from '../services/auth/auth.service';
 import { SocketService } from '../services/global/socket.service';
@@ -19,6 +21,8 @@ export class Tab5Page implements OnInit {
     private authService: AuthService,
     private accountService: AccountService,
     private socketService: SocketService,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
   ) { }
 
   ngOnInit() {
@@ -38,16 +42,27 @@ export class Tab5Page implements OnInit {
 
   logout() {
     this.socketService.disconnect();
+    localStorage.removeItem('currentUser');
     this.authService.logout().subscribe({
       next: () => {
-        localStorage.removeItem('currentUser');
         this.navigateTo('/auth/login');
       },
       error: () => {
-        localStorage.removeItem('currentUser');
         this.navigateTo('/auth/login');
       },
     });
+  }
+
+  async showHistory() {
+    const modal = await this.modalController.create({
+      component: UserHistoryComponent,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        id: this.user.id,
+      }
+    });
+    return await modal.present();
   }
 
   navigateTo(path: string, id?: string) {

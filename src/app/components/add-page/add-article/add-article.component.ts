@@ -40,7 +40,7 @@ export class AddArticleComponent implements OnInit {
         accountNumber: this.accountNumber,
         price: this.price,
         tva: this.tva,
-        description: (this.description.trim()) ? this.description.trim() : '',
+        description: (this.description?.trim()) ? this.description?.trim() : '',
       };
 
       this.articleService.create(creationData).subscribe({
