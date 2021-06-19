@@ -21,7 +21,9 @@ export class SocketService {
     this.socket = io(environment.SOCKET, { path: '/socketio', auth: { token: `Bearer ${user.token}` } });
 
     if (!this.socketConnected) {
+      console.log('Connexion...1');
       if (this.socket) {
+        console.log('Connexion...2');
         this.socketConnected = true;
         this.socket.connect();
       }
@@ -34,8 +36,6 @@ export class SocketService {
       this.socket.on('connect_error', (error: any) => {
         console.log(error);
       });
-
-      console.log(this.socket);
     }
   }
 
@@ -45,7 +45,8 @@ export class SocketService {
   }
 
   disconnect() {
-    this.socket.disconnect();
+    console.log('Déconnexion...');
     this.socketConnected = false;
+    this.socket.disconnect();
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ViewWillEnter } from '@ionic/angular';
 import { AccountService } from '../services/account/account.service';
 import { GlobalService } from '../services/global/global.service';
 import { SocketService } from '../services/global/socket.service';
@@ -9,7 +10,7 @@ import { SocketService } from '../services/global/socket.service';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage implements OnInit, OnDestroy {
+export class TabsPage implements OnInit, OnDestroy, ViewWillEnter {
 
   selected: string;
 
@@ -31,7 +32,6 @@ export class TabsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.socketService.connect();
     this.globalService.registerFCM();
 
     this.globalService.tabsSubject.subscribe({
@@ -39,7 +39,13 @@ export class TabsPage implements OnInit, OnDestroy {
     });
   }
 
+  ionViewWillEnter(): void {
+    console.log('Init...');
+    this.socketService.connect();
+  }
+
   ngOnDestroy(): void {
+    this.socketService.disconnect();
     this.selected = '';
   }
 
