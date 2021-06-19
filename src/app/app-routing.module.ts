@@ -35,7 +35,7 @@ const routes: Routes = [
     canActivate: [BackGuard],
   },
   {
-    path: 'messages',
+    path: 'messages/:id',
     loadChildren: () => import('./pages/messages/messages.module').then(m => m.MessagesPageModule),
     canActivate: [AuthGuard],
   },

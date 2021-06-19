@@ -10,3 +10,17 @@ export interface EnterpriseI {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface EnterpriseUpdateI {
+    activity?: any;
+    numTVA?: string;
+    numSIRET?: string;
+    numRCS?: string;
+}
+
+export interface AddressUpdateI {
+    address?: string;
+    zip?: string;
+    city?: string;
+    country?: string;
+}

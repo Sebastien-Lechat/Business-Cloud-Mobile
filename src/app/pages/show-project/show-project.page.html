@@ -47,7 +47,7 @@
                         <ion-skeleton-text *ngIf="!project" style="width:100%;height: 13px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
                     </div>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <ion-col size='12' class="center" *ngIf="project && (billableTime && !project.fixedRate)">
                     <div class="stat-card">
                         <div class="icon-stat-card">
                             <div class="icon-div center">
@@ -56,11 +56,12 @@
                         </div>
                         <div class="text-stat-card">
                             <p class="input-label">Temps facturable</p>
-                            <p class="stat-green">17 heures</p>
+                            <p class="stat-green">{{ billableTime }} heures</p>
                         </div>
                     </div>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <ion-skeleton-text *ngIf="!project" style="width:100%;height: 70px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
+                <ion-col size='12' class="center" *ngIf="project && (project.fixedRate || project.hourlyRate)">
                     <div class="stat-card">
                         <div class="icon-stat-card">
                             <div class="icon-div center">
@@ -68,12 +69,15 @@
                             </div>
                         </div>
                         <div class="text-stat-card">
-                            <p class="input-label">Coût (500 € /heure)</p>
-                            <p class="stat-green">8,500.00 €</p>
+                            <p *ngIf="project.hourlyRate" class="input-label">Coût ({{ project.hourlyRate }} € /heure)</p>
+                            <p *ngIf="project.fixedRate" class="input-label">Coût</p>
+                            <p *ngIf="project.hourlyRate" class="stat-green">{{ project.hourlyRate * billableTime }} €</p>
+                            <p *ngIf="project.fixedRate" class="stat-green">{{ project.fixedRate }} €</p>
                         </div>
                     </div>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <ion-skeleton-text *ngIf="!project" style="width:100%;height: 70px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
+                <ion-col size='12' class="center" *ngIf="project">
                     <div class="stat-card">
                         <div class="icon-stat-card">
                             <div class="icon-div center">
@@ -82,11 +86,12 @@
                         </div>
                         <div class="text-stat-card">
                             <p class="input-label">Dépenses supplémentaires</p>
-                            <p class="stat-red">2,000.00 €</p>
+                            <p class="stat-red">{{ project.billing?.additionalExpense ? project.billing?.additionalExpense : 0}} €</p>
                         </div>
                     </div>
                 </ion-col>
-                <ion-col size='12' class="center">
+                <ion-skeleton-text *ngIf="!project" style="width:100%;height: 70px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
+                <ion-col size='12' class="center" *ngIf="project">
                     <div class="stat-card">
                         <div class="icon-stat-card">
                             <div class="icon-div center">
@@ -95,10 +100,11 @@
                         </div>
                         <div class="text-stat-card">
                             <p class="input-label">Montant facturable</p>
-                            <p class="stat-green">10,500.00 €</p>
+                            <p class="stat-green">{{ project.fixedRate ? project.fixedRate - (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * billableTime }} €</p>
                         </div>
                     </div>
                 </ion-col>
+                <ion-skeleton-text *ngIf="!project" style="width:100%;height: 70px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
                 <ion-col size='3' class="center mb-2 mt-2">
                     <div class="separate-div"></div>
                 </ion-col>

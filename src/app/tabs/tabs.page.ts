@@ -31,8 +31,8 @@ export class TabsPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.globalService.registerFCM();
     this.socketService.connect();
+    this.globalService.registerFCM();
 
     this.globalService.tabsSubject.subscribe({
       next: (selected: string) => { if (selected) { this.selected = selected; } }

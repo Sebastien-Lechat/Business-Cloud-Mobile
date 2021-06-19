@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { ClientI } from 'src/interfaces/userInterface';
+import { PrivatePolicyComponent } from '../components/modals/private-policy/private-policy.component';
 import { UserHistoryComponent } from '../components/modals/user-history/user-history.component';
 import { AccountService } from '../services/account/account.service';
 import { AuthService } from '../services/auth/auth.service';
@@ -61,6 +62,15 @@ export class Tab5Page implements OnInit {
       componentProps: {
         id: this.user.id,
       }
+    });
+    return await modal.present();
+  }
+
+  async showPrivatePolicy() {
+    const modal = await this.modalController.create({
+      component: PrivatePolicyComponent,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl
     });
     return await modal.present();
   }

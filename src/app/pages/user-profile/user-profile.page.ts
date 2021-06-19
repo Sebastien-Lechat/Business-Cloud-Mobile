@@ -75,7 +75,6 @@ export class UserProfilePage implements OnInit {
         }
       }
     });
-
   }
 
   sortFiles(count: number) {

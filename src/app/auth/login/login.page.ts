@@ -16,8 +16,6 @@ export class LoginPage implements OnInit {
   public email = '';
   public password = '';
 
-  public loading = false;
-
   constructor(
     private router: Router,
     private authService: AuthService,

@@ -43,7 +43,7 @@ export class AddProjectComponent implements OnInit {
   constructor(
     private router: Router,
     private accountService: AccountService,
-    private globalService: GlobalService,
+    public globalService: GlobalService,
     private userService: UserService,
     private toasterService: ToasterService,
     private projectService: ProjectService,
@@ -113,7 +113,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   async createProject() {
-    if (!this.projectNum.trim() || !this.title.trim() || this.selectedEmployeeList.length === 0 || !this.selectedClient.selectedId || !this.startDate || !this.deadline) {
+    if (!this.projectNum.trim() || !this.title.trim() || this.selectedEmployeeList.length === 0 || !this.selectedClient.selectedId || !this.startDate || !this.deadline || (!this.fixedRate && !this.hourlyRate)) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
     } else {
       const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Création...' });

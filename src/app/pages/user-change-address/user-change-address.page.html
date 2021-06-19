@@ -17,26 +17,26 @@
                 <ion-row>
                     <ion-col size='12' class="start mb-2">
                         <label class="input-label">Adresse</label>
-                        <input type="text" id="address" class="input-with-icon" placeholder='Adresse'>
+                        <input type="text" id="address" class="input-with-icon" placeholder='Entrez une address...' [(ngModel)]="address">
                         <ion-icon src="assets/icon/place.svg" class="input-icon-with-label"></ion-icon>
                     </ion-col>
                     <ion-col size='12' class="start mb-2">
                         <label class="input-label">Code postal</label>
-                        <input type="text" id="zip" class="input-with-icon" placeholder='Code postal'>
+                        <input type="text" id="zip" class="input-with-icon" placeholder='Entrez un code postal...' [(ngModel)]="zip">
                         <ion-icon name="map-outline" class="input-icon-with-label"></ion-icon>
                     </ion-col>
                     <ion-col size='12' class="start mb-2">
                         <label class="input-label">Ville</label>
-                        <input type="text" id="city" class="input-with-icon" placeholder='Ville'>
+                        <input type="text" id="city" class="input-with-icon" placeholder='Entrez une ville...' [(ngModel)]="city">
                         <ion-icon name="business-outline" class="input-icon-with-label"></ion-icon>
                     </ion-col>
                     <ion-col size='12' class="start mb-4">
                         <label class="input-label">Pays</label>
-                        <input type="text" id="country" class="input-with-icon" placeholder='Pays'>
+                        <input type="text" id="country" class="input-with-icon" placeholder='Entrez un pays...' [(ngModel)]="country">
                         <ion-icon name="earth-outline" class="input-icon-with-label"></ion-icon>
                     </ion-col>
                     <ion-col size='12' class="start mb-2">
-                        <button class="app-btn pointer" (click)="navigateTo('/tabs/tab5')">Modifier</button>
+                        <button class="app-btn pointer" (click)="updateUserAddress()">Modifier</button>
                     </ion-col>
                 </ion-row>
             </ion-grid>

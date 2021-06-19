@@ -1,4 +1,5 @@
 import { formatDate } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/account/account.service';
@@ -136,7 +137,7 @@ export class TimeProjectComponent implements OnInit, OnDestroy {
         await loading.dismiss();
         this.toasterService.presentSuccessToast('Temps enregistré');
       },
-      error: async (error) => {
+      error: async (error: HttpErrorResponse) => {
         await loading.dismiss();
         if (error.error.code === '110101') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
         else if (error.error.code === '110102') { this.toasterService.presentErrorToast('ID de projet invalide'); }

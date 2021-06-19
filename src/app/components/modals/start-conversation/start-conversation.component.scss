@@ -1,5 +1,5 @@
 .scroll-list {
-    height: calc(100% - 2rem - 0.7rem - 45px);
+    height: calc(100% - 2rem - 0.7rem - 55px);
     ion-list {
         padding: 0;
         min-height: 100%;
@@ -10,11 +10,6 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-image: url(./../../../assets/img/avatar-icon.jpg);
     background-size: cover;
     background-position: center;
-}
-
-.skeleton-card {
-    height: 70px;
 }
