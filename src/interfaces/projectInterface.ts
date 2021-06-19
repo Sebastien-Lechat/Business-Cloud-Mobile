@@ -13,6 +13,7 @@ export interface ProjectI {
     fixedRate?: number;
     hourlyRate?: number;
     estimateHour: number;
+    billing?: { billableTime?: number, additionalExpense?: number };
     createdAt: Date;
     updatedAt: Date;
 }
@@ -45,6 +46,7 @@ export interface ProjectJsonI {
     fixedRate?: number;
     hourlyRate?: number;
     estimateHour: number;
+    billing?: { billableTime?: number, additionalExpense?: number };
     description?: string;
     createdAt: Date | string;
     updatedAt: Date | string;

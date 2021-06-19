@@ -1,0 +1,13 @@
+.scroll-list {
+    height: calc(100% - 2rem - 0.7rem - 45px);
+    padding: 15px 0px;
+    h1,
+    h2,
+    strong {
+        color: var(--color-3);
+    }
+    ion-col {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

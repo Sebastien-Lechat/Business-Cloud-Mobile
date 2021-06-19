@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ClientI, UserDoubleAuthUpdateI, UserInfoUpdateI, UserPasswordUpdateI } from 'src/interfaces/userInterface';
 import { map } from 'rxjs/operators';
+import { AddressUpdateI, EnterpriseUpdateI } from 'src/interfaces/enterpriseInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,14 @@ export class AccountService {
 
   modifyUserPassword(toUpdate: UserPasswordUpdateI) {
     return this.http.put<any>(this.url + `account/password`, toUpdate);
+  }
+
+  modifyUserEnterprise(toUpdate: EnterpriseUpdateI) {
+    return this.http.put<any>(this.url + `account/enterprise`, toUpdate);
+  }
+
+  modifyUserAddress(toUpdate: AddressUpdateI) {
+    return this.http.put<any>(this.url + `account/address`, toUpdate);
   }
 
   modifyUserDoubleAuth(toUpdate: UserDoubleAuthUpdateI) {

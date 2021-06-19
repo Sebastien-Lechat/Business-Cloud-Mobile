@@ -98,13 +98,13 @@
         <ion-col size='4' class="center mb-2">
             <div class="separate-div"></div>
         </ion-col>
-        <ion-col size='12' class="start mb-2" *ngIf="fixedRate === 0">
-            <label class="input-label">Taux horaire</label>
+        <ion-col size='12' class="start mb-2" *ngIf="fixedRate === 0 || fixedRate === null">
+            <label class="input-label">Taux horaire<span class="red-star">*</span></label>
             <input type="number" step="50" class="input-with-icon" placeholder='Taux horaire' [(ngModel)]="hourlyRate">
             <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
         </ion-col>
-        <ion-col size='12' class="start mb-2" *ngIf="hourlyRate === 0">
-            <label class="input-label">Taux fixe</label>
+        <ion-col size='12' class="start mb-2" *ngIf="hourlyRate === 0 || hourlyRate === null">
+            <label class="input-label">Taux fixe<span class="red-star">*</span></label>
             <input type="number" step="50" class="input-with-icon" placeholder='Taux fixe' [(ngModel)]="fixedRate">
             <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
         </ion-col>

@@ -1,3 +1,5 @@
+import { EnterpriseI } from './enterpriseInterface';
+
 export interface UserObject {
     data: UserI | ClientI;
     type: 'client' | 'user';
@@ -19,6 +21,7 @@ export interface UserI {
     isActive?: boolean;
     needVerifyEmail?: boolean;
     doubleAuthentification?: boolean;
+    enterprise?: EnterpriseI;
 }
 
 export interface ClientI extends UserI {
@@ -97,6 +100,7 @@ export interface UserJsonI {
     userId?: string;
     needVerifyEmail?: boolean;
     doubleAuthentification?: boolean;
+    enterprise?: EnterpriseI;
 }
 
 export interface UserInfoUpdateI { name?: string; email?: string; phone?: string; birthdayDate?: string; }

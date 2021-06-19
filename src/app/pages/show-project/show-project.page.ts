@@ -22,8 +22,8 @@ export class ShowProjectPage implements OnInit {
   id = '';
   project: ProjectJsonI;
   client: ClientI;
-
   edit = true;
+  billableTime = 0.00;
 
   constructor(
     private modalController: ModalController,
@@ -39,6 +39,10 @@ export class ShowProjectPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+  }
+
+  ionViewWillEnter(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) { this.initData(); }
   }
@@ -50,7 +54,9 @@ export class ShowProjectPage implements OnInit {
       next: async (data: { error: false, project: ProjectJsonI }) => {
         data.project.createdAt = formatDate(data.project.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         data.project.deadline = formatDate(data.project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+        this.billableTime = !isNaN(parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
         this.project = data.project;
+        console.log(this.project);
         this.userService.getUser(this.project.clientId.id).subscribe({
           next: async (data2: { error: false, user: ClientI }) => {
             this.client = data2.user;
@@ -73,6 +79,9 @@ export class ShowProjectPage implements OnInit {
       componentProps: {
         projectId: this.id,
       }
+    });
+    modal.onDidDismiss().then(() => {
+      if (this.id) { this.initData(); }
     });
     return await modal.present();
   }

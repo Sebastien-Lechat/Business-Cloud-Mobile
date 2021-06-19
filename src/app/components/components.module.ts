@@ -23,6 +23,7 @@ import { ExpenseListComponent } from './modals/expense-list/expense-list.compone
 import { UserExpenseListComponent } from './modals/user-expense-list/user-expense-list.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { UserHistoryComponent } from './modals/user-history/user-history.component';
+import { PrivatePolicyComponent } from './modals/private-policy/private-policy.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { UserHistoryComponent } from './modals/user-history/user-history.compone
     LoadBarComponent,
     ExpenseListComponent,
     UserExpenseListComponent,
-    UserHistoryComponent
+    UserHistoryComponent,
+    PrivatePolicyComponent
   ],
   imports: [
     IonicModule,
@@ -71,7 +73,8 @@ import { UserHistoryComponent } from './modals/user-history/user-history.compone
     LoadBarComponent,
     ExpenseListComponent,
     UserExpenseListComponent,
-    UserHistoryComponent
+    UserHistoryComponent,
+    PrivatePolicyComponent
   ],
 })
 export class ComponentsModule { }
