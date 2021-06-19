@@ -1,0 +1,38 @@
+<ion-content>
+    <ion-grid class="header-div-snd">
+        <ion-row>
+            <ion-col size='2' class="start">
+                <ion-icon name="chevron-back-outline" class="app-icon pointer" (click)="dismiss()"></ion-icon>
+            </ion-col>
+            <ion-col size='10'>
+                <input type="text" class="input-with-icon" placeholder='Recherche...' [(ngModel)]="searchValue" (keyup)="filterUsers()">
+                <ion-icon name="search-outline" class="input-icon-with-label"></ion-icon>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-content class="scroll-list">
+        <ion-list *ngIf="loading">
+            <ion-skeleton-text *ngFor="let item of [].constructor(10);" class="skeleton-card" animated></ion-skeleton-text>
+        </ion-list>
+        <ion-list *ngIf="users && !loading">
+            <ion-card class="app-card pointer" *ngFor="let user of filteredUsers" (click)="startConversation(user.id)">
+                <ion-card-content>
+                    <ion-grid class="py-0">
+                        <ion-row>
+                            <ion-col size='3' class="center">
+                                <div class="avatar-list" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');">
+                                </div>
+                            </ion-col>
+                            <ion-col size='9' class="start">
+                                <h2 class="card-title hide-overflow">{{ this.capitalize(user.name) }}</h2>
+                                <p *ngIf="user.type === 'client'" class="card-text-date hide-overflow" style="margin-top:-8px;">Client</p>
+                                <p *ngIf="user.type === 'user' && !user.role" class="card-text-date hide-overflow" style="margin-top:-8px;">Employé</p>
+                                <p *ngIf="user.type === 'user'  && user.role" class="card-text-date hide-overflow" style="margin-top:-8px;">{{ this.capitalize(user.role) }}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </ion-list>
+    </ion-content>
+</ion-content>

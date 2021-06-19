@@ -24,6 +24,7 @@ import { UserExpenseListComponent } from './modals/user-expense-list/user-expens
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { UserHistoryComponent } from './modals/user-history/user-history.component';
 import { PrivatePolicyComponent } from './modals/private-policy/private-policy.component';
+import { StartConversationComponent } from './modals/start-conversation/start-conversation.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PrivatePolicyComponent } from './modals/private-policy/private-policy.c
     ExpenseListComponent,
     UserExpenseListComponent,
     UserHistoryComponent,
-    PrivatePolicyComponent
+    PrivatePolicyComponent,
+    StartConversationComponent
   ],
   imports: [
     IonicModule,
@@ -74,7 +76,8 @@ import { PrivatePolicyComponent } from './modals/private-policy/private-policy.c
     ExpenseListComponent,
     UserExpenseListComponent,
     UserHistoryComponent,
-    PrivatePolicyComponent
+    PrivatePolicyComponent,
+    StartConversationComponent
   ],
 })
 export class ComponentsModule { }

@@ -1,8 +1,14 @@
 .scroll-list {
-    height: calc(100% - 2rem - 0.7rem - 45px);
+    height: calc(100% - 2rem - 0.7rem - 105px);
     ion-list {
         padding: 0;
         min-height: 100%;
+        display: flex;
+        align-items: flex-end;
+        ion-grid {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
     }
 }
 
@@ -10,14 +16,9 @@
     font-size: calc(1.05rem + 0.9vw);
 }
 
-.message-div {
-    min-height: 60vh;
-}
-
 .message {
     padding: 10px;
     border-radius: 10px;
-    margin-bottom: 2px;
     white-space: pre-wrap;
     min-width: 150px;
     max-width: 270px;
@@ -44,37 +45,36 @@
 }
 
 .my-time {
-    color: #fff;
-    float: right;
+    text-align: right;
     font-size: small;
+    color: #000000a1;
+    width: 100%;
+    margin-bottom: 2px;
 }
 
 .other-time {
-    color: #bdbdbd;
-    float: right;
+    text-align: left;
     font-size: small;
+    color: #000000a1;
+    width: 100%;
+    margin-bottom: 2px;
 }
 
-.transparent-top {
-    position: fixed;
-    top: 88px;
+.new-separator {
+    color: red;
     width: 100%;
-    text-align: center;
-    margin: 0;
-    padding: 2px 0;
-    background-image: linear-gradient( 180deg, #0000000d 0%, transparent 100%) !important;
-    z-index: 10;
-}
-
-.transparent-bottom {
-    position: fixed;
-    top: calc(77vh + 88px);
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    padding: 2px 0;
-    background-image: linear-gradient( 180deg, transparent 0%, #0000000d 100%) !important;
-    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    hr {
+        width: 20%;
+    }
+    p {
+        width: 60%;
+        text-align: center;
+    }
 }
 
 .app-btn-msg {

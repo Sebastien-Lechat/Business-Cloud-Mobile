@@ -30,7 +30,6 @@ export class UserHistoryComponent implements OnInit {
         this.loading = false;
       }
     });
-
   }
 
   dismiss() {
