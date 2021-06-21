@@ -40,7 +40,6 @@ export class TabsPage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   ionViewWillEnter(): void {
-    console.log('Init...');
     this.socketService.connect();
   }
 

@@ -30,7 +30,7 @@ export class NotificationsPage implements OnInit {
     if (category === 'Facture') { this.router.navigate(['/tabs/show-bill/', id]); }
     if (category === 'Projet') { this.router.navigate(['/tabs/show-project/', id]); }
     if (category === 'Devis') { this.router.navigate(['/tabs/show-quote/', id]); }
-    if (category === 'Message') { console.log('Add navigation'); }
+    if (category === 'Message') { this.router.navigate(['/messages/', id]); }
   }
 
   nagivateBack() {

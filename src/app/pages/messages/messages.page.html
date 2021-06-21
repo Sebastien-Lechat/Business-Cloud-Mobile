@@ -1,14 +1,14 @@
 <ion-content>
     <ion-grid class="header-div-snd">
         <ion-row>
-            <ion-col size='3' class="start">
+            <ion-col size='2' class="start">
                 <ion-icon name="chevron-back-outline" class="app-icon pointer" (click)="nagivateBack()"></ion-icon>
             </ion-col>
-            <ion-col size='6' class="center">
+            <ion-col size='8' class="center p-0">
                 <ion-skeleton-text *ngIf="!conversation" style="width:80%;height: 24px;border-radius: 10px;margin-top: 8px;" animated></ion-skeleton-text>
-                <h2 class="header-title text-center hide-overflow" *ngIf="conversation">{{ target.name }}</h2>
+                <h2 class="header-title center text-center hide-overflow" *ngIf="conversation">{{ target.name }} <span class="connexion-dot" [class.connected]="target?.isConnected" [class.disconnected]="!target?.isConnected"></span></h2>
             </ion-col>
-            <ion-col size='3' class="end">
+            <ion-col size='2' class="end">
                 <ion-icon name="call" class="app-icon pointer"></ion-icon>
             </ion-col>
         </ion-row>

@@ -13,6 +13,7 @@ const { PushNotifications, Device } = Plugins;
 export class GlobalService {
 
   tabsSubject: BehaviorSubject<string> = new BehaviorSubject(undefined);
+  closeConv: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
 
   creationSubject: BehaviorSubject<number> = new BehaviorSubject(6);
   headerNotificationsCountAlreadyExist = false;

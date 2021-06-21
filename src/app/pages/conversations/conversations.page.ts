@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConversationService } from 'src/app/services/conversation/conversation.service';
-import { ConvJsonI } from 'src/interfaces/conversationInterface';
 import { AccountService } from 'src/app/services/account/account.service';
+import { ConversationService } from 'src/app/services/conversation/conversation.service';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { ConvJsonI } from 'src/interfaces/conversationInterface';
 
 @Component({
   selector: 'app-conversations',
@@ -18,11 +19,19 @@ export class ConversationsPage implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
+    private globalService: GlobalService,
     private conversationService: ConversationService,
     public accountService: AccountService,
   ) { }
 
   ngOnInit() {
+    this.globalService.closeConv.subscribe({
+      next: (closed: boolean) => {
+        if (closed) {
+          this.initData();
+        }
+      },
+    });
   }
 
   ionViewWillEnter(): void {
@@ -37,6 +46,7 @@ export class ConversationsPage implements OnInit {
           conversation.updatedAt = this.formatUpdatedAt(conversation.updatedAt as string);
         });
         this.conversations = data.conversations;
+        console.log(this.conversations);
         this.loading = false;
       },
     });
@@ -58,6 +68,5 @@ export class ConversationsPage implements OnInit {
   nagivateBack() {
     this.location.back();
   }
-
 
 }

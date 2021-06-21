@@ -17,7 +17,8 @@
                             </ion-col>
                             <ion-col size='7' class="start">
                                 <h2 class="card-title hide-overflow">{{ conversation.member1.user._id !== accountService.user.id ? conversation.member1.user.name : conversation.member2.user.name }}</h2>
-                                <p class="card-text-date hide-overflow" style="margin-top:-8px;">Le dernier message est vraiment trop cool tu verras</p>
+                                <p *ngIf="conversation.lastMessage?.text" class="card-text-date hide-overflow" style="margin-top:-8px;">{{ conversation.lastMessage?.text }}</p>
+                                <p *ngIf="!conversation.lastMessage?.text" class="card-text-date hide-overflow" style="margin-top:-8px;">Aucun message pour l'instant</p>
                             </ion-col>
                             <ion-col size='2' class="center">
                                 <p class="card-text-time hide-overflow">{{ conversation.updatedAt }}</p>
