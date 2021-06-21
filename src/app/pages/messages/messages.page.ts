@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import { AccountService } from 'src/app/services/account/account.service';
 import { ConversationService } from 'src/app/services/conversation/conversation.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { SocketService } from 'src/app/services/global/socket.service';
 import { ConvJsonI, MessageI } from 'src/interfaces/conversationInterface';
 
@@ -12,7 +13,7 @@ import { ConvJsonI, MessageI } from 'src/interfaces/conversationInterface';
   templateUrl: './messages.page.html',
   styleUrls: ['./messages.page.scss'],
 })
-export class MessagesPage implements OnInit {
+export class MessagesPage implements OnInit, OnDestroy {
 
   conversationId: string;
   conversation: ConvJsonI;
@@ -21,9 +22,10 @@ export class MessagesPage implements OnInit {
   message = '';
   newIsPrinted = false;
 
-  target: { _id: string, name: string, socketToken: string };
+  target: { _id: string, name: string, socketToken: string, isConnected?: boolean };
 
   loading = false;
+  interval: any;
 
   @ViewChild('list') list: IonContent;
 
@@ -32,6 +34,7 @@ export class MessagesPage implements OnInit {
     private route: ActivatedRoute,
     private conversationService: ConversationService,
     private socketService: SocketService,
+    private globalService: GlobalService,
     public accountService: AccountService,
   ) { }
 
@@ -50,13 +53,14 @@ export class MessagesPage implements OnInit {
         this.conversationService.getConversationMessage(this.conversationId).subscribe({
           next: (data2: { error: false, messages: MessageI[] }) => {
             this.messages = data2.messages;
-            console.log(this.messages);
             this.loading = false;
+            this.startCheckConnected();
             this.scrollToBottom();
           },
         });
       },
     });
+
 
     this.socketService.newMessage.subscribe({
       next: (data: { content: string, from: string, createdAt: Date, seen: boolean }) => {
@@ -66,11 +70,27 @@ export class MessagesPage implements OnInit {
         }
       }
     });
+
+    this.socketService.isConnected.subscribe({
+      next: (data: { value: boolean, from: { name: string, socketId: string } }) => {
+        if (data && this.target && this.target?.socketToken === data?.from.socketId) {
+          this.target.isConnected = data.value;
+        }
+      }
+    });
+
+    window.addEventListener('keyboardDidShow', () => {
+      this.scrollToBottom();
+    });
+
+    window.addEventListener('keyboardDidHide', () => {
+      this.scrollToBottom();
+    });
   }
 
   sendMessage() {
     if (this.message) {
-      this.socketService.sendPrivateMessage(this.conversationId, this.message, { socketId: this.target.socketToken, name: this.target.name });
+      this.socketService.sendPrivateMessage(this.conversationId, this.message, { id: this.target._id, socketId: this.target.socketToken, name: this.target.name });
       this.messages.push({ conversationId: this.conversationId, text: this.message, userId: this.accountService.user.id, createdAt: new Date().toISOString(), seen: true });
       this.message = '';
       this.scrollToBottom();
@@ -85,14 +105,26 @@ export class MessagesPage implements OnInit {
     this.scrollToBottom();
   }
 
+  startCheckConnected() {
+    this.socketService.checkIfConnected({ socketId: this.target.socketToken, name: this.target.name });
+    this.interval = setInterval(() => {
+      this.socketService.checkIfConnected({ socketId: this.target.socketToken, name: this.target.name });
+    }, 10000);
+  }
+
   scrollToBottom() {
     setTimeout(() => {
       this.list.scrollToBottom();
-    }, 1);
+    }, 2);
   }
 
   nagivateBack() {
+    this.globalService.closeConv.next(true);
     this.location.back();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 
 }
