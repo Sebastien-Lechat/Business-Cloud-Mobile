@@ -17,7 +17,7 @@ import { ShortUserListI } from 'src/interfaces/userInterface';
 })
 export class AddProjectComponent implements OnInit {
 
-  projectNum = 'PRO000001';
+  projectNum = '';
   title = '';
 
   customersList: ShortUserListI[] = [];
@@ -55,6 +55,12 @@ export class AddProjectComponent implements OnInit {
   }
 
   initAutocomplete() {
+    this.globalService.findNextNumber('PRO').subscribe({
+      next: (data: { error: boolean, nextNumber: string }) => {
+        this.projectNum = data.nextNumber;
+      }
+    });
+
     this.userService.getUsersList().subscribe({
       next: (data: { error: false, users: ShortUserListI[] }) => {
         this.customersList = data.users.filter(user => user.type === 'client');

@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { UserExpenseService } from 'src/app/services/userExpense/user-expense.service';
 import { UserExpenseCreateI, UserExpenseJsonI } from 'src/interfaces/userExpense';
@@ -13,7 +14,7 @@ import { UserExpenseCreateI, UserExpenseJsonI } from 'src/interfaces/userExpense
 })
 export class AddExpenseAccountComponent implements OnInit {
 
-  userExpenseNum = 'UEXP' + this.randomInRange(100000, 999999);
+  userExpenseNum = '';
   price = 0;
   category = '';
   file = '';
@@ -25,9 +26,15 @@ export class AddExpenseAccountComponent implements OnInit {
     private userExpenseService: UserExpenseService,
     private toasterService: ToasterService,
     private loadingController: LoadingController,
+    public globalService: GlobalService,
   ) { }
 
   ngOnInit() {
+    this.globalService.findNextNumber('UEXP').subscribe({
+      next: (data: { error: boolean, nextNumber: string }) => {
+        this.userExpenseNum = data.nextNumber;
+      }
+    });
   }
 
   async createUserExpense() {

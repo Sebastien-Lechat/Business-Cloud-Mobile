@@ -1,7 +1,11 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Chart } from 'chart.js';
+import { BillI } from 'src/interfaces/billInterface';
+import { StatisticI } from 'src/interfaces/globalInterface';
+import { AccountService } from '../services/account/account.service';
+import { BillService } from '../services/bill/bill.service';
+import { GlobalService } from '../services/global/global.service';
 
 @Component({
   selector: 'app-tab3',
@@ -10,10 +14,18 @@ import { Chart } from 'chart.js';
 })
 export class Tab3Page implements OnInit {
 
+  statistics: StatisticI;
+  nearlyLateBills: any[];
+  lateBills: any[];
+  loading = false;
 
-  @ViewChild('chart') chart: any;
-
-  constructor(private router: Router, private location: Location) { }
+  constructor(
+    private router: Router,
+    private location: Location,
+    private billService: BillService,
+    private globalService: GlobalService,
+    public accountService: AccountService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -28,54 +40,32 @@ export class Tab3Page implements OnInit {
   }
 
   ionViewDidEnter() {
-    // this.createBarChart();
+    this.initData();
   }
 
-  createBarChart() {
-    this.chart = new Chart(this.chart.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: ['Jav', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin'], // , 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Dec'
-        datasets: [{
-          label: 'Revenus',
-          backgroundColor: '#009E0F',
-          data: [
-            6534, 4864, 8645, 6487, 13468, 4879, 4689, 658, 123, 14587, 548, 3695
-          ]
-        }, {
-          label: 'Dépenses',
-          backgroundColor: '#F20C0C',
-          data: [
-            -1245, -6550, -3750, -7459, -680, -3548, -9, -14500, -24785, -369, -123, -266
-          ]
-        }]
-      },
-      options: {
-        legend: {
-          display: true,
-          position: 'bottom',
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              max: 15000,
-              min: -10000,
-              display: false // This will remove only the label
-            },
-            gridLines: {
-              display: true,
-            },
-          }],
-          xAxes: [{
-            gridLines: {
-              display: true,
-            },
-            stacked: true,
-          }]
+  initData() {
+    this.loading = true;
+    this.globalService.getStatistics().subscribe({
+      next: (data: { error: boolean, statistics: StatisticI }) => {
+        if (data.statistics.projectTimeTotal !== undefined) {
+          data.statistics.projectTimeTotal = !isNaN(parseFloat((data.statistics.projectTimeTotal as number / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.statistics.projectTimeTotal as number / (1000 * 60 * 60)).toFixed(2)) : 0;
+        }
+        this.statistics = data.statistics;
+        if (this.statistics && this.nearlyLateBills && this.lateBills) {
+          this.loading = false;
+        }
+      }
+    });
+    this.billService.getBillList().subscribe({
+      next: (data: { error: boolean, bills: BillI[] }) => {
+        this.lateBills = data.bills.filter((bill: BillI) => bill.status === 'En retard');
+        this.nearlyLateBills = data.bills.filter((bill: BillI) => bill.status !== 'En retard' && bill.status !== 'Payée');
+        this.nearlyLateBills.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        if (this.statistics && this.nearlyLateBills && this.lateBills) {
+          this.loading = false;
         }
       }
     });
   }
-
 
 }

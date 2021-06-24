@@ -50,4 +50,6 @@ export interface ProjectJsonI {
     description?: string;
     createdAt: Date | string;
     updatedAt: Date | string;
+    total?: string | number;
+    totalHours?: string | number;
 }

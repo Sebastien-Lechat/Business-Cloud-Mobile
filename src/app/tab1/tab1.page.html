@@ -58,8 +58,8 @@
                             </ion-col>
                             <ion-col size='4'>
                                 <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-loss">-3,578 €</p>
-                                <p class="card-text-time">355h</p>
+                                <p [class.card-text-rest]='project.total === 0' [class.card-text-loss]='project.total < 0' [class.card-text-profit]='project.total > 0'>{{ project.total }} €</p>
+                                <p class="card-text-time">{{ project.totalHours }} h</p>
                             </ion-col>
                             <ion-col size='2' class="center">
                                 <div *ngIf="project.status === 'En attente'" class="status-div-warning"></div>

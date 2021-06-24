@@ -33,3 +33,14 @@ export interface HistoryI {
     createdAt: Date | string;
     updatedAt: Date | string;
 }
+
+export interface StatisticI {
+    gainTotal?: number;
+    expenseTotal?: number;
+    employeeTotal?: number;
+    customerTotal?: number;
+    projectTotal?: number;
+    projectTimeTotal?: number | string;
+    billUnpaidTotal?: number;
+    billUnpaidAmountTotal?: number;
+}

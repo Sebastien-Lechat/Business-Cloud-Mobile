@@ -71,4 +71,12 @@ export class GlobalService {
     );
   }
 
+  findNextNumber(acronym: string) {
+    return this.http.get<any>(this.url + `global/nextNumber?acronym=` + acronym);
+  }
+
+  getStatistics() {
+    return this.http.get<any>(this.url + `global/statistics`);
+  }
+
 }

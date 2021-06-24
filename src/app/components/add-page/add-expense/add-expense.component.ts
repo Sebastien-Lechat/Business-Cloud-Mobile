@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { ProjectService } from 'src/app/services/project/project.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { ExpenseCreateI, ExpenseJsonI } from 'src/interfaces/expenseInterface';
@@ -15,7 +16,7 @@ import { ProjectJsonI } from 'src/interfaces/projectInterface';
 })
 export class AddExpenseComponent implements OnInit {
 
-  expenseNum = 'EXP' + this.randomInRange(100000, 999999);
+  expenseNum = '';
   price = 0;
   accountNumber = 999999;
   category = '';
@@ -42,19 +43,25 @@ export class AddExpenseComponent implements OnInit {
     private expenseService: ExpenseService,
     private toasterService: ToasterService,
     private loadingController: LoadingController,
+    public globalService: GlobalService,
   ) { }
 
   ngOnInit() {
   }
 
   initAutocomplete() {
+    this.globalService.findNextNumber('EXP').subscribe({
+      next: (data: { error: boolean, nextNumber: string }) => {
+        this.expenseNum = data.nextNumber;
+      }
+    });
+
     this.projectService.getProjectList().subscribe({
       next: (data: { error: false, projects: ProjectJsonI[] }) => {
         this.projectList = data.projects;
         this.filteredProjectList = data.projects;
         if (this.selectedProject.selectedId) {
           this.selectedProject.name = this.projectList.find(project => project.id === this.selectedProject.selectedId)?.title;
-          console.log(this.selectedProject);
         }
       },
     });

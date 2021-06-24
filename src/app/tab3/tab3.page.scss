@@ -52,3 +52,18 @@
     margin: 5px;
     width: 100%;
 }
+
+.no-item-card {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.card-list-stat {
+    width: 100%;
+    max-height: 274px;
+    overflow-y: auto;
+    .app-card {
+        width: calc(100% - 10px);
+    }
+}
