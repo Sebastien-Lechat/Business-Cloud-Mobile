@@ -33,6 +33,10 @@ export class Tab1Page implements OnInit {
     this.projectService.getProjectList().subscribe({
       next: (data: { error: false, projects: ProjectJsonI[] }) => {
         this.sortProject(this.filteredProjects, 'createdAt', 0);
+        data.projects.map((project: ProjectJsonI) => {
+          project.totalHours = !isNaN(parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
+          project.total = project.fixedRate ? project.fixedRate - (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours;
+        });
         this.projects = data.projects;
         this.filteredProjects = data.projects;
         this.filterProjects();

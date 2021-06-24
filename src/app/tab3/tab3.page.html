@@ -10,7 +10,7 @@
                 <ion-icon name="" class="app-icon"></ion-icon>
                 <ion-icon name="calendar-outline" class="app-icon"></ion-icon>
             </ion-col>
-            <ion-col size='6' class="center">
+            <ion-col *ngIf="statistics && statistics?.gainTotal !== undefined" size='6' class="center">
                 <div class="stat-card">
                     <div class="icon-stat-card">
                         <div class="icon-div center">
@@ -18,12 +18,12 @@
                         </div>
                     </div>
                     <div class="text-stat-card">
-                        <p class="input-label">Revenus</p>
-                        <p class="stat-green">357869 €</p>
+                        <p class="input-label">{{ accountService.user.type === 'user' ? 'Revenus' : 'Payés' }}</p>
+                        <p class="stat-green">{{ statistics.gainTotal }} €</p>
                     </div>
                 </div>
             </ion-col>
-            <ion-col size='6' class="center">
+            <ion-col *ngIf="statistics && statistics?.expenseTotal !== undefined" size='6' class="center">
                 <div class="stat-card">
                     <div class="icon-stat-card">
                         <div class="icon-div center">
@@ -32,14 +32,12 @@
                     </div>
                     <div class="text-stat-card">
                         <p class="input-label">Dépenses</p>
-                        <p class="stat-red">27845 €</p>
+                        <p class="stat-red">{{ statistics.expenseTotal }} €</p>
                     </div>
                 </div>
             </ion-col>
-            <!-- <ion-col size='12' class="center">
-                <canvas #chart height="325"></canvas>
-            </ion-col> -->
-            <ion-col size='6' class="center">
+            <ion-skeleton-text *ngIf="!statistics" style="width:100%;height: 60px;border-radius: 10px;margin-bottom: 8px;" animated></ion-skeleton-text>
+            <ion-col *ngIf="statistics && statistics?.employeeTotal !== undefined" size='6' class="center">
                 <div class="stat-card">
                     <div class="icon-stat-card">
                         <div class="icon-div center">
@@ -48,11 +46,11 @@
                     </div>
                     <div class="text-stat-card">
                         <p class="input-label">Employés</p>
-                        <p class="stat-green">45</p>
+                        <p class="stat-green">{{ statistics.employeeTotal }}</p>
                     </div>
                 </div>
             </ion-col>
-            <ion-col size='6' class="center">
+            <ion-col *ngIf="statistics && statistics?.customerTotal !== undefined" size='6' class="center">
                 <div class="stat-card">
                     <div class="icon-stat-card">
                         <div class="icon-div center">
@@ -61,24 +59,12 @@
                     </div>
                     <div class="text-stat-card">
                         <p class="input-label">Clients</p>
-                        <p class="stat-green">245</p>
+                        <p class="stat-green">{{ statistics.customerTotal }}</p>
                     </div>
                 </div>
             </ion-col>
-            <ion-col size='6' class="center">
-                <div class="stat-card">
-                    <div class="icon-stat-card">
-                        <div class="icon-div center">
-                            <ion-icon name="pie-chart-outline" class="app-icon"></ion-icon>
-                        </div>
-                    </div>
-                    <div class="text-stat-card">
-                        <p class="input-label">Projet</p>
-                        <p class="stat-green">6</p>
-                    </div>
-                </div>
-            </ion-col>
-            <ion-col size='6' class="center">
+            <ion-skeleton-text *ngIf="!statistics" style="width:100%;height: 60px;border-radius: 10px;margin-bottom: 8px;" animated></ion-skeleton-text>
+            <ion-col *ngIf="statistics && statistics?.billUnpaidTotal !== undefined" size='6' class="center">
                 <div class="stat-card">
                     <div class="icon-stat-card">
                         <div class="icon-div center">
@@ -87,145 +73,137 @@
                     </div>
                     <div class="text-stat-card">
                         <p class="input-label">Impayés</p>
-                        <p class="stat-red">48</p>
+                        <p class="stat-red">{{ statistics.billUnpaidTotal }}</p>
                     </div>
                 </div>
             </ion-col>
-
-            <ion-col size='12' class="start mt-2 mb-2">
-                <h2 class="header-title">Factures impayés</h2>
+            <ion-col *ngIf="statistics && statistics?.billUnpaidAmountTotal !== undefined" size='6' class="center">
+                <div class="stat-card">
+                    <div class="icon-stat-card">
+                        <div class="icon-div center">
+                            <ion-icon src="assets/icon/money.svg" class="app-icon"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="text-stat-card">
+                        <p class="input-label">Impayés</p>
+                        <p class="stat-red">{{ statistics.billUnpaidAmountTotal }} €</p>
+                    </div>
+                </div>
             </ion-col>
-
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='6'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='4'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='6'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='4'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='6'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='4'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-danger"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-
+            <ion-skeleton-text *ngIf="!statistics" style="width:100%;height: 60px;border-radius: 10px;margin-bottom: 8px;" animated></ion-skeleton-text>
+            <ion-col *ngIf="statistics && statistics?.projectTotal !== undefined" size='6' class="center">
+                <div class="stat-card">
+                    <div class="icon-stat-card">
+                        <div class="icon-div center">
+                            <ion-icon name="pie-chart-outline" class="app-icon"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="text-stat-card">
+                        <p class="input-label">Projet</p>
+                        <p class="stat-green">{{ statistics.projectTotal }}</p>
+                    </div>
+                </div>
+            </ion-col>
+            <ion-col *ngIf="statistics && statistics?.projectTimeTotal !== undefined" size='6' class="center">
+                <div class="stat-card">
+                    <div class="icon-stat-card">
+                        <div class="icon-div center">
+                            <ion-icon name="pie-chart-outline" class="app-icon"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="text-stat-card">
+                        <p class="input-label">Temps</p>
+                        <p class="stat-green">{{ statistics.projectTimeTotal }} h</p>
+                    </div>
+                </div>
+            </ion-col>
+            <ion-skeleton-text *ngIf="!statistics" style="width:100%;height: 60px;border-radius: 10px;margin-bottom: 8px;" animated></ion-skeleton-text>
+            <ion-col size='12' class="start mt-2 mb-2">
+                <h2 class="header-title">Factures impayées</h2>
+            </ion-col>
+            <ion-list *ngIf="loading" class="card-list-stat">
+                <ion-skeleton-text *ngFor="let item of [].constructor(3);" class="skeleton-card" animated></ion-skeleton-text>
+            </ion-list>
+            <ion-list *ngIf="lateBills && !loading" class="card-list-stat">
+                <ion-card class="app-card pointer" *ngFor="let bill of lateBills">
+                    <ion-card-content *ngIf="bill.billNum" (click)="navigateTo('/tabs/show-bill/', bill.id)">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='6'>
+                                    <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
+                                    <p class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
+                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                </ion-col>
+                                <ion-col size='4'>
+                                    <h2 class="card-title hide-overflow">&nbsp;</h2>
+                                    <p class="card-text-rest">{{ bill.totalTTC - bill.amountPaid }} €</p>
+                                    <p class="card-text-time">&nbsp;</p>
+                                </ion-col>
+                                <ion-col size='2' class="center">
+                                    <div *ngIf="bill.status === 'Non payée'" class="status-div-warning"></div>
+                                    <div *ngIf="bill.status === 'Partiellement payée'" class="status-div-warning"></div>
+                                    <div *ngIf="bill.status === 'En retard'" class="status-div-danger"></div>
+                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+                <ion-card class="app-card pointer no-item-card" *ngIf="lateBills && lateBills.length === 0">
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='12' class="center">
+                                    Aucune facture non payée
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
             <ion-col size='12' class="start mt-2 mb-2">
                 <h2 class="header-title">Dates limites proches</h2>
             </ion-col>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='6'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='4'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='6'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='4'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
-            <ion-card class="app-card pointer" (click)="navigateTo('/tabs/show-bill')">
-                <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size='6'>
-                                <h2 class="card-title hide-overflow">FAC1458697456</h2>
-                                <p class="card-text-client hide-overflow">Jacques Pierre</p>
-                                <p class="card-text-date hide-overflow">Fin: 06/12/2021</p>
-                            </ion-col>
-                            <ion-col size='4'>
-                                <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                <p class="card-text-rest">3,578 €</p>
-                                <p class="card-text-time">&nbsp;</p>
-                            </ion-col>
-                            <ion-col size='2' class="center">
-                                <div class="status-div-warning"></div>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-card-content>
-            </ion-card>
+            <ion-list *ngIf="loading" class="card-list-stat">
+                <ion-skeleton-text *ngFor="let item of [].constructor(3);" class="skeleton-card" animated></ion-skeleton-text>
+            </ion-list>
+            <ion-list *ngIf="nearlyLateBills && !loading" class="card-list-stat">
+                <ion-card class="app-card pointer" *ngFor="let bill of nearlyLateBills">
+                    <ion-card-content *ngIf="bill.billNum" (click)="navigateTo('/tabs/show-bill/', bill.id)">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='6'>
+                                    <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
+                                    <p class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
+                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                </ion-col>
+                                <ion-col size='4'>
+                                    <h2 class="card-title hide-overflow">&nbsp;</h2>
+                                    <p class="card-text-rest">{{ bill.totalTTC - bill.amountPaid }} €</p>
+                                    <p class="card-text-time">&nbsp;</p>
+                                </ion-col>
+                                <ion-col size='2' class="center">
+                                    <div *ngIf="bill.status === 'Non payée'" class="status-div-warning"></div>
+                                    <div *ngIf="bill.status === 'Partiellement payée'" class="status-div-warning"></div>
+                                    <div *ngIf="bill.status === 'En retard'" class="status-div-danger"></div>
+                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+                <ion-card class="app-card pointer no-item-card" *ngIf="nearlyLateBills && nearlyLateBills.length === 0">
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='12' class="center">
+                                    Aucune facture avec des dates limites proches
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
         </ion-row>
     </ion-grid>
 </ion-content>

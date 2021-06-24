@@ -114,7 +114,6 @@ export class LoginPage implements OnInit {
             this.router.navigate(['/tabs/tab3']);
           },
           error: async (error: HttpErrorResponse) => {
-            console.log(error.error.code);
             await loading.dismiss();
             if (error.error.code === '101401') { this.toasterService.presentErrorToast('Erreur lors de la connexion'); }
             else if (error.error.code === '101402') { this.toasterService.presentErrorToast('Adresse email invalide'); }

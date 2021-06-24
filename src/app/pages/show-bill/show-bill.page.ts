@@ -223,7 +223,17 @@ export class ShowBillPage implements OnInit {
   }
 
   sendMail() {
-    this.toasterService.presentSuccessToast('Email envoyé');
+    this.billService.sendMail(this.bill.id, this.client.id).subscribe({
+      next: () => {
+        this.toasterService.presentSuccessToast('Email envoyé');
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error.code === '104301') { this.toasterService.presentErrorToast('ID manquants'); }
+        else if (error.error.code === '104302') { this.toasterService.presentErrorToast('ID de la facture invalide'); }
+        else if (error.error.code === '104303') { this.toasterService.presentErrorToast('ID du client invalide'); }
+        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+      },
+    });
   }
 
   navigateTo(path: string, id?: string) {

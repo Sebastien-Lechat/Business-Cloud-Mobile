@@ -54,7 +54,7 @@ export class SocketService {
   }
 
   disconnect() {
-    console.log('Déconnexion...');
+    // console.log('Déconnexion...');
     this.socketConnected = false;
     this.socket.disconnect();
   }

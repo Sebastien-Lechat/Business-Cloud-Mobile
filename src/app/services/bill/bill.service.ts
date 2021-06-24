@@ -31,4 +31,8 @@ export class BillService {
   delete(id: string) {
     return this.http.delete<any>(this.url + `bill/` + id);
   }
+
+  sendMail(billId: string, clientId: string) {
+    return this.http.post<any>(this.url + `bill/` + billId + `/customer/` + clientId + `/mail`, {});
+  }
 }

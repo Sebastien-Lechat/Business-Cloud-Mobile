@@ -16,7 +16,7 @@ import { ShortUserListI } from 'src/interfaces/userInterface';
 })
 export class AddQuoteComponent implements OnInit {
 
-  estimateNum = 'DEV000001';
+  estimateNum = '';
 
   customersList: ShortUserListI[] = [];
   filteredCustomersList: ShortUserListI[] = [];
@@ -40,6 +40,12 @@ export class AddQuoteComponent implements OnInit {
   }
 
   initAutocomplete() {
+    this.globalService.findNextNumber('DEV').subscribe({
+      next: (data: { error: boolean, nextNumber: string }) => {
+        this.estimateNum = data.nextNumber;
+      }
+    });
+
     this.userService.getUsersList().subscribe({
       next: (data: { error: false, users: ShortUserListI[] }) => {
         this.customersList = data.users.filter(user => user.type === 'client');
@@ -72,7 +78,7 @@ export class AddQuoteComponent implements OnInit {
       const creationData: EstimateCreateI = {
         estimateNum: this.estimateNum.trim(),
         clientId: this.selectedClient.selectedId,
-        enterpriseId: '606de2cd8522d42a44aa9a9b',
+        enterpriseId: '60cdc2cfc8189d2314c24efb',
         status: 'En attente',
         deadline: new Date(this.deadline),
         reduction: this.reduction,

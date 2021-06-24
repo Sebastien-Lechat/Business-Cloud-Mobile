@@ -80,11 +80,11 @@ export class MessagesPage implements OnInit, OnDestroy {
     });
 
     window.addEventListener('keyboardDidShow', () => {
-      this.scrollToBottom();
+      this.updateSeen();
     });
 
     window.addEventListener('keyboardDidHide', () => {
-      this.scrollToBottom();
+      this.updateSeen();
     });
   }
 

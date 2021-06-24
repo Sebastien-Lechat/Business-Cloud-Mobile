@@ -46,7 +46,6 @@ export class ConversationsPage implements OnInit {
           conversation.updatedAt = this.formatUpdatedAt(conversation.updatedAt as string);
         });
         this.conversations = data.conversations;
-        console.log(this.conversations);
         this.loading = false;
       },
     });
