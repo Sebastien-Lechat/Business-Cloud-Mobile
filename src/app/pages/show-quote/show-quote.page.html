@@ -72,6 +72,12 @@
                     <ion-icon name="calendar-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
                 <ion-col size='12' class="start mb-2">
+                    <label class="input-label" for="reduction">Réduction</label>
+                    <input *ngIf="estimate" type="number" step="1" id="reduction" class="input-with-icon" placeholder="Pourcentage de réduction..." [(ngModel)]="estimate.reduction" [readonly]="edit">
+                    <ion-skeleton-text *ngIf="!estimate" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
+                    <ion-icon src="/assets/icon/percentage.svg" class="input-icon-with-label percent-icon"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="start mb-2">
                     <label class="input-label">Adresses de facturation</label>
                     <textarea *ngIf="client" type="text" id="billAddress" class="textarea-without-icon" placeholder="Saisissez une adresse..." [readonly]="edit">{{ client.address }}, {{ client.city }} - {{ client.zip }},{{ client.country }}
                     </textarea>
@@ -90,7 +96,7 @@
                     <button class="app-btn pointer" (click)="sendMail()" type="button"><ion-icon name="mail"></ion-icon>&nbsp;&nbsp;Relancer</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
-                    <button class="app-btn pointer"><ion-icon name="cloud-download"></ion-icon>&nbsp;&nbsp;Télécharger</button>
+                    <button class="app-btn pointer" (click)="sendPDF()"><ion-icon name="cloud-download"></ion-icon>&nbsp;&nbsp;Télécharger</button>
                 </ion-col>
                 <ion-col size='4' class="center mb-2">
                     <div class="separate-div"></div>
@@ -104,19 +110,19 @@
                 <div *ngIf="estimate" class="w-100">
                     <ion-row class="w-100" *ngFor="let article of estimate.articles; let i = index">
                         <ion-col size='8' class="start mb-2">
-                            <input type="text" class="input-with-icon" placeholder='Nom article' [value]="article.articleId.name">
+                            <input type="text" class="input-with-icon" placeholder='Nom article' [value]="article.articleId.name" readonly>
                             <ion-icon name="cart-outline" class="input-icon"></ion-icon>
                         </ion-col>
                         <ion-col size='4' class="start mb-2">
-                            <input type="text" class="input-with-icon" placeholder='Quantité' [value]="article.quantity">
+                            <input type="text" class="input-with-icon" placeholder='Quantité' [value]="article.quantity" readonly>
                             <ion-icon src="/assets/icon/box.svg" class="input-icon"></ion-icon>
                         </ion-col>
                         <ion-col size='5' class="start mb-2">
-                            <input type="text" class="input-with-icon" placeholder='Prix' [value]="article.articleId.price + ' €'">
+                            <input type="text" class="input-with-icon" placeholder='Prix' [value]="article.articleId.price + ' €'" readonly>
                             <ion-icon src="/assets/icon/money.svg" class="input-icon"></ion-icon>
                         </ion-col>
                         <ion-col size='5' class="start mb-2">
-                            <input type="text" class="input-with-icon" placeholder='TVA' [value]="article.articleId.tva">
+                            <input type="text" class="input-with-icon" placeholder='TVA' [value]="article.articleId.tva" readonly>
                             <ion-icon src="/assets/icon/percentage.svg" class="input-icon percent-icon"></ion-icon>
                         </ion-col>
                         <ion-col size='2' class="start mb-2">

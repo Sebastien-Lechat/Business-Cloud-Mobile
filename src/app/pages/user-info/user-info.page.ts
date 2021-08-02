@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { AccountService } from 'src/app/services/account/account.service';
-import { ClientI, UserInfoUpdateI } from 'src/interfaces/userInterface';
-import { LoadingController } from '@ionic/angular';
-import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { AccountService } from 'src/app/services/account/account.service';
+import { ToasterService } from 'src/app/services/toaster/toaster.service';
+import { ClientI, UserInfoUpdateI } from 'src/interfaces/userInterface';
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.page.html',
@@ -19,13 +20,20 @@ export class UserInfoPage implements OnInit {
   email = '';
   phone = '';
   birthdayDate = '';
+  avatar = '';
+  selectedPicture: any;
+  showFlag = false;
+  croppedImage: string;
+
+  @ViewChild('file') file: ElementRef;
 
   constructor(
     private router: Router,
     private location: Location,
     private accountService: AccountService,
     private loadingController: LoadingController,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private afStorage: AngularFireStorage
   ) { }
 
   async ngOnInit() {
@@ -68,6 +76,7 @@ export class UserInfoPage implements OnInit {
     this.email = user.email;
     if (user.phone) { this.phone = user.phone; }
     if (user.birthdayDate) { this.birthdayDate = user.birthdayDate; }
+    this.loadImg(this.user.avatar);
   }
 
   generateToUpdateData(): UserInfoUpdateI {
@@ -87,4 +96,85 @@ export class UserInfoPage implements OnInit {
   nagivateBack() {
     this.location.back();
   }
+
+  /* -------------------------------------------------------------------- */
+
+  selectFile() {
+    this.file.nativeElement.click();
+  }
+
+  fileChangeEvent(event: any) {
+    this.selectedPicture = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+
+  // imageLoaded(image: any) {
+  //   console.log(image);
+  // }
+  // cropperReady(event: any) {
+  //   console.log(event);
+  // }
+
+  loadImageFailed() {
+    this.toasterService.presentErrorToast('Erreur lors de l\'importation');
+  }
+
+  base64ToFile(data: string, filename: string) {
+    const arr = data.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  showLightbox() {
+    this.showFlag = true;
+  }
+
+  closeEventHandler() {
+    this.showFlag = false;
+  }
+
+  async upload() {
+    const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Modification...' });
+    await loading.present();
+    const file = this.base64ToFile(this.croppedImage, 'image.png');
+    this.afStorage.upload('/images/' + file.name + '_' + this.user.id, file)
+      .then(() => {
+        this.accountService.uploadImg(file.name + '_' + this.user.id).subscribe({
+          next: async () => {
+            this.loadImg(file.name + '_' + this.user.id);
+            await loading.dismiss();
+            this.selectedPicture = undefined;
+            this.croppedImage = undefined;
+            this.toasterService.presentSuccessToast('Modification réussie');
+          },
+          error: async () => {
+            await loading.dismiss();
+            this.toasterService.presentErrorToast('Erreur lors de la modification');
+          }
+        });
+      })
+      .catch(async () => {
+        await loading.dismiss();
+        this.toasterService.presentErrorToast('Erreur lors de la modification');
+      });
+  }
+
+  loadImg(path: string) {
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.avatar = data;
+      }
+    });
+  }
+
 }

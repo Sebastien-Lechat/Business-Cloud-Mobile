@@ -9,6 +9,7 @@ export interface EstimateI {
     articles: EstimateArticleI[];
     totalHT: number;
     totalTTC: number;
+    reduction?: number;
     deadline: string;
     createdAt: Date | string;
     updatedAt: Date | string;

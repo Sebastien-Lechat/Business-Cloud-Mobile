@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ArticleService } from 'src/app/services/article/article.service';
 import { BillService } from 'src/app/services/bill/bill.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { ArticleI } from 'src/interfaces/articleInterface';
@@ -39,6 +40,7 @@ export class ShowBillPage implements OnInit {
     private loadingController: LoadingController,
     private toasterService: ToasterService,
     private alertController: AlertController,
+    private globalService: GlobalService
   ) { }
 
   ngOnInit() {
@@ -80,16 +82,18 @@ export class ShowBillPage implements OnInit {
 
   filterArticle(event?: any) {
     if (event) {
-      this.selectedArticle.selectedId = event.option.value;
-      this.articlesList.map(article => {
-        if (article.id === event.option.value) {
-          this.selectedArticle.name = article.name;
-          this.selectedArticle.tva = article.tva;
-          this.selectedArticle.quantity = 1;
-          this.selectedArticle.price = article.price;
-          this.selectedArticle.description = (article.description) ? article.description : '';
-        }
-      });
+      setTimeout(() => {
+        this.selectedArticle.selectedId = event.option.value;
+        this.articlesList.map(article => {
+          if (article.id === event.option.value) {
+            this.selectedArticle.name = article.name;
+            this.selectedArticle.tva = article.tva;
+            this.selectedArticle.quantity = 1;
+            this.selectedArticle.price = article.price;
+            this.selectedArticle.description = (article.description) ? article.description : '';
+          }
+        });
+      }, 1);
     } else {
       this.selectedArticle.selectedId = '';
       this.filteredArticlesList = this.articlesList.filter(article => {
@@ -117,6 +121,8 @@ export class ShowBillPage implements OnInit {
           next: (data: { error: false, article: ArticleI }) => {
             this.billService.update({ id: this.bill.id, articles: this.generateArticleUpdateList((data.article._id) ? data.article._id : data.article.id) }).subscribe({
               next: async (data2: { error: false, bill: BillI }) => {
+                data2.bill.createdAt = formatDate(data2.bill.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+                data2.bill.deadline = formatDate(data2.bill.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
                 this.bill = data2.bill;
                 this.selectedArticle = { name: '', selectedId: '', quantity: 0, tva: 0, price: 0, description: '', accountNumber: 999999 };
                 await loading.dismiss();
@@ -207,6 +213,8 @@ export class ShowBillPage implements OnInit {
     await loading.present();
     this.billService.update({ id: this.bill.id, articles: articleList }).subscribe({
       next: async (data: { error: false, bill: BillI }) => {
+        data.bill.createdAt = formatDate(data.bill.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+        data.bill.deadline = formatDate(data.bill.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.bill = data.bill;
         this.selectedArticle = { name: '', selectedId: '', quantity: 0, tva: 0, price: 0, description: '', accountNumber: 999999 };
         await loading.dismiss();
@@ -231,6 +239,20 @@ export class ShowBillPage implements OnInit {
         if (error.error.code === '104301') { this.toasterService.presentErrorToast('ID manquants'); }
         else if (error.error.code === '104302') { this.toasterService.presentErrorToast('ID de la facture invalide'); }
         else if (error.error.code === '104303') { this.toasterService.presentErrorToast('ID du client invalide'); }
+        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+      },
+    });
+  }
+
+  sendPDF() {
+    this.globalService.getFileasPDF('bill', this.bill.id).subscribe({
+      next: () => {
+        this.toasterService.presentSuccessToast('Email avec le PDF envoyé');
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error.code === '114051') { this.toasterService.presentErrorToast('ID manquant'); }
+        else if (error.error.code === '114052') { this.toasterService.presentErrorToast('Type manquant'); }
+        else if (error.error.code === '114053') { this.toasterService.presentErrorToast('ID du client invalide'); }
         else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
       },
     });

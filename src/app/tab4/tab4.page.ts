@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { ShortUserListI } from 'src/interfaces/userInterface';
 import { UserService } from '../services/user/user.service';
@@ -13,6 +14,7 @@ export class Tab4Page implements OnInit {
   users: ShortUserListI[] = [];
 
   filteredUsers: ShortUserListI[] = [];
+  avatarList = {};
   searchValue = '';
   filter = '0';
 
@@ -20,7 +22,8 @@ export class Tab4Page implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private afStorage: AngularFireStorage,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +37,10 @@ export class Tab4Page implements OnInit {
     this.loading = true;
     this.userService.getUsersList().subscribe({
       next: (data: { error: false, users: ShortUserListI[] }) => {
+        data.users.forEach((user) => {
+          if (user.avatar) { this.loadImg(user.id, user.avatar); }
+          else { this.avatarList[user.id] = { data: undefined, loaded: true }; }
+        });
         this.users = data.users;
         this.filteredUsers = data.users;
         this.filterUsers();
@@ -61,6 +68,19 @@ export class Tab4Page implements OnInit {
             return true;
           } else if (user.name.toLowerCase().includes(this.searchValue.toLowerCase())) { return true; }
         }
+      }
+    });
+  }
+
+  loadImg(id: string, path: string) {
+    this.avatarList[id] = { data: undefined, loaded: false };
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.avatarList[id] = { data, loaded: true };
+      },
+      error: () => {
+        this.avatarList[id].loaded = true;
       }
     });
   }

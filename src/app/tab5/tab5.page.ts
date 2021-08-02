@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { ClientI } from 'src/interfaces/userInterface';
@@ -16,6 +17,9 @@ import { SocketService } from '../services/global/socket.service';
 export class Tab5Page implements OnInit {
 
   user: ClientI = this.accountService.user;
+  avatar = '';
+  showFlag = false;
+  avatarLoaded = false;
 
   constructor(
     private router: Router,
@@ -24,6 +28,7 @@ export class Tab5Page implements OnInit {
     private socketService: SocketService,
     private modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
+    private afStorage: AngularFireStorage,
   ) { }
 
   ngOnInit() {
@@ -37,6 +42,7 @@ export class Tab5Page implements OnInit {
     this.accountService.getAccountProfile().subscribe({
       next: (data: { error: false, user: ClientI }) => {
         this.user = data.user;
+        this.loadImg(this.user.avatar);
       },
     });
   }
@@ -73,6 +79,27 @@ export class Tab5Page implements OnInit {
       presentingElement: this.routerOutlet.nativeEl
     });
     return await modal.present();
+  }
+
+  showLightbox() {
+    this.showFlag = true;
+  }
+
+  closeEventHandler() {
+    this.showFlag = false;
+  }
+
+  loadImg(path: string) {
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.avatar = data;
+        this.avatarLoaded = true;
+      },
+      error: () => {
+        this.avatarLoaded = true;
+      }
+    });
   }
 
   navigateTo(path: string, id?: string) {

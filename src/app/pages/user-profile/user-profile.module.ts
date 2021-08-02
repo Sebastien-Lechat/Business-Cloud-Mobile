@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { UserProfilePageRoutingModule } from './user-profile-routing.module';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 import { UserProfilePage } from './user-profile.page';
 
@@ -13,8 +14,9 @@ import { UserProfilePage } from './user-profile.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    NgImageFullscreenViewModule,
     UserProfilePageRoutingModule
   ],
   declarations: [UserProfilePage]
 })
-export class UserProfilePageModule {}
+export class UserProfilePageModule { }

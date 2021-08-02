@@ -31,4 +31,8 @@ export class EstimateService {
   delete(id: string) {
     return this.http.delete<any>(this.url + `estimate/` + id);
   }
+
+  sendMail(estimateId: string, clientId: string) {
+    return this.http.post<any>(this.url + `estimate/` + estimateId + `/customer/` + clientId + `/mail`, {});
+  }
 }

@@ -10,9 +10,14 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-image: url(./../../../assets/img/avatar-icon.jpg);
     background-size: cover;
     background-position: center;
+}
+
+.avatar-list-skeleton {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
 }
 
 .skeleton-card {

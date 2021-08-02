@@ -34,8 +34,11 @@
                     <ion-grid>
                         <ion-row>
                             <ion-col size='3' class="center">
-                                <div class="avatar-list" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');">
+                                <div *ngIf="!user.avatar && avatarList[user.id] && avatarList[user.id].loaded" class="avatar-list" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');">
                                 </div>
+                                <div *ngIf="user.avatar && avatarList[user.id] && avatarList[user.id].loaded" class="avatar-list" style="background-image: url('{{ avatarList[user.id].data }}');">
+                                </div>
+                                <ion-skeleton-text *ngIf="!avatarList[user.id].loaded" class="avatar-list-skeleton" animated></ion-skeleton-text>
                             </ion-col>
                             <ion-col size='7' class="start">
                                 <h2 class="card-title hide-overflow">{{ this.capitalize(user.name) }}</h2>
