@@ -9,10 +9,13 @@ export interface ConvI {
 
 export interface ConvJsonI {
     id: string;
-    member1: { type: string, user: { _id: string, name: string, socketToken: string } };
-    member2: { type: string, user: { _id: string, name: string, socketToken: string } };
+    member1: { type: string, user: { _id: string, name: string, avatar?: string, socketToken: string } };
+    member2: { type: string, user: { _id: string, name: string, avatar?: string, socketToken: string } };
     createdAt: Date | string;
     updatedAt: Date | string;
+    otherId?: string;
+    otherAvatar?: any;
+    otherName?: string;
     lastMessage?: { text: string, user: string };
 }
 export interface MessageI {

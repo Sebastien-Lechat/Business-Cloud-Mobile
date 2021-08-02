@@ -49,6 +49,9 @@ export class TokenInterceptor implements HttpInterceptor {
           this.router.navigate(['/auth/login']);
         } else if (error.status === 401 && error.error.message === 'Expired Token') {
           return this.handle401Error(req, next);
+        } else if (error.status === 401 && error.error.message === 'This token has expired') {
+          localStorage.removeItem('currentUser');
+          this.router.navigate(['/auth/login']);
         }
         return throwError(error);
       }),

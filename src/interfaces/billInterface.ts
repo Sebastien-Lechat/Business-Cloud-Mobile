@@ -13,7 +13,7 @@ export interface BillI {
     clientId: string | ClientI | ShortUserListI;
     enterpriseId: string;
     articles: BillArticleI[];
-    reduction: number;
+    reduction?: number;
     totalHT: number;
     totalTTC: number;
     deadline: string;

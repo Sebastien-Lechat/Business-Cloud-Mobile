@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ArticleService } from 'src/app/services/article/article.service';
 import { EstimateService } from 'src/app/services/estimate/estimate.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { ArticleI } from 'src/interfaces/articleInterface';
@@ -39,6 +40,8 @@ export class ShowQuotePage implements OnInit {
     private loadingController: LoadingController,
     private toasterService: ToasterService,
     private alertController: AlertController,
+    private globalService: GlobalService
+
   ) { }
 
   ngOnInit() {
@@ -80,16 +83,18 @@ export class ShowQuotePage implements OnInit {
 
   filterArticle(event?: any) {
     if (event) {
-      this.selectedArticle.selectedId = event.option.value;
-      this.articlesList.map(article => {
-        if (article.id === event.option.value) {
-          this.selectedArticle.name = article.name;
-          this.selectedArticle.tva = article.tva;
-          this.selectedArticle.quantity = 1;
-          this.selectedArticle.price = article.price;
-          this.selectedArticle.description = (article.description) ? article.description : '';
-        }
-      });
+      setTimeout(() => {
+        this.selectedArticle.selectedId = event.option.value;
+        this.articlesList.map(article => {
+          if (article.id === event.option.value) {
+            this.selectedArticle.name = article.name;
+            this.selectedArticle.tva = article.tva;
+            this.selectedArticle.quantity = 1;
+            this.selectedArticle.price = article.price;
+            this.selectedArticle.description = (article.description) ? article.description : '';
+          }
+        });
+      }, 1);
     } else {
       this.selectedArticle.selectedId = '';
       this.filteredArticlesList = this.articlesList.filter(article => {
@@ -117,6 +122,8 @@ export class ShowQuotePage implements OnInit {
           next: (data: { error: false, article: ArticleI }) => {
             this.estimateService.update({ id: this.estimate.id, articles: this.generateArticleUpdateList((data.article._id) ? data.article._id : data.article.id) }).subscribe({
               next: async (data2: { error: false, estimate: EstimateI }) => {
+                data2.estimate.createdAt = formatDate(data2.estimate.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+                data2.estimate.deadline = formatDate(data2.estimate.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
                 this.estimate = data2.estimate;
                 this.selectedArticle = { name: '', selectedId: '', quantity: 0, tva: 0, price: 0, description: '', accountNumber: 999999 };
                 await loading.dismiss();
@@ -206,6 +213,8 @@ export class ShowQuotePage implements OnInit {
     await loading.present();
     this.estimateService.update({ id: this.estimate.id, articles: articleList }).subscribe({
       next: async (data: { error: false, estimate: EstimateI }) => {
+        data.estimate.createdAt = formatDate(data.estimate.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+        data.estimate.deadline = formatDate(data.estimate.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.estimate = data.estimate;
         this.selectedArticle = { name: '', selectedId: '', quantity: 0, tva: 0, price: 0, description: '', accountNumber: 999999 };
         await loading.dismiss();
@@ -222,7 +231,31 @@ export class ShowQuotePage implements OnInit {
   }
 
   sendMail() {
-    this.toasterService.presentSuccessToast('Email envoyé');
+    this.estimateService.sendMail(this.estimate.id, this.client.id).subscribe({
+      next: () => {
+        this.toasterService.presentSuccessToast('Email envoyé');
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error.code === '105301') { this.toasterService.presentErrorToast('ID manquants'); }
+        else if (error.error.code === '105302') { this.toasterService.presentErrorToast('ID du devis invalide'); }
+        else if (error.error.code === '105303') { this.toasterService.presentErrorToast('ID du client invalide'); }
+        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+      },
+    });
+  }
+
+  sendPDF() {
+    this.globalService.getFileasPDF('estimate', this.estimate.id).subscribe({
+      next: () => {
+        this.toasterService.presentSuccessToast('Email avec le PDF envoyé');
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error.code === '114051') { this.toasterService.presentErrorToast('ID manquant'); }
+        else if (error.error.code === '114052') { this.toasterService.presentErrorToast('Type manquant'); }
+        else if (error.error.code === '114053') { this.toasterService.presentErrorToast('ID du client invalide'); }
+        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+      },
+    });
   }
 
   navigateTo(path: string, id?: string) {

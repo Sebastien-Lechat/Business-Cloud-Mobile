@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "businesscloud-mobile": {
+      "hosting": {
+        "app": [
+          "businesscloud-mobile"
+        ]
+      }
+    }
+  }
+}

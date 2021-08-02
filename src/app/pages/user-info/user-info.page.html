@@ -15,13 +15,28 @@
         <div class="input-div-profile center">
             <ion-grid>
                 <ion-row>
-                    <ion-col size='12' class="start mb-2">
-                        <div class="avatar-grid center">
-                            <div class="circle-avatar"></div>
+                    <ion-col size='12' class="center mb-4">
+                        <div *ngIf="(!avatar && !selectedPicture) || !user" class="w-100 center">
+                            <ion-skeleton-text *ngIf="!user" class="avatar-profile-skeleton" animated></ion-skeleton-text>
+                        </div>
+                        <div *ngIf="!avatar && !selectedPicture && user && !user.avatar" class="w-100 center">
+                            <div class="img-responsive" alt="" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user?.name }}&background=ececec&size=128&color=2865a2&bold=true');" (click)="showLightbox()">
+                            </div>
+                            <ng-image-fullscreen-view [images]="[{image: avatar}]" [imageIndex]="0" [show]="showFlag" (close)="closeEventHandler()"></ng-image-fullscreen-view>
+                        </div>
+                        <div *ngIf="avatar && !selectedPicture" class="w-100 center">
+                            <div class="img-responsive" alt="" style="background-image: url('{{ avatar }}');" (click)="showLightbox()">
+                            </div>
+                            <ng-image-fullscreen-view [images]="[{image: avatar}]" [imageIndex]="0" [show]="showFlag" (close)="closeEventHandler()"></ng-image-fullscreen-view>
+                        </div>
+                        <div *ngIf="selectedPicture">
+                            <image-cropper [imageChangedEvent]="selectedPicture" [maintainAspectRatio]="true" [aspectRatio]="3/3" format="png" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
                         </div>
                     </ion-col>
                     <ion-col size='12' class="start mb-4">
-                        <button class="app-btn pointer"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;Appareil Photo</button>
+                        <button *ngIf="!selectedPicture" class="app-btn pointer" (click)="selectFile()"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;Appareil Photo</button>
+                        <button *ngIf="selectedPicture" class="app-btn pointer" (click)="upload()">Valider</button>
+                        <input type="file" #file class="file-input" hidden (change)="fileChangeEvent($event)" accept="image/*" capture="environment">
                     </ion-col>
                     <ion-col size='12' class="start mb-2">
                         <label class="input-label">Nom et Prénom<span class="red-star">*</span></label>

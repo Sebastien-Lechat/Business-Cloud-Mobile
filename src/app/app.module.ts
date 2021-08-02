@@ -13,6 +13,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DEFAULT_TIMEOUT, TimeoutInterceptor } from './services/interceptor/http.interceptor';
 import { TokenInterceptor } from './services/interceptor/token.interceptor';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -25,6 +27,13 @@ registerLocaleData(localeFr);
     BrowserAnimationsModule,
     HttpClientModule,
     NgCircleProgressModule.forRoot(),
+    AngularFireModule.initializeApp({
+      apiKey: 'AIzaSyA9Hbp-w13B3gOgCZIjBKF4JHmkTAjXxDI',
+      authDomain: 'businesscloud-mobile.firebaseapp.com',
+      storageBucket: 'businesscloud-mobile.appspot.com',
+      projectId: 'businesscloud-mobile',
+    }),
+    AngularFireStorageModule
   ],
   providers: [
     ScreenOrientation,

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { Tab5PageRoutingModule } from './tab5-routing.module';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 import { Tab5Page } from './tab5.page';
 
@@ -13,8 +14,9 @@ import { Tab5Page } from './tab5.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    NgImageFullscreenViewModule,
     Tab5PageRoutingModule
   ],
   declarations: [Tab5Page]
 })
-export class Tab5PageModule {}
+export class Tab5PageModule { }

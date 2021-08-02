@@ -79,4 +79,8 @@ export class GlobalService {
     return this.http.get<any>(this.url + `global/statistics`);
   }
 
+  getFileasPDF(type: string, id: string) {
+    return this.http.get<any>(this.url + `global/generateInvoice/${type}/${id}`);
+  }
+
 }

@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account/account.service';
 import { ConversationService } from 'src/app/services/conversation/conversation.service';
@@ -15,6 +16,7 @@ export class ConversationsPage implements OnInit {
 
   conversations: ConvJsonI[];
   loading = false;
+  avatarList = {};
 
   constructor(
     private router: Router,
@@ -22,6 +24,7 @@ export class ConversationsPage implements OnInit {
     private globalService: GlobalService,
     private conversationService: ConversationService,
     public accountService: AccountService,
+    private afStorage: AngularFireStorage,
   ) { }
 
   ngOnInit() {
@@ -43,6 +46,12 @@ export class ConversationsPage implements OnInit {
     this.conversationService.getConversationList().subscribe({
       next: (data: { error: false, conversations: ConvJsonI[] }) => {
         data.conversations.map((conversation: ConvJsonI) => {
+          conversation.otherId = conversation.member1.user._id !== this.accountService.user.id ? conversation.member1.user._id : conversation.member2.user._id;
+          conversation.otherName = conversation.member1.user._id !== this.accountService.user.id ? conversation.member1.user.name : conversation.member2.user.name;
+          conversation.otherAvatar = conversation.member1.user._id !== this.accountService.user.id ? conversation.member1.user.avatar : conversation.member2.user.avatar;
+
+          if (conversation.otherAvatar) { this.loadImg(conversation.otherId, conversation.otherAvatar); }
+          else { this.avatarList[conversation.otherId] = { data: undefined, loaded: true }; }
           conversation.updatedAt = this.formatUpdatedAt(conversation.updatedAt as string);
         });
         this.conversations = data.conversations;
@@ -58,6 +67,19 @@ export class ConversationsPage implements OnInit {
     const minutes = Math.floor(s % 3600 / 60);
     const seconds = Math.floor(s % 60);
     return (day) ? day + 'j' : (hours) ? hours + 'h' : (minutes) ? minutes + 'm' : seconds + 's';
+  }
+
+  loadImg(id: string, path: string) {
+    this.avatarList[id] = { data: undefined, loaded: false };
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.avatarList[id] = { data, loaded: true };
+      },
+      error: () => {
+        this.avatarList[id].loaded = true;
+      }
+    });
   }
 
   navigateTo(path: string) {

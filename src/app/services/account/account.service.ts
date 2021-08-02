@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { ClientI, UserDoubleAuthUpdateI, UserInfoUpdateI, UserPasswordUpdateI } from 'src/interfaces/userInterface';
+import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { AddressUpdateI, EnterpriseUpdateI } from 'src/interfaces/enterpriseInterface';
+import { ClientI, UserDoubleAuthUpdateI, UserInfoUpdateI, UserPasswordUpdateI } from 'src/interfaces/userInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +58,9 @@ export class AccountService {
 
   modifyUserDoubleAuth(toUpdate: UserDoubleAuthUpdateI) {
     return this.http.post<any>(this.url + `auth/activate-double-auth`, toUpdate);
+  }
+
+  uploadImg(avatarPath: string) {
+    return this.http.put<any>(this.url + `account/avatar`, { avatarPath });
   }
 }
