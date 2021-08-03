@@ -1,14 +1,16 @@
-import { formatDate, Location } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { AccountService } from 'src/app/services/account/account.service';
 import { ArticleService } from 'src/app/services/article/article.service';
 import { EstimateService } from 'src/app/services/estimate/estimate.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { ArticleI } from 'src/interfaces/articleInterface';
+import { BillI } from 'src/interfaces/billInterface';
 import { EstimateI } from 'src/interfaces/estimateInterface';
 import { UserJsonI } from 'src/interfaces/userInterface';
 
@@ -32,10 +34,10 @@ export class ShowQuotePage implements OnInit {
 
   constructor(
     private router: Router,
-    private location: Location,
     private route: ActivatedRoute,
     private estimateService: EstimateService,
     private userService: UserService,
+    public accountService: AccountService,
     private articleService: ArticleService,
     private loadingController: LoadingController,
     private toasterService: ToasterService,
@@ -258,13 +260,30 @@ export class ShowQuotePage implements OnInit {
     });
   }
 
+  acceptEstimate() {
+    this.estimateService.transform(this.estimate.id).subscribe({
+      next: (data: { error: true, bill: BillI }) => {
+        this.router.navigate(['/tabs/show-bill/', data.bill.id]).then(() => {
+          this.toasterService.presentSuccessToast('Devis tranformé en facture');
+        });
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.error.code === '105351') { this.toasterService.presentErrorToast('ID manquants'); }
+        else if (error.error.code === '105352') { this.toasterService.presentErrorToast('ID du devis invalide'); }
+        else if (error.error.code === '105353') { this.toasterService.presentErrorToast('ID du client invalide'); }
+        else if (error.error.code === '105354') { this.toasterService.presentErrorToast('Statut du devis invalide'); }
+        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+      },
+    });
+  }
+
   navigateTo(path: string, id?: string) {
     if (id) { this.router.navigate([path, id]); }
     else { this.router.navigate([path]); }
   }
 
   nagivateBack() {
-    this.location.back();
+    this.router.navigate(['/tabs/tab2']);
   }
 
 }

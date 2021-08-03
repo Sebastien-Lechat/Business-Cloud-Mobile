@@ -26,7 +26,7 @@
                     <ion-skeleton-text *ngIf="!bill" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px;" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="center pb-4 ps-0">
-                    <ion-icon name="trash-outline" class="app-icon trash-icon pointer" (click)="deleteBill()"></ion-icon>
+                    <ion-icon *ngIf="accountService.type === 'user'" name="trash-outline" class="app-icon trash-icon pointer" (click)="deleteBill()"></ion-icon>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -93,11 +93,14 @@
                 <ion-col size='4' class="center mb-2">
                     <div class="separate-div"></div>
                 </ion-col>
-                <ion-col size='12' class="center mb-2">
+                <ion-col size='12' class="center mb-2" *ngIf="bill?.status !== 'Payée' && accountService.type === 'user'">
                     <button class="app-btn pointer" (click)="sendMail()" type="button"><ion-icon name="mail"></ion-icon>&nbsp;&nbsp;Relancer</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
                     <button class="app-btn pointer" (click)="sendPDF()"><ion-icon name="cloud-download"></ion-icon>&nbsp;&nbsp;Télécharger</button>
+                </ion-col>
+                <ion-col size='12' class="center mb-2" *ngIf="bill?.status !== 'Payée' && accountService.type === 'client'">
+                    <button class="app-btn pointer"><ion-icon name="card"></ion-icon>&nbsp;&nbsp;Payer</button>
                 </ion-col>
                 <ion-col size='4' class="center mb-2">
                     <div class="separate-div"></div>
@@ -118,7 +121,7 @@
                             <input type="text" class="input-with-icon" placeholder='Quantité' [value]="article.quantity" readonly>
                             <ion-icon src="/assets/icon/box.svg" class="input-icon"></ion-icon>
                         </ion-col>
-                        <ion-col size='5' class="start mb-2">
+                        <ion-col [size]='accountService.type === "user" ? 5 : 7' class="start mb-2">
                             <input type="text" class="input-with-icon" placeholder='Prix' [value]="article.articleId.price + ' €'" readonly>
                             <ion-icon src="/assets/icon/money.svg" class="input-icon"></ion-icon>
                         </ion-col>
@@ -126,7 +129,7 @@
                             <input type="text" class="input-with-icon" placeholder='TVA' [value]="article.articleId.tva" readonly>
                             <ion-icon src="/assets/icon/percentage.svg" class="input-icon percent-icon"></ion-icon>
                         </ion-col>
-                        <ion-col size='2' class="start mb-2">
+                        <ion-col size='2' class="start mb-2" *ngIf="accountService.type === 'user'">
                             <button class="app-btn btn-red pointer" (click)="deleteArticle(i)"><ion-icon name="trash-outline"></ion-icon></button>
                         </ion-col>
                         <ion-col *ngIf="bill.articles.length - 1 !== i" size='12' class="center">
@@ -152,10 +155,10 @@
                     <ion-skeleton-text *ngIf="!bill" style="width:100%;height: 40px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='12' class="center mt-2 mb-2">
+                <ion-col size='12' class="center mt-2 mb-2" *ngIf="accountService.type === 'user'">
                     <div class="light-separate-div"></div>
                 </ion-col>
-                <ion-col size='7' class="start mb-2">
+                <ion-col size='7' class="start mb-2" *ngIf="accountService.type === 'user'">
                     <label class="input-label">Nom article<span class="red-star">*</span></label>
                     <input type="text" id="articleName" class="input-with-icon" placeholder='Entrez un nom...' [(ngModel)]="selectedArticle.name" [matAutocomplete]="articlesAutocomplete" (keyup)="filterArticle()">
                     <ion-icon name="cart-outline" class="input-icon-with-label"></ion-icon>
@@ -165,26 +168,26 @@
                         {{article.name}} - {{article.price}}€ - {{ article.tva }}%
                     </mat-option>
                 </mat-autocomplete>
-                <ion-col size='5' class="start mb-2">
+                <ion-col size='5' class="start mb-2" *ngIf="accountService.type === 'user'">
                     <label class="input-label">Quantité<span class="red-star">*</span></label>
                     <input type="number" step="11" id="quantity" class="input-with-icon" placeholder='Entrez une quantité...' [(ngModel)]="selectedArticle.quantity">
                     <ion-icon src="/assets/icon/box.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='6' class="start mb-2">
+                <ion-col size='6' class="start mb-2" *ngIf="accountService.type === 'user'">
                     <label class="input-label">Prix<span class="red-star">*</span></label>
                     <input type="number" step="10" id="price" class="input-with-icon" placeholder='Entrez un prix...' [(ngModel)]="selectedArticle.price">
                     <ion-icon src="/assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='6' class="start mb-2">
+                <ion-col size='6' class="start mb-2" *ngIf="accountService.type === 'user'">
                     <label class="input-label">TVA<span class="red-star">*</span></label>
                     <input type="number" step="1" id="tva" class="input-with-icon" placeholder='Entrez une tva...' [(ngModel)]="selectedArticle.tva">
                     <ion-icon src="/assets/icon/percentage.svg" class="input-icon-with-label percent-icon"></ion-icon>
                 </ion-col>
-                <ion-col size='12' class="start mb-2">
+                <ion-col size='12' class="start mb-2" *ngIf="accountService.type === 'user'">
                     <label class="input-label">Description</label>
                     <textarea type="text" id="description" class="textarea-without-icon" placeholder="Entrez une description..." [(ngModel)]="selectedArticle.description"></textarea>
                 </ion-col>
-                <ion-col size='12' class="center mb-2">
+                <ion-col size='12' class="center mb-2" *ngIf="accountService.type === 'user'">
                     <button class="app-btn pointer" (click)="updateBillArticles()" type="button"><ion-icon name="add"></ion-icon>&nbsp;&nbsp;Ajouter un article</button>
                 </ion-col>
             </ion-row>
