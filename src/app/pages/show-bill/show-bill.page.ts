@@ -1,8 +1,9 @@
-import { formatDate, Location } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { AccountService } from 'src/app/services/account/account.service';
 import { ArticleService } from 'src/app/services/article/article.service';
 import { BillService } from 'src/app/services/bill/bill.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -32,10 +33,10 @@ export class ShowBillPage implements OnInit {
 
   constructor(
     private router: Router,
-    private location: Location,
     private route: ActivatedRoute,
     private billService: BillService,
     private userService: UserService,
+    public accountService: AccountService,
     private articleService: ArticleService,
     private loadingController: LoadingController,
     private toasterService: ToasterService,
@@ -264,7 +265,7 @@ export class ShowBillPage implements OnInit {
   }
 
   nagivateBack() {
-    this.location.back();
+    this.router.navigate(['/tabs/tab2']);
   }
 
 }

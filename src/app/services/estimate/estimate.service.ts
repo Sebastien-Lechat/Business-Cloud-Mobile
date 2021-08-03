@@ -24,6 +24,10 @@ export class EstimateService {
     return this.http.post<any>(this.url + `estimate`, data);
   }
 
+  transform(id: string) {
+    return this.http.post<any>(this.url + `estimate/transform/${id}`, {});
+  }
+
   update(data: EstimateUpdateI) {
     return this.http.put<any>(this.url + `estimate`, data);
   }
