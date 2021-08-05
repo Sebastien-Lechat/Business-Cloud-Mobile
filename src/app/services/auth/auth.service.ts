@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Plugins } from '@capacitor/core';
+import { FacebookLogin } from '@capacitor-community/facebook-login';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -89,26 +90,26 @@ export class AuthService {
 
   async loginToFacebook(): Promise<{ request: Observable<any>, token: string } | null> {
     const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos'];
-    const result = await Plugins.FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
+    const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result && result.accessToken) {
-      return { request: from(Plugins.FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)', 'name'] }) as Promise<any>), token: 'string' };
+      return { request: from(FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)', 'name'] }) as Promise<any>), token: 'string' };
     } else {
       return null;
     }
   }
 
   async logoutFromFacebook(): Promise<void> {
-    await Plugins.FacebookLogin.logout();
+    await FacebookLogin.logout();
   }
 
   /* -------------- Google Function -------------- */
 
   async loginToGoogle(): Promise<Observable<any>> {
-    return from(Plugins.GoogleAuth.signIn(null) as Promise<any>);
+    return from(GoogleAuth.signIn() as Promise<any>);
   }
 
   async logoutFromGoogle(): Promise<void> {
-    await Plugins.GoogleAuth.signOut(null);
+    await GoogleAuth.signOut();
   }
 
 }

@@ -1,21 +1,34 @@
 {
-  "appId": "fr.business.cloud.mobile",
-  "appName": "BusinessCloud",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    },
-    "GoogleAuth": {
-      "scopes": [
-        "profile",
-        "email"
-      ],
-      "serverClientId": "616972391210-aghr24t7utpfbu3ij1oov5n31vb2u6m5.apps.googleusercontent.com",
-      "forceCodeForRefreshToken": true
-    }
-  },
-  "cordova": {}
+	"appId": "fr.business.cloud.mobile",
+	"appName": "BusinessCloud",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "www",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		},
+		"GoogleAuth": {
+			"scopes": [
+				"profile",
+				"email"
+			],
+			"serverClientId": "616972391210-aghr24t7utpfbu3ij1oov5n31vb2u6m5.apps.googleusercontent.com",
+			"forceCodeForRefreshToken": false
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"alert"
+			]
+		}
+	},
+	"cordova": {},
+	"server": {
+		"url": "http://192.168.1.45:8101",
+		"cleartext": true,
+		"originalUrl": "http://192.168.1.45:8101",
+		"originalCleartext": true
+	}
 }

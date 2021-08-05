@@ -15,7 +15,20 @@
       ],
       "serverClientId": "616972391210-aghr24t7utpfbu3ij1oov5n31vb2u6m5.apps.googleusercontent.com",
       "forceCodeForRefreshToken": false
+    },
+    "PushNotifications": {
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
     }
   },
-  "cordova": {}
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.1.45:8101",
+    "cleartext": true,
+    "originalUrl": "http://192.168.1.45:8101",
+    "originalCleartext": true
+  }
 }
