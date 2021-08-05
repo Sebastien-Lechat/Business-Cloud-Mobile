@@ -51,6 +51,8 @@ export class Tab3Page implements OnInit {
           data.statistics.projectTimeTotal = !isNaN(parseFloat((data.statistics.projectTimeTotal as number / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.statistics.projectTimeTotal as number / (1000 * 60 * 60)).toFixed(2)) : 0;
         }
         this.statistics = data.statistics;
+        this.statistics.billUnpaidAmountTotal = parseFloat(this.statistics.billUnpaidAmountTotal.toFixed(2));
+        this.statistics.gainTotal = parseFloat(this.statistics.gainTotal.toFixed(1));
         if (this.statistics && this.nearlyLateBills && this.lateBills) {
           this.loading = false;
         }

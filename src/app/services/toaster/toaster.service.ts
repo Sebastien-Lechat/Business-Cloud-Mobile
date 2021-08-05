@@ -20,6 +20,17 @@ export class ToasterService {
     toast.present();
   }
 
+  public async presentWarningToast(messageToPrint: string, options: { toasterDuration?: number } = {}) {
+    const toast = await this.toastController.create({
+      message: messageToPrint,
+      duration: options.toasterDuration || 1500,
+      position: 'bottom',
+      color: 'warning',
+      // cssClass: 'toaster-div'
+    });
+    toast.present();
+  }
+
   public async presentErrorToast(messageToPrint: string, options: { error?: HttpErrorResponse, toasterDuration?: number } = {}) {
     if (options.error) { console.log(options.error); }
     const toast = await this.toastController.create({

@@ -5,6 +5,7 @@
 export const environment = {
   API: 'http://localhost:8081/api/',
   SOCKET: 'http://localhost:8081/',
+  STRIPE_KEY: 'pk_test_51GvL7NFBexKqC7NAlOGIRUczJOVrLvMJKHUDoauUsIyOTkDOiCGMBiC4Xpn0VdMoeWm0NyvjWGaRtBPh5GWLsNl600J0K4pDOQ',
   // API: 'https://businesscloud-api.herokuapp.com/api/',
   // SOCKET: 'https://businesscloud-api.herokuapp.com/',
   production: false

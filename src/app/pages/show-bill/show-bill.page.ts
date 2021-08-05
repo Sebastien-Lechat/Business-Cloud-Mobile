@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Stripe } from '@capacitor-community/stripe';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/account/account.service';
 import { ArticleService } from 'src/app/services/article/article.service';
@@ -12,7 +13,6 @@ import { UserService } from 'src/app/services/user/user.service';
 import { ArticleI } from 'src/interfaces/articleInterface';
 import { BillI } from 'src/interfaces/billInterface';
 import { UserJsonI } from 'src/interfaces/userInterface';
-
 @Component({
   selector: 'app-show-bill',
   templateUrl: './show-bill.page.html',
@@ -257,6 +257,19 @@ export class ShowBillPage implements OnInit {
         else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
       },
     });
+  }
+
+  async payBill() {
+    await this.billService.createPaymentSheet(this.bill.totalTTC);
+    Stripe.presentPaymentSheet()
+      .then((data: any) => {
+        console.log('Success', data);
+        if (data.paymentResult === 'paymentSheetCanceled') { this.toasterService.presentWarningToast('Payement annulé'); }
+        else if (data.paymentResult === 'paymentSheetFailed') { this.toasterService.presentErrorToast('Erreur lors du payement'); }
+        else if (data.paymentResult === 'paymentSheetCompleted') { this.toasterService.presentSuccessToast('Payement réussi'); }
+      }).catch((error: any) => {
+        console.log('Error', error);
+      });
   }
 
   navigateTo(path: string, id?: string) {

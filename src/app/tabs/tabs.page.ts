@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Stripe } from '@capacitor-community/stripe';
 import { ViewWillEnter } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 import { AccountService } from '../services/account/account.service';
 import { GlobalService } from '../services/global/global.service';
 import { SocketService } from '../services/global/socket.service';
@@ -13,6 +15,7 @@ import { SocketService } from '../services/global/socket.service';
 export class TabsPage implements OnInit, OnDestroy, ViewWillEnter {
 
   selected: string;
+  private stripeKey = environment.STRIPE_KEY;
 
   constructor(private router: Router, public accountService: AccountService, private socketService: SocketService, private globalService: GlobalService) {
     const url = this.router.routerState.snapshot.url;
@@ -41,6 +44,9 @@ export class TabsPage implements OnInit, OnDestroy, ViewWillEnter {
 
   ionViewWillEnter(): void {
     this.socketService.connect();
+    Stripe.initialize({
+      publishableKey: this.stripeKey,
+    });
   }
 
   ngOnDestroy(): void {
