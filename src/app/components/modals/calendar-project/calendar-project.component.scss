@@ -3,6 +3,10 @@ mgl-timeline-entry-dot {
     border-radius: 10px;
 }
 
+::ng-deep mgl-timeline {
+    min-height: 100%;
+}
+
 ::ng-deep .mgl-timeline-line {
     border-radius: 10px;
 }
@@ -14,4 +18,14 @@ mgl-timeline-entry-dot {
 
 ::ng-deep .mgl-timeline-entry-card-header {
     background-color: #DFE7F5 !important;
+}
+
+.timeline-h {
+    min-height: calc(100% - 1.9375rem - 6px - 40px - 0.7rem);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.minh-100 {
+    min-height: 100%;
 }

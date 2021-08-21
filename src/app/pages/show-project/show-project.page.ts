@@ -24,6 +24,7 @@ export class ShowProjectPage implements OnInit {
   client: ClientI;
   edit = true;
   billableTime = 0.00;
+  progression = 0;
 
   constructor(
     private modalController: ModalController,
@@ -56,6 +57,7 @@ export class ShowProjectPage implements OnInit {
         data.project.deadline = formatDate(data.project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.billableTime = !isNaN(parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
         this.project = data.project;
+        this.progression = this.calculateProgression(this.project.createdAt as string, this.project.deadline);
         this.userService.getUser(this.project.clientId.id).subscribe({
           next: async (data2: { error: false, user: ClientI }) => {
             this.client = data2.user;
@@ -89,7 +91,10 @@ export class ShowProjectPage implements OnInit {
     const modal = await this.modalController.create({
       component: CalendarProjectComponent,
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        projectId: this.id,
+      }
     });
     return await modal.present();
   }
@@ -98,7 +103,10 @@ export class ShowProjectPage implements OnInit {
     const modal = await this.modalController.create({
       component: ExpenseListComponent,
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        projectId: this.id,
+      }
     });
     return await modal.present();
   }
@@ -110,6 +118,12 @@ export class ShowProjectPage implements OnInit {
   navigateTo(path: string, id?: string) {
     if (id) { this.router.navigate([path, id]); }
     else { this.router.navigate([path]); }
+  }
+
+  calculateProgression(start: string, end: string) {
+    if (new Date(end).getTime() - Date.now() < 0) { return 1; }
+    else if (Date.now() - new Date(start).getTime() < 0) { return 0; }
+    else { return parseFloat(((Date.now() - new Date(start).getTime()) / (new Date(end).getTime() - new Date(start).getTime())).toFixed(2)); }
   }
 
   nagivateBack() {

@@ -43,7 +43,7 @@
                 <ion-col size='12' class="start mb-2">
                     <label class="input-label">Progression</label>
                     <div class="progress-input">
-                        <ion-progress-bar *ngIf="project" [value]="project.progression / 100"></ion-progress-bar>
+                        <ion-progress-bar *ngIf="project" [value]="progression"></ion-progress-bar>
                         <ion-skeleton-text *ngIf="!project" style="width:100%;height: 13px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
                     </div>
                 </ion-col>

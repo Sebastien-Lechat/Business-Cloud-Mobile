@@ -119,49 +119,6 @@
             </ion-col>
             <ion-skeleton-text *ngIf="!statistics" style="width:100%;height: 60px;border-radius: 10px;margin-bottom: 8px !important;margin: 0 6px;" animated></ion-skeleton-text>
             <ion-col size='12' class="start mt-2 mb-2">
-                <h2 class="header-title">Factures impayées</h2>
-            </ion-col>
-            <ion-list *ngIf="loading" class="card-list-stat">
-                <ion-skeleton-text *ngFor="let item of [].constructor(3);" class="skeleton-card" animated></ion-skeleton-text>
-            </ion-list>
-            <ion-list *ngIf="lateBills && !loading" class="card-list-stat">
-                <ion-card class="app-card pointer" *ngFor="let bill of lateBills">
-                    <ion-card-content *ngIf="bill.billNum" (click)="navigateTo('/tabs/show-bill/', bill.id)">
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size='6'>
-                                    <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
-                                    <p *ngIf="bill.clientId?.name" class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
-                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
-                                </ion-col>
-                                <ion-col size='4'>
-                                    <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                    <p class="card-text-rest">{{ bill.totalTTC - bill.amountPaid }} €</p>
-                                    <p class="card-text-time">&nbsp;</p>
-                                </ion-col>
-                                <ion-col size='2' class="center">
-                                    <div *ngIf="bill.status === 'Non payée'" class="status-div-warning"></div>
-                                    <div *ngIf="bill.status === 'Partiellement payée'" class="status-div-warning"></div>
-                                    <div *ngIf="bill.status === 'En retard'" class="status-div-danger"></div>
-                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </ion-card-content>
-                </ion-card>
-                <ion-card class="app-card pointer no-item-card" *ngIf="lateBills && lateBills.length === 0">
-                    <ion-card-content>
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size='12' class="center">
-                                    Aucune facture non payée
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </ion-card-content>
-                </ion-card>
-            </ion-list>
-            <ion-col size='12' class="start mt-2 mb-2">
                 <h2 class="header-title">Dates limites proches</h2>
             </ion-col>
             <ion-list *ngIf="loading" class="card-list-stat">
@@ -198,6 +155,49 @@
                             <ion-row>
                                 <ion-col size='12' class="center">
                                     Aucune facture avec des dates limites proches
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
+            <ion-col size='12' class="start mt-2 mb-2">
+                <h2 class="header-title">Factures impayées</h2>
+            </ion-col>
+            <ion-list *ngIf="loading" class="card-list-stat">
+                <ion-skeleton-text *ngFor="let item of [].constructor(3);" class="skeleton-card" animated></ion-skeleton-text>
+            </ion-list>
+            <ion-list *ngIf="lateBills && !loading" class="card-list-stat">
+                <ion-card class="app-card pointer" *ngFor="let bill of lateBills">
+                    <ion-card-content *ngIf="bill.billNum" (click)="navigateTo('/tabs/show-bill/', bill.id)">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='6'>
+                                    <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
+                                    <p *ngIf="bill.clientId?.name" class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
+                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                </ion-col>
+                                <ion-col size='4'>
+                                    <h2 class="card-title hide-overflow">&nbsp;</h2>
+                                    <p class="card-text-rest">{{ bill.totalTTC - bill.amountPaid }} €</p>
+                                    <p class="card-text-time">&nbsp;</p>
+                                </ion-col>
+                                <ion-col size='2' class="center">
+                                    <div *ngIf="bill.status === 'Non payée'" class="status-div-warning"></div>
+                                    <div *ngIf="bill.status === 'Partiellement payée'" class="status-div-warning"></div>
+                                    <div *ngIf="bill.status === 'En retard'" class="status-div-danger"></div>
+                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+                <ion-card class="app-card pointer no-item-card" *ngIf="lateBills && lateBills.length === 0">
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='12' class="center">
+                                    Aucune facture non payée
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
