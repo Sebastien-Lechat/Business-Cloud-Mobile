@@ -20,7 +20,15 @@ export class ProjectService {
     return this.http.get<any>(this.url + `project/` + id);
   }
 
+  transformProject(id: string) {
+    return this.http.post<any>(this.url + `project/transform/${id}`, {});
+  }
+
   create(data: ProjectCreateI) {
     return this.http.post<any>(this.url + `project`, data);
+  }
+
+  delete(id: string) {
+    return this.http.delete<any>(this.url + `project/${id}`);
   }
 }

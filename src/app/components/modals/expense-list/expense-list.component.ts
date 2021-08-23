@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { ExpenseJsonI } from 'src/interfaces/expenseInterface';
@@ -21,6 +21,7 @@ export class ExpenseListComponent implements OnInit {
     private loadingController: LoadingController,
     private toasterService: ToasterService,
     private expenseService: ExpenseService,
+    private alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -35,7 +36,6 @@ export class ExpenseListComponent implements OnInit {
         data.expenses.map((expense: ExpenseJsonI) => {
           expense.createdAt = formatDate(expense.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         });
-        console.log(data.expenses);
         this.expenses = data.expenses;
         await loading.dismiss();
       },
@@ -70,21 +70,40 @@ export class ExpenseListComponent implements OnInit {
   }
 
   async deleteExpense(id: string): Promise<void> {
-    const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Suppression...' });
-    await loading.present();
-    this.expenseService.delete(id).subscribe({
-      next: async () => {
-        this.expenses = this.expenses.filter(expense => expense.id !== id);
-        await loading.dismiss();
-        this.toasterService.presentSuccessToast('Suppression du temps réussie');
-      },
-      error: async (error) => {
-        await loading.dismiss();
-        if (error.error.code === '110201') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
-        else if (error.error.code === '110202') { this.toasterService.presentErrorToast('ID du temps invalide'); }
-        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
-      }
+    const alert = await this.alertController.create({
+      cssClass: 'alert-class',
+      message: 'Êtes-vous sur de vouloir supprimer cette dépense ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => { }
+        }, {
+          text: 'Confirmer',
+          role: 'confirm',
+          handler: async () => {
+            await alert.present();
+            const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Suppression...' });
+            await loading.present();
+            this.expenseService.delete(id).subscribe({
+              next: async () => {
+                this.expenses = this.expenses.filter(expense => expense.id !== id);
+                await loading.dismiss();
+                this.toasterService.presentSuccessToast('Suppression du temps réussie');
+              },
+              error: async (error) => {
+                await loading.dismiss();
+                if (error.error.code === '110201') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
+                else if (error.error.code === '110202') { this.toasterService.presentErrorToast('ID du temps invalide'); }
+                else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+              }
+            });
+          }
+        }
+      ]
     });
+
+    await alert.present();
   }
 
   formatTime(time: number): string {

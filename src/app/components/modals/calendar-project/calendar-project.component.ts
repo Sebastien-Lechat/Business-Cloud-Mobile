@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { TimeService } from 'src/app/services/time/time.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { TimeJsonI } from 'src/interfaces/timeInterface';
@@ -21,6 +21,7 @@ export class CalendarProjectComponent implements OnInit {
     public timeService: TimeService,
     private loadingController: LoadingController,
     private toasterService: ToasterService,
+    private alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -37,7 +38,6 @@ export class CalendarProjectComponent implements OnInit {
           time.durationFormated = this.formatTime(time.duration);
         });
         this.times = data.times;
-        console.log(this.times);
         await loading.dismiss();
       },
       error: async (error: HttpErrorResponse) => {
@@ -79,21 +79,39 @@ export class CalendarProjectComponent implements OnInit {
   }
 
   async deleteTime(id: string): Promise<void> {
-    const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Suppression...' });
-    await loading.present();
-    this.timeService.delete(id).subscribe({
-      next: async () => {
-        this.times = this.times.filter(time => time.id !== id);
-        await loading.dismiss();
-        this.toasterService.presentSuccessToast('Suppression du temps réussie');
-      },
-      error: async (error) => {
-        await loading.dismiss();
-        if (error.error.code === '110201') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
-        else if (error.error.code === '110202') { this.toasterService.presentErrorToast('ID du temps invalide'); }
-        else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
-      }
+    const alert = await this.alertController.create({
+      cssClass: 'alert-class',
+      message: 'Êtes-vous sur de vouloir supprimer ce temps ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => { }
+        }, {
+          text: 'Confirmer',
+          role: 'confirm',
+          handler: async () => {
+            const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Suppression...' });
+            await loading.present();
+            this.timeService.delete(id).subscribe({
+              next: async () => {
+                this.times = this.times.filter(time => time.id !== id);
+                await loading.dismiss();
+                this.toasterService.presentSuccessToast('Suppression du temps réussie');
+              },
+              error: async (error) => {
+                await loading.dismiss();
+                if (error.error.code === '110201') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
+                else if (error.error.code === '110202') { this.toasterService.presentErrorToast('ID du temps invalide'); }
+                else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+              }
+            });
+          }
+        }
+      ]
     });
+
+    await alert.present();
   }
 
   dismiss() {

@@ -2,7 +2,7 @@ import { formatDate, Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonRouterOutlet, LoadingController, ModalController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, ModalController } from '@ionic/angular';
 import { CalendarProjectComponent } from 'src/app/components/modals/calendar-project/calendar-project.component';
 import { ExpenseListComponent } from 'src/app/components/modals/expense-list/expense-list.component';
 import { TimeProjectComponent } from 'src/app/components/modals/time-project/time-project.component';
@@ -36,7 +36,7 @@ export class ShowProjectPage implements OnInit {
     private projectService: ProjectService,
     private loadingController: LoadingController,
     private toasterService: ToasterService,
-    // private alertController: AlertController,
+    private alertController: AlertController,
   ) { }
 
   ngOnInit() {
@@ -53,7 +53,6 @@ export class ShowProjectPage implements OnInit {
     await loading.present();
     this.projectService.getOneProject(this.id).subscribe({
       next: async (data: { error: false, project: ProjectJsonI }) => {
-        console.log(data.project);
         data.project.createdAt = formatDate(data.project.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         data.project.deadline = formatDate(data.project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.billableTime = !isNaN(parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
@@ -71,6 +70,81 @@ export class ShowProjectPage implements OnInit {
         this.toasterService.presentErrorToast('Impossible de récupérer cette facture.', { error });
       }
     });
+  }
+
+  async deleteProject(): Promise<void> {
+    const alert = await this.alertController.create({
+      cssClass: 'alert-class',
+      message: 'Êtes-vous sur de vouloir supprimer ce projet ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => { }
+        }, {
+          text: 'Confirmer',
+          role: 'confirm',
+          handler: async () => {
+            const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Suppression...' });
+            await loading.present();
+            this.projectService.delete(this.project.id).subscribe({
+              next: async () => {
+                await loading.dismiss();
+                this.router.navigate(['/tabs/tab1']).then(() => {
+                  this.toasterService.presentSuccessToast('Suppression du projet réussi');
+                });
+              },
+              error: async (error: HttpErrorResponse) => {
+                await loading.dismiss();
+                if (error.error.code === '108251') { this.toasterService.presentErrorToast('ID du projet manquant'); }
+                else if (error.error.code === '108252') { this.toasterService.presentErrorToast('ID du projet invalide'); }
+                else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async transformProject() {
+    const alert = await this.alertController.create({
+      cssClass: 'alert-class',
+      message: 'Êtes-vous sur de vouloir transformer ce projet en facture ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'Confirmer',
+          role: 'confirm',
+          handler: async () => {
+            const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Transformation...' });
+            await loading.present();
+            this.projectService.transformProject(this.project.id).subscribe({
+              next: async (data: { error: false, billId: string }) => {
+                await loading.dismiss();
+                this.router.navigate(['/tabs/show-bill/', data.billId]).then(() => {
+                  this.toasterService.presentSuccessToast('Transformation du projet réussi');
+                });
+              },
+              error: async (error) => {
+                await loading.dismiss();
+                if (error.error.code === '108301') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
+                else if (error.error.code === '108302') { this.toasterService.presentErrorToast('ID du temps invalide'); }
+                else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async showAddTimeModal() {

@@ -25,7 +25,7 @@
                     <ion-skeleton-text *ngIf="!project" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px" animated></ion-skeleton-text>
                 </ion-col>
                 <ion-col size='2' class="center pb-4 ps-0">
-                    <ion-icon name="trash-outline" class="app-icon trash-icon"></ion-icon>
+                    <ion-icon name="trash-outline" class="app-icon trash-icon" (click)="deleteProject()"></ion-icon>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -130,7 +130,7 @@
                     <button class="app-btn pointer" (click)="showAddTimeModal()"><ion-icon name="time"></ion-icon>&nbsp;&nbsp;Enregistrer du temps</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
-                    <button class="app-btn pointer"><ion-icon name="document-text"></ion-icon>&nbsp;&nbsp;Transformer en facture</button>
+                    <button class="app-btn pointer" (click)="transformProject()"><ion-icon name="document-text"></ion-icon>&nbsp;&nbsp;Transformer en facture</button>
                 </ion-col>
                 <ion-col size='3' class="center mb-2 mt-2">
                     <div class="separate-div"></div>
