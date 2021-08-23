@@ -40,7 +40,8 @@ export class Tab1Page implements OnInit {
           project.progression = this.calculateProgression(project.createdAt as string, project.deadline);
 
           project.totalHours = !isNaN(parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
-          project.total = project.fixedRate ? project.fixedRate - (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours;
+          project.total = project.fixedRate ? project.fixedRate + (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours +
+            (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0);
         });
         this.projects = data.projects;
         this.filteredProjects = data.projects;

@@ -53,6 +53,7 @@ export class ShowProjectPage implements OnInit {
     await loading.present();
     this.projectService.getOneProject(this.id).subscribe({
       next: async (data: { error: false, project: ProjectJsonI }) => {
+        console.log(data.project);
         data.project.createdAt = formatDate(data.project.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         data.project.deadline = formatDate(data.project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.billableTime = !isNaN(parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
@@ -96,6 +97,9 @@ export class ShowProjectPage implements OnInit {
         projectId: this.id,
       }
     });
+    modal.onDidDismiss().then(() => {
+      if (this.id) { this.initData(); }
+    });
     return await modal.present();
   }
 
@@ -107,6 +111,9 @@ export class ShowProjectPage implements OnInit {
       componentProps: {
         projectId: this.id,
       }
+    });
+    modal.onDidDismiss().then(() => {
+      if (this.id) { this.initData(); }
     });
     return await modal.present();
   }

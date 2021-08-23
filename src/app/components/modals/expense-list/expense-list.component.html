@@ -11,4 +11,36 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <div *ngIf="expenses" class="w-100">
+                <ion-row class="w-100" *ngFor="let expense of expenses; let i = index">
+                    <ion-col size='7' class="start">
+                        <input type="text" class="input-with-icon" placeholder='Employé' value="{{ expense.userId.name }}" title="{{ expense.userId.name }}" readonly>
+                        <ion-icon name="person-outline" class="input-icon"></ion-icon>
+                    </ion-col>
+                    <ion-col size='5' class="start">
+                        <input type="date" class="input-without-icon" placeholder="Date d'enrgistrement" value="{{ expense.createdAt }}" readonly>
+                        <ion-icon name="calendar-outline" class="input-icon"></ion-icon>
+                    </ion-col>
+                    <ion-col size='6' class="start">
+                        <input type="text" class="input-with-icon" placeholder="Prix" value="{{ expense.price + '€' }}" readonly>
+                        <ion-icon src="assets/icon/money.svg" class="input-icon"></ion-icon>
+                    </ion-col>
+                    <ion-col size='3' class="start" *ngIf="expense.billable">
+                        <button class="app-btn pointer" title="facturable" (click)="editExpense(expense.id, !expense.billable)"><ion-icon name="card"></ion-icon></button>
+                    </ion-col>
+                    <ion-col size='3' class="start" *ngIf="!expense.billable">
+                        <button class="app-btn btn-orange pointer" title="non-facturable" (click)="editExpense(expense.id, !expense.billable)"><ion-icon name="card"></ion-icon></button>
+                    </ion-col>
+                    <ion-col size='3' class="start">
+                        <button class="app-btn btn-red pointer" (click)="deleteExpense(expense.id)"><ion-icon name="trash-outline"></ion-icon></button>
+                    </ion-col>
+                    <ion-col *ngIf="expenses.length - 1 !== i" size='12' class="center mt-2">
+                        <div class="light-separate-grey"></div>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </ion-row>
+    </ion-grid>
 </ion-content>

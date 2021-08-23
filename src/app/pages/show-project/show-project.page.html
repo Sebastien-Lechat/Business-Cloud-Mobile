@@ -100,7 +100,8 @@
                         </div>
                         <div class="text-stat-card">
                             <p class="input-label">Montant facturable</p>
-                            <p class="stat-green">{{ project.fixedRate ? project.fixedRate - (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * billableTime }} €</p>
+                            <p class="stat-green">{{ project.fixedRate ? project.fixedRate + (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * billableTime + (project.billing?.additionalExpense ? project.billing?.additionalExpense
+                                : 0) }} €</p>
                         </div>
                     </div>
                 </ion-col>

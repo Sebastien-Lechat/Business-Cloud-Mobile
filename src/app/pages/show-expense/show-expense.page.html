@@ -22,10 +22,10 @@
                     <p *ngIf="expense && expense.expenseNum">{{ expense.expenseNum }}</p>
                     <p *ngIf="expense && expense.userExpenseNum">{{ expense.userExpenseNum }}</p>
                     <ion-skeleton-text *ngIf="!expense" style="width:100%;height: 33px;border-radius: 10px;margin: 0;" animated></ion-skeleton-text>
-                    <span *ngIf="expense" class="badge status-warning">En attente</span>
-                    <ion-skeleton-text *ngIf="!expense" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px" animated></ion-skeleton-text>
+                    <!-- <span *ngIf="expense && expense.userExpenseNum" class="badge status-warning">En attente</span> -->
+                    <!-- <ion-skeleton-text *ngIf="!expense && expense.userExpenseNum" style="width:40%;height: 24px;border-radius: 10px;margin-top: 8px" animated></ion-skeleton-text> -->
                 </ion-col>
-                <ion-col size='2' class="center mb-3">
+                <ion-col size='2' class="center">
                     <ion-icon name="trash-outline" class="app-icon trash-icon pointer"></ion-icon>
                 </ion-col>
             </ion-row>

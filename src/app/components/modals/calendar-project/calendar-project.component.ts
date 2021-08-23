@@ -1,4 +1,5 @@
 import { formatDate } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { TimeService } from 'src/app/services/time/time.service';
@@ -39,7 +40,7 @@ export class CalendarProjectComponent implements OnInit {
         console.log(this.times);
         await loading.dismiss();
       },
-      error: async (error) => {
+      error: async (error: HttpErrorResponse) => {
         await loading.dismiss();
         this.toasterService.presentErrorToast('Impossible de récupérer les temps du projets.', { error });
       }
