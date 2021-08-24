@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectJsonI } from 'src/interfaces/projectInterface';
@@ -34,8 +35,13 @@ export class Tab1Page implements OnInit {
       next: (data: { error: false, projects: ProjectJsonI[] }) => {
         this.sortProject(this.filteredProjects, 'createdAt', 0);
         data.projects.map((project: ProjectJsonI) => {
+          project.createdAt = formatDate(project.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+          project.deadline = formatDate(project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
+          project.progression = this.calculateProgression(project.createdAt as string, project.deadline);
+
           project.totalHours = !isNaN(parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
-          project.total = project.fixedRate ? project.fixedRate - (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours;
+          project.total = project.fixedRate ? project.fixedRate + (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours +
+            (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0);
         });
         this.projects = data.projects;
         this.filteredProjects = data.projects;
@@ -72,6 +78,10 @@ export class Tab1Page implements OnInit {
     else if (this.filterSorting === '2') { this.sortProject(this.filteredProjects, 'startDate', 0); }
     else if (this.filterSorting === '3') { this.sortProject(this.filteredProjects, 'deadline', 1); }
     else if (this.filterSorting === '4') { this.sortProject(this.filteredProjects, 'deadline', 0); }
+    else if (this.filterSorting === '5') { this.sortProject(this.filteredProjects, 'total', 1); }
+    else if (this.filterSorting === '6') { this.sortProject(this.filteredProjects, 'total', 0); }
+    else if (this.filterSorting === '7') { this.sortProject(this.filteredProjects, 'totalHours', 1); }
+    else if (this.filterSorting === '8') { this.sortProject(this.filteredProjects, 'totalHours', 0); }
   }
 
   sortProject(array: Array<any>, value: string, direction: 0 | 1) {
@@ -81,6 +91,12 @@ export class Tab1Page implements OnInit {
   refreshData(event: any) {
     this.initData();
     event.target.complete();
+  }
+
+  calculateProgression(start: string, end: string) {
+    if (new Date(end).getTime() - Date.now() < 0) { return 1; }
+    else if (Date.now() - new Date(start).getTime() < 0) { return 0; }
+    else { return parseFloat(((Date.now() - new Date(start).getTime()) / (new Date(end).getTime() - new Date(start).getTime())).toFixed(2)); }
   }
 
   navigateTo(path: string, id?: string) {

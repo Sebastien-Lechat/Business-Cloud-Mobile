@@ -27,6 +27,12 @@ export class UserService {
     if (route.includes('/article')) {
       if (method === 'POST') { return 'Création d\'un article'; }
       else if (method === 'DELETE') { return 'Suppression d\'un article'; }
+    } else if (route.includes('/bill/payment/')) {
+      if (method === 'POST') { return 'Payement d\'une facture'; }
+    } else if (route.includes('/bill/payment-sheet')) {
+      if (method === 'POST') { return 'Tentative de payement'; }
+    } else if (route.includes('/bill/') && route.includes('/customer/')) {
+      if (method === 'POST') { return 'Envoi d\'un mail de relance'; }
     } else if (route.includes('/bill')) {
       if (method === 'POST') { return 'Création d\'une facture'; }
       else if (method === 'PUT') { return 'Modification d\'une facture'; }
@@ -45,7 +51,10 @@ export class UserService {
       else if (method === 'DELETE') { return 'Suppression d\'un employé'; }
     } else if (route.includes('/expense')) {
       if (method === 'POST') { return 'Création d\'une dépense'; }
+      else if (method === 'PUT') { return 'Modification d\'une dépense'; }
       else if (method === 'DELETE') { return 'Suppression d\'une dépense'; }
+    } else if (route.includes('/project/transform/')) {
+      if (method === 'POST') { return 'Transformation d\'un projet en facture'; }
     } else if (route.includes('/project')) {
       if (method === 'POST') { return 'Création d\'un projet'; }
       else if (method === 'PUT') { return 'Modification d\'un projet'; }

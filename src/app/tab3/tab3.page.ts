@@ -17,6 +17,7 @@ export class Tab3Page implements OnInit {
   statistics: StatisticI;
   nearlyLateBills: any[];
   lateBills: any[];
+  payedBills: any[];
   loading = false;
 
   constructor(
@@ -62,7 +63,16 @@ export class Tab3Page implements OnInit {
       next: (data: { error: boolean, bills: BillI[] }) => {
         this.lateBills = data.bills.filter((bill: BillI) => bill.status === 'En retard');
         this.nearlyLateBills = data.bills.filter((bill: BillI) => bill.status !== 'En retard' && bill.status !== 'Payée');
-        this.nearlyLateBills.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        this.payedBills = data.bills.filter((bill: BillI) => bill.status === 'Payée');
+
+        this.lateBills.sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
+        this.nearlyLateBills.sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime());
+        this.payedBills.sort((a, b) => new Date(b.payementDate).getTime() - new Date(a.payementDate).getTime());
+
+        if (this.lateBills.length > 5) { this.lateBills = this.lateBills.slice(0, 5); }
+        if (this.nearlyLateBills.length > 5) { this.nearlyLateBills = this.nearlyLateBills.slice(0, 5); }
+        if (this.payedBills.length > 5) { this.payedBills = this.payedBills.slice(0, 5); }
+
         if (this.statistics && this.nearlyLateBills && this.lateBills) {
           this.loading = false;
         }

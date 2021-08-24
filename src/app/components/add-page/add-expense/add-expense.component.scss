@@ -14,3 +14,16 @@
         height: 23px;
     }
 }
+
+.img-responsive {
+    width: 100%;
+    border: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #27476b;
+    background-color: white;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    height: 71.2vw;
+}

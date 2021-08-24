@@ -4,7 +4,7 @@
     <app-load-bar [active]="loading"></app-load-bar>
     <ion-grid>
         <ion-row>
-            <ion-col size='5'>
+            <ion-col size='6'>
                 <ion-item class="select-input">
                     <ion-select id="status" placeholder="Statut..." value="0" (ionChange)="filterProjects($event)" okText="Ok" cancelText="Fermer">
                         <ion-select-option value="0">Statut...</ion-select-option>
@@ -14,7 +14,7 @@
                     </ion-select>
                 </ion-item>
             </ion-col>
-            <ion-col size='5'>
+            <ion-col size='6'>
                 <ion-item class="select-input">
                     <ion-select id="sorting" placeholder="Tri..." value="0" (ionChange)="filterProjects($event)" okText="Ok" cancelText="Fermer">
                         <ion-select-option value="0">Tri...</ion-select-option>
@@ -29,9 +29,9 @@
                     </ion-select>
                 </ion-item>
             </ion-col>
-            <ion-col size='2' class="center">
+            <!-- <ion-col size='2' class="center">
                 <button class="app-btn-outline pointer" type="button"><ion-icon name="calendar-outline" class="app-icon calendar-icon"></ion-icon></button>
-            </ion-col>
+            </ion-col> -->
             <ion-col size='12' class="center">
                 <input type="text" class="input-with-icon" placeholder='Recherche...' [(ngModel)]="searchValue" (keyup)="filterProjects()">
                 <ion-icon name="search-outline" class="input-icon"></ion-icon>
@@ -66,6 +66,12 @@
                                 <div *ngIf="project.status === 'En cours'" class="status-div-warning"></div>
                                 <div *ngIf="project.status === 'En retard'" class="status-div-danger"></div>
                                 <div *ngIf="project.status === 'Terminé'" class="status-div-success"></div>
+                            </ion-col>
+                            <ion-col size='12' class="center">
+                                <div class="progress-input">
+                                    <ion-progress-bar *ngIf="project" [value]="project.progression"></ion-progress-bar>
+                                    <ion-skeleton-text *ngIf="!project" style="width:100%;height: 13px;border-radius: 10px;margin: 0;margin-top: 10px;" animated></ion-skeleton-text>
+                                </div>
                             </ion-col>
                         </ion-row>
                     </ion-grid>

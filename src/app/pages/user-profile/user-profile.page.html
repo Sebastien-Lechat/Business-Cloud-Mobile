@@ -50,12 +50,12 @@
                     <ion-card-content *ngIf="file.estimateNum" (click)="navigateTo('/tabs/show-quote/', file.id)">
                         <ion-grid>
                             <ion-row>
-                                <ion-col size='7'>
+                                <ion-col size='6'>
                                     <h2 *ngIf="file.estimateNum" class="card-title hide-overflow">{{ file.estimateNum }}</h2>
                                     <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
                                     <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
-                                <ion-col size='3'>
+                                <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
                                     <p class="card-text-rest">{{ file.totalTTC }} €</p>
                                     <p class="card-text-time">&nbsp;</p>
@@ -72,14 +72,14 @@
                     <ion-card-content *ngIf="file.billNum" (click)="navigateTo('/tabs/show-bill/', file.id)">
                         <ion-grid>
                             <ion-row>
-                                <ion-col size='7'>
+                                <ion-col size='6'>
                                     <h2 *ngIf="file.billNum" class="card-title hide-overflow">{{ file.billNum }}</h2>
                                     <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
                                     <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
-                                <ion-col size='3'>
+                                <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                    <p class="card-text-rest">{{ file.totalTTC }} €</p>
+                                    <p [class.card-text-rest]='file.totalTTC === 0' [class.card-text-profit]='file.totalTTC - file.amountPaid === 0' [class.card-text-loss]='file.totalTTC - file.amountPaid > 0'>{{ file.totalTTC - file.amountPaid > 0 ? file.totalTTC - file.amountPaid : file.amountPaid }} €</p>
                                     <p class="card-text-time">&nbsp;</p>
                                 </ion-col>
                                 <ion-col size='2' class="center">

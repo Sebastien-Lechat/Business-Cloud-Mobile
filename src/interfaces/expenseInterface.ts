@@ -32,7 +32,7 @@ export interface ExpenseJsonI {
     category: string;
     file: string;
     description: string;
-    userId: string;
+    userId: { name: string, _id: string };
     projectId?: string;
     billable: boolean;
     createdAt: Date | string;

@@ -1,6 +1,7 @@
 import { formatDate, Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
@@ -19,11 +20,11 @@ import { ClientI } from 'src/interfaces/userInterface';
 export class ShowExpensePage implements OnInit {
 
   id = '';
-
   expense: any;
   employee: ClientI;
-
   count = 0;
+  fileImg: any;
+  showFlag = false;
 
   constructor(
     private router: Router,
@@ -34,7 +35,7 @@ export class ShowExpensePage implements OnInit {
     private loadingController: LoadingController,
     private toasterService: ToasterService,
     private userExpenseService: UserExpenseService,
-    // private alertController: AlertController,
+    private afStorage: AngularFireStorage
   ) { }
 
   articles: Array<TArticles> = testData;
@@ -51,6 +52,7 @@ export class ShowExpensePage implements OnInit {
       next: async (data: { error: false, expense: ExpenseJsonI }) => {
         data.expense.createdAt = formatDate(data.expense.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.expense = data.expense;
+        this.loadImg(this.expense.file);
         this.userService.getUser(this.expense.userId).subscribe({
           next: async (data2: { error: false, user: ClientI }) => {
             this.employee = data2.user;
@@ -95,6 +97,23 @@ export class ShowExpensePage implements OnInit {
 
   nagivateBack() {
     this.location.back();
+  }
+
+  showLightbox() {
+    this.showFlag = true;
+  }
+
+  closeEventHandler() {
+    this.showFlag = false;
+  }
+
+  loadImg(path: string) {
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.fileImg = data;
+      }
+    });
   }
 
 }

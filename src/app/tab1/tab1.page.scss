@@ -5,3 +5,10 @@
         min-height: 100%;
     }
 }
+
+.progress-input {
+    ion-progress-bar {
+        margin: 0;
+        height: 9px;
+    }
+}

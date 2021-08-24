@@ -96,7 +96,8 @@ export class LoginPage implements OnInit {
             },
           });
         },
-        error: () => {
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
           this.toasterService.presentErrorToast('Connexion à Facebook impossible');
         }
       });
@@ -128,7 +129,8 @@ export class LoginPage implements OnInit {
           },
         });
       },
-      error: () => {
+      error: (error: HttpErrorResponse) => {
+        console.log(error);
         this.toasterService.presentErrorToast('Connexion à Google impossible');
       }
     });

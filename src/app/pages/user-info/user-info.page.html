@@ -29,14 +29,14 @@
                             </div>
                             <ng-image-fullscreen-view [images]="[{image: avatar}]" [imageIndex]="0" [show]="showFlag" (close)="closeEventHandler()"></ng-image-fullscreen-view>
                         </div>
-                        <div *ngIf="selectedPicture">
+                        <div *ngIf="selectedPicture" class="w-100 center">
                             <image-cropper [imageChangedEvent]="selectedPicture" [maintainAspectRatio]="true" [aspectRatio]="3/3" format="png" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
                         </div>
                     </ion-col>
                     <ion-col size='12' class="start mb-4">
                         <button *ngIf="!selectedPicture" class="app-btn pointer" (click)="selectFile()"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;Appareil Photo</button>
                         <button *ngIf="selectedPicture" class="app-btn pointer" (click)="upload()">Valider</button>
-                        <input type="file" #file class="file-input" hidden (change)="fileChangeEvent($event)" accept="image/*" capture="environment">
+                        <input type="file" #file class="file-input" hidden (change)="fileChangeEvent($event)" accept="image/*">
                     </ion-col>
                     <ion-col size='12' class="start mb-2">
                         <label class="input-label">Nom et Prénom<span class="red-star">*</span></label>

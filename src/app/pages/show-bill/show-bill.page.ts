@@ -263,10 +263,16 @@ export class ShowBillPage implements OnInit {
     await this.billService.createPaymentSheet(this.bill.totalTTC);
     Stripe.presentPaymentSheet()
       .then((data: any) => {
-        console.log('Success', data);
         if (data.paymentResult === 'paymentSheetCanceled') { this.toasterService.presentWarningToast('Payement annulé'); }
         else if (data.paymentResult === 'paymentSheetFailed') { this.toasterService.presentErrorToast('Erreur lors du payement'); }
-        else if (data.paymentResult === 'paymentSheetCompleted') { this.toasterService.presentSuccessToast('Payement réussi'); }
+        else if (data.paymentResult === 'paymentSheetCompleted') {
+          this.billService.payBill(this.bill.id).subscribe({
+            next: () => {
+              this.initData();
+              this.toasterService.presentSuccessToast('Payement réussi');
+            },
+          });
+        }
       }).catch((error: any) => {
         console.log('Error', error);
       });

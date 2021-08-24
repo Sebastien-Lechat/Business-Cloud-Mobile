@@ -14,20 +14,25 @@
             <input type="number" step="10" id="price" class="input-with-icon" placeholder='Entrez un prix...' [(ngModel)]="price">
             <ion-icon src="assets/icon/money.svg" class="input-icon-with-label"></ion-icon>
         </ion-col>
-        <ion-col size='9' class="start mb-2">
+        <ion-col size='12' class="start mb-2">
             <label class="input-label">Catégorie<span class="red-star">*</span></label>
             <ion-item class="select-input">
                 <ion-select placeholder="Séléctionnez une catégorie..." okText="Ok" cancelText="Fermer" [(ngModel)]="category">
+                    <ion-select-option value="Frais de déplacement">Frais de déplacement</ion-select-option>
+                    <ion-select-option value="Main-d’œuvre externe">Main-d’œuvre externe</ion-select-option>
                     <ion-select-option value="Achat d'un serveur">Achat d'un serveur</ion-select-option>
-                    <ion-select-option value="Temps facturés">Temps facturés</ion-select-option>
+                    <ion-select-option value="Location d'un serveur">Location d'un serveur</ion-select-option>
+                    <ion-select-option value="Achat de matériel informatique">Achat de matériels</ion-select-option>
+                    <ion-select-option value="Location de matériel informatique">Location de matériels</ion-select-option>
                     <ion-select-option value="Achats divers">Achats divers</ion-select-option>
+                    <ion-select-option value="Charges diverses">Charges diverses</ion-select-option>
                 </ion-select>
             </ion-item>
         </ion-col>
-        <ion-col size='3' class="start mb-2">
+        <!-- <ion-col size='3' class="start mb-2">
             <label class="input-label">&nbsp;</label>
             <button class="app-btn pointer"><ion-icon name="add"></ion-icon></button>
-        </ion-col>
+        </ion-col> -->
         <ion-col size='12' class="start mb-2">
             <label class="input-label">Classe de numéro de compte<span class="red-star">*</span></label>
             <ion-item class="select-input">
@@ -53,7 +58,7 @@
             </ion-item>
         </ion-col>
         <ion-col size='12' class="start mb-2">
-            <label class="input-label" for="projet">Projet</label>
+            <label class="input-label" for="projet">Projet<span class="red-star">*</span></label>
             <input type="text" id="projet" class="input-with-icon" placeholder='Séléctionnez un projet...' [(ngModel)]="selectedProject.name" [matAutocomplete]="projectAutocomplete" (keyup)="filterProject()">
             <ion-icon name="pie-chart-outline" class="input-icon-with-label"></ion-icon>
         </ion-col>
@@ -66,11 +71,18 @@
             <label class="input-label">Document</label>
             <!-- <div class="picture-div"></div> -->
         </ion-col>
-        <ion-col size='6' class="start mb-2">
-            <button class="app-btn pointer"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;Photo</button>
-        </ion-col>
-        <ion-col size='6' class="start mb-2">
-            <button class="app-btn pointer"><ion-icon name="link"></ion-icon>&nbsp;&nbsp;Document</button>
+        <ion-col size='12' class="start mb-2">
+            <div *ngIf="croppedImage && !selectedPicture" class="w-100 center">
+                <div class="img-responsive" alt="" style="background-image: url('{{ croppedImage }}');" (click)="showLightbox()">
+                </div>
+                <ng-image-fullscreen-view [images]="[{image: croppedImage}]" [imageIndex]="0" [show]="showFlag" (close)="closeEventHandler()"></ng-image-fullscreen-view>
+            </div>
+            <div *ngIf="selectedPicture" class="w-100 center">
+                <image-cropper [imageChangedEvent]="selectedPicture" [maintainAspectRatio]="true" [aspectRatio]="4/3" format="png" (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()"></image-cropper>
+            </div>
+            <button *ngIf="!selectedPicture" class="app-btn pointer" (click)="selectFile()"><ion-icon name="camera"></ion-icon>&nbsp;&nbsp;Document</button>
+            <button *ngIf="selectedPicture" class="app-btn pointer" (click)="validate()">Valider</button>
+            <input type="file" #file class="file-input" hidden (change)="fileChangeEvent($event)" accept="image/*">
         </ion-col>
         <ion-col size='12' class="start mb-3">
             <label class="input-label">Description de la dépense</label>

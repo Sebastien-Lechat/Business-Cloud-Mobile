@@ -590,8 +590,20 @@
                 opacity: 1;
             }
         }
+        ion-select::part(icon) {
+            width: 18px !important;
+            height: 18px !important;
+        }
     }
     
+    //  ::ng-deep ion-item.select-input {
+    //     ion-select {
+    //         .select-icon-inner {
+    //             width: 18px !important;
+    //             height: 18px !important;
+    //         }
+    //     }
+    // }
     .bill-title {
         margin-top: 0.25rem;
         p {
@@ -612,6 +624,8 @@
             height: 13px;
             border-radius: 10px;
             margin-top: 10px;
+            --background: rgb(209, 209, 209);
+            --progress-background: #1570ca;
         }
     }
     

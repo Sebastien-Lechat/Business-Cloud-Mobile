@@ -50,7 +50,10 @@ export class BillService {
       customerId: customer,
       merchantDisplayName: 'BusinessCloud Mobile',
       customerEphemeralKeySecret: ephemeralKey,
-      // style: 'alwaysDark',
     });
+  }
+
+  payBill(id: string) {
+    return this.http.post<any>(this.url + `bill/payment/${id}`, {});
   }
 }

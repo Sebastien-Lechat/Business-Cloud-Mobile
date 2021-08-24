@@ -17,4 +17,4 @@ import { ShowProjectPage } from './show-project.page';
   ],
   declarations: [ShowProjectPage]
 })
-export class ShowProjectPageModule {}
+export class ShowProjectPageModule { }
