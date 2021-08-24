@@ -37,8 +37,7 @@ export class Tab1Page implements OnInit {
         data.projects.map((project: ProjectJsonI) => {
           project.createdAt = formatDate(project.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
           project.deadline = formatDate(project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
-          project.progression = this.calculateProgression(project.createdAt as string, project.deadline);
-
+          project.progression = project.status !== 'Terminé' ? this.calculateProgression(project.createdAt as string, project.deadline) : 1;
           project.totalHours = !isNaN(parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
           project.total = project.fixedRate ? project.fixedRate + (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours +
             (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0);

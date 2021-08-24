@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Device, DeviceId } from '@capacitor/device';
-import { ActionPerformed, PushNotifications, PushNotificationSchema, Token } from '@capacitor/push-notifications';
+import { PushNotifications, Token } from '@capacitor/push-notifications';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -57,15 +57,17 @@ export class GlobalService {
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        alert('Push received: ' + JSON.stringify(notification));
+      () => {
+        // notification: PushNotificationSchema
+        // alert('Push received: ' + JSON.stringify(notification));
       }
     );
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: ActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
+      () => {
+        // notification: ActionPerformed
+        // alert('Push action performed: ' + JSON.stringify(notification));
       }
     );
   }

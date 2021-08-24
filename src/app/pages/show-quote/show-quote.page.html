@@ -98,7 +98,7 @@
                 <ion-col size='12' class="center mb-2">
                     <button class="app-btn pointer" (click)="sendPDF()"><ion-icon name="cloud-download"></ion-icon>&nbsp;&nbsp;Télécharger</button>
                 </ion-col>
-                <ion-col size='12' class="center mb-2" *ngIf="estimate?.status !== 'Accepté'">
+                <ion-col size='12' class="center mb-2" *ngIf="estimate?.status !== 'Accepté' && accountService.type === 'client'">
                     <button class="app-btn pointer" (click)="acceptEstimate()"><ion-icon name="checkmark-circle"></ion-icon>&nbsp;&nbsp;Accepter le devis</button>
                 </ion-col>
                 <ion-col size='4' class="center mb-2">

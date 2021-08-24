@@ -230,6 +230,8 @@
             margin: 0;
             margin-top: 3px;
             width: 100%;
+            display: flex;
+            align-items: center;
         }
         .card-text-date {
             color: #00000090;
@@ -237,6 +239,8 @@
             margin: 0;
             margin-top: 3px;
             width: 100%;
+            display: flex;
+            align-items: center;
         }
         .card-text-time {
             text-align: center;
@@ -245,6 +249,9 @@
             margin: 0;
             margin-top: 3px;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .card-text-profit {
             text-align: center;

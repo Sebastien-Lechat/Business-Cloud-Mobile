@@ -132,7 +132,8 @@
                                 <ion-col size='6'>
                                     <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
                                     <p class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
-                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                    <p class="card-text-date hide-overflow">
+                                        <ion-icon name="hourglass-outline" class="me-1"></ion-icon> {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
@@ -173,7 +174,8 @@
                                 <ion-col size='6'>
                                     <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
                                     <p *ngIf="bill.clientId?.name" class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
-                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                    <p class="card-text-date hide-overflow">
+                                        <ion-icon name="hourglass-outline" class="me-1"></ion-icon> {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
@@ -213,7 +215,8 @@
                                 <ion-col size='6'>
                                     <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
                                     <p *ngIf="bill.clientId?.name" class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
-                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                    <p class="card-text-date hide-overflow">
+                                        <ion-icon name="hourglass-outline" class="me-1"></ion-icon> {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
@@ -227,7 +230,7 @@
                         </ion-grid>
                     </ion-card-content>
                 </ion-card>
-                <ion-card class="app-card pointer no-item-card" *ngIf="lateBills && lateBills.length === 0">
+                <ion-card class="app-card pointer no-item-card" *ngIf="payedBills && payedBills.length === 0">
                     <ion-card-content>
                         <ion-grid>
                             <ion-row>
