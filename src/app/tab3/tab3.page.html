@@ -7,8 +7,8 @@
                 <h2 class="header-title">Statistiques</h2>
             </ion-col>
             <ion-col size='4' class="around mb-2">
-                <ion-icon name="" class="app-icon"></ion-icon>
-                <ion-icon name="calendar-outline" class="app-icon"></ion-icon>
+                <!-- <ion-icon name="" class="app-icon"></ion-icon>
+                <ion-icon name="calendar-outline" class="app-icon"></ion-icon> -->
             </ion-col>
             <ion-col *ngIf="statistics && statistics?.gainTotal !== undefined" size='6' class="center py-0">
                 <div class="stat-card">
@@ -136,14 +136,12 @@
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                    <p class="card-text-rest">{{ bill.totalTTC - bill.amountPaid }} €</p>
+                                    <p [class.card-text-rest]='bill.totalTTC === 0' [class.card-text-profit]='bill.totalTTC - bill.amountPaid === 0' [class.card-text-loss]='bill.totalTTC - bill.amountPaid > 0'>{{ bill.totalTTC - bill.amountPaid > 0 ? bill.totalTTC - bill.amountPaid : bill.amountPaid }} €</p>
                                     <p class="card-text-time">&nbsp;</p>
                                 </ion-col>
                                 <ion-col size='2' class="center">
                                     <div *ngIf="bill.status === 'Non payée'" class="status-div-warning"></div>
                                     <div *ngIf="bill.status === 'Partiellement payée'" class="status-div-warning"></div>
-                                    <div *ngIf="bill.status === 'En retard'" class="status-div-danger"></div>
-                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
@@ -179,14 +177,11 @@
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
-                                    <p class="card-text-rest">{{ bill.totalTTC - bill.amountPaid }} €</p>
+                                    <p [class.card-text-rest]='bill.totalTTC === 0' [class.card-text-profit]='bill.totalTTC - bill.amountPaid === 0' [class.card-text-loss]='bill.totalTTC - bill.amountPaid > 0'>{{ bill.totalTTC - bill.amountPaid > 0 ? bill.totalTTC - bill.amountPaid : bill.amountPaid }} €</p>
                                     <p class="card-text-time">&nbsp;</p>
                                 </ion-col>
                                 <ion-col size='2' class="center">
-                                    <div *ngIf="bill.status === 'Non payée'" class="status-div-warning"></div>
-                                    <div *ngIf="bill.status === 'Partiellement payée'" class="status-div-warning"></div>
                                     <div *ngIf="bill.status === 'En retard'" class="status-div-danger"></div>
-                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
                                 </ion-col>
                             </ion-row>
                         </ion-grid>
@@ -198,6 +193,46 @@
                             <ion-row>
                                 <ion-col size='12' class="center">
                                     Aucune facture non payée
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
+            <ion-col size='12' class="start mt-2 mb-2">
+                <h2 class="header-title">Factures payées</h2>
+            </ion-col>
+            <ion-list *ngIf="loading" class="card-list-stat">
+                <ion-skeleton-text *ngFor="let item of [].constructor(3);" class="skeleton-card" animated></ion-skeleton-text>
+            </ion-list>
+            <ion-list *ngIf="payedBills && !loading" class="card-list-stat">
+                <ion-card class="app-card pointer" *ngFor="let bill of payedBills">
+                    <ion-card-content *ngIf="bill.billNum" (click)="navigateTo('/tabs/show-bill/', bill.id)">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='6'>
+                                    <h2 *ngIf="bill.billNum" class="card-title hide-overflow">{{ bill.billNum }}</h2>
+                                    <p *ngIf="bill.clientId?.name" class="card-text-client hide-overflow">{{ bill.clientId.name }}</p>
+                                    <p class="card-text-date hide-overflow">Fin: {{ bill.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                </ion-col>
+                                <ion-col size='4'>
+                                    <h2 class="card-title hide-overflow">&nbsp;</h2>
+                                    <p [class.card-text-rest]='bill.totalTTC === 0' [class.card-text-profit]='bill.totalTTC - bill.amountPaid === 0' [class.card-text-loss]='bill.totalTTC - bill.amountPaid > 0'>{{ bill.totalTTC - bill.amountPaid > 0 ? bill.totalTTC - bill.amountPaid : bill.amountPaid }} €</p>
+                                    <p class="card-text-time">&nbsp;</p>
+                                </ion-col>
+                                <ion-col size='2' class="center">
+                                    <div *ngIf="bill.status === 'Payée'" class="status-div-success"></div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+                <ion-card class="app-card pointer no-item-card" *ngIf="lateBills && lateBills.length === 0">
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size='12' class="center">
+                                    Aucune facture payées
                                 </ion-col>
                             </ion-row>
                         </ion-grid>

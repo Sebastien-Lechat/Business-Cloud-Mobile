@@ -61,6 +61,11 @@ p {
             background: white;
         }
     }
+    ion-grid {
+        background: transparent;
+        padding-right: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
+        padding-left: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
+    }
 }
 
 .app-btn-auth {

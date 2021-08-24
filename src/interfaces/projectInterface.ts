@@ -33,6 +33,12 @@ export interface ProjectCreateI {
     description?: string;
 }
 
+export interface ProjectUpdateI {
+    id?: string;
+    title?: string;
+    status?: string;
+}
+
 export interface ProjectJsonI {
     projectNum: string;
     id: string;

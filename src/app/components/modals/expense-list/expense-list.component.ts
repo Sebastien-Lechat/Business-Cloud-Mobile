@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
@@ -17,6 +18,7 @@ export class ExpenseListComponent implements OnInit {
   expenses: ExpenseJsonI[];
 
   constructor(
+    private router: Router,
     public modalController: ModalController,
     private loadingController: LoadingController,
     private toasterService: ToasterService,
@@ -118,6 +120,11 @@ export class ExpenseListComponent implements OnInit {
     this.modalController.dismiss({
       dismissed: true
     });
+  }
+
+  showExpense(id: string) {
+    this.dismiss();
+    this.router.navigate(['/tabs/show-expense/', id]);
   }
 
 }

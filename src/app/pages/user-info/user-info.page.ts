@@ -111,13 +111,6 @@ export class UserInfoPage implements OnInit {
     this.croppedImage = event.base64;
   }
 
-  // imageLoaded(image: any) {
-  //   console.log(image);
-  // }
-  // cropperReady(event: any) {
-  //   console.log(event);
-  // }
-
   loadImageFailed() {
     this.toasterService.presentErrorToast('Erreur lors de l\'importation');
   }

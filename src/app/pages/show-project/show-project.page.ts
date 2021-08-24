@@ -109,6 +109,43 @@ export class ShowProjectPage implements OnInit {
     await alert.present();
   }
 
+  async completeProject() {
+    const alert = await this.alertController.create({
+      cssClass: 'alert-class',
+      message: 'Êtes-vous sur de vouloir terminer ce projet ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+          }
+        }, {
+          text: 'Confirmer',
+          role: 'confirm',
+          handler: async () => {
+            const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Modification...' });
+            await loading.present();
+            this.projectService.update({ id: this.project.id, status: 'Terminé' }).subscribe({
+              next: async () => {
+                await loading.dismiss();
+                this.toasterService.presentSuccessToast('Projet terminé');
+                this.initData();
+              },
+              error: async (error) => {
+                await loading.dismiss();
+                if (error.error.code === '108201') { this.toasterService.presentErrorToast('ID du projet manquant'); }
+                else if (error.error.code === '108202') { this.toasterService.presentErrorToast('ID du projet invalide'); }
+                else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async transformProject() {
     const alert = await this.alertController.create({
       cssClass: 'alert-class',
@@ -135,7 +172,7 @@ export class ShowProjectPage implements OnInit {
               error: async (error) => {
                 await loading.dismiss();
                 if (error.error.code === '108301') { this.toasterService.presentErrorToast('Données obligatoires manquantes'); }
-                else if (error.error.code === '108302') { this.toasterService.presentErrorToast('ID du temps invalide'); }
+                else if (error.error.code === '108302') { this.toasterService.presentErrorToast('ID du projet invalide'); }
                 else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
               }
             });

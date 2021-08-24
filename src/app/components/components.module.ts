@@ -5,6 +5,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { IonicModule } from '@ionic/angular';
 import { MglTimelineModule } from 'angular-mgl-timeline';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddArticleComponent } from './add-page/add-article/add-article.component';
 import { AddBillComponent } from './add-page/add-bill/add-bill.component';
 import { AddBtnComponent } from './add-page/add-btn/add-btn.component';
@@ -25,6 +26,7 @@ import { UserExpenseListComponent } from './modals/user-expense-list/user-expens
 import { UserHistoryComponent } from './modals/user-history/user-history.component';
 import { ArticleTableRowComponent } from './table/article-table/article-table-row/article-table-row.component';
 import { ArticleTableComponent } from './table/article-table/article-table.component';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { ArticleTableComponent } from './table/article-table/article-table.compo
     CommonModule,
     MglTimelineModule,
     MatAutocompleteModule,
+    ImageCropperModule,
+    NgImageFullscreenViewModule,
     NgCircleProgressModule.forRoot(),
   ],
   exports: [

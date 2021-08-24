@@ -78,6 +78,10 @@ export class Tab1Page implements OnInit {
     else if (this.filterSorting === '2') { this.sortProject(this.filteredProjects, 'startDate', 0); }
     else if (this.filterSorting === '3') { this.sortProject(this.filteredProjects, 'deadline', 1); }
     else if (this.filterSorting === '4') { this.sortProject(this.filteredProjects, 'deadline', 0); }
+    else if (this.filterSorting === '5') { this.sortProject(this.filteredProjects, 'total', 1); }
+    else if (this.filterSorting === '6') { this.sortProject(this.filteredProjects, 'total', 0); }
+    else if (this.filterSorting === '7') { this.sortProject(this.filteredProjects, 'totalHours', 1); }
+    else if (this.filterSorting === '8') { this.sortProject(this.filteredProjects, 'totalHours', 0); }
   }
 
   sortProject(array: Array<any>, value: string, direction: 0 | 1) {

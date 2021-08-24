@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ShowExpensePageRoutingModule } from './show-expense-routing.module';
 
 import { ShowExpensePage } from './show-expense.page';
+import { NgImageFullscreenViewModule } from 'ng-image-fullscreen-view';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ShowExpensePageRoutingModule
+    ShowExpensePageRoutingModule,
+    NgImageFullscreenViewModule,
   ],
   declarations: [ShowExpensePage]
 })
-export class ShowExpensePageModule {}
+export class ShowExpensePageModule { }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ProjectCreateI } from 'src/interfaces/projectInterface';
+import { ProjectCreateI, ProjectUpdateI } from 'src/interfaces/projectInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,10 @@ export class ProjectService {
 
   create(data: ProjectCreateI) {
     return this.http.post<any>(this.url + `project`, data);
+  }
+
+  update(data: ProjectUpdateI) {
+    return this.http.put<any>(this.url + `project`, data);
   }
 
   delete(id: string) {

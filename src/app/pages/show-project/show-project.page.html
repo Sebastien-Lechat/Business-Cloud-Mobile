@@ -120,14 +120,17 @@
                         <ion-icon name="calendar"></ion-icon>&nbsp;&nbsp;Voir le calendrier
                     </button>
                 </ion-col>
-                <ion-col size='12' class="center mb-2" (click)="redirectToExpense()">
+                <ion-col size='12' class="center mb-2" (click)="redirectToExpense()" *ngIf="project && project.status !== 'Terminé'">
                     <button class="app-btn pointer"><ion-icon src="/assets/icon/moneyFill.svg"></ion-icon>&nbsp;&nbsp;Ajouter une dépense</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2" (click)="showListExpenseModal()">
                     <button class="app-btn pointer"><ion-icon name="list"></ion-icon>&nbsp;&nbsp;Liste des dépenses</button>
                 </ion-col>
-                <ion-col size='12' class="center mb-2">
+                <ion-col size='12' class="center mb-2" *ngIf="project && project.status !== 'Terminé'">
                     <button class="app-btn pointer" (click)="showAddTimeModal()"><ion-icon name="time"></ion-icon>&nbsp;&nbsp;Enregistrer du temps</button>
+                </ion-col>
+                <ion-col size='12' class="center mb-2" *ngIf="project && project.status !== 'Terminé'">
+                    <button class="app-btn pointer" (click)="completeProject()"><ion-icon name="checkmark-circle"></ion-icon>&nbsp;&nbsp;Terminer le projet</button>
                 </ion-col>
                 <ion-col size='12' class="center mb-2">
                     <button class="app-btn pointer" (click)="transformProject()"><ion-icon name="document-text"></ion-icon>&nbsp;&nbsp;Transformer en facture</button>
