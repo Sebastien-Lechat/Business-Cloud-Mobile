@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectJsonI } from 'src/interfaces/projectInterface';
+import { AccountService } from '../services/account/account.service';
 import { ProjectService } from '../services/project/project.service';
 
 @Component({
@@ -20,7 +21,11 @@ export class Tab1Page implements OnInit {
   filterStatus = '0';
   filterSorting = '0';
 
-  constructor(private router: Router, private projectService: ProjectService) { }
+  constructor(
+    private router: Router,
+    private projectService: ProjectService,
+    public accountService: AccountService,
+  ) { }
 
   ngOnInit(): void {
   }

@@ -50,6 +50,10 @@ p {
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+}
+
 .scroll-list {
     height: calc(100vh - 63px - 60px - 214px - 6.15rem);
     min-height: 25vh;

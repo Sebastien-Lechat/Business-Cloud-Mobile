@@ -91,6 +91,7 @@ export class AddClientComponent implements OnInit {
         numRCS: (this.numRCS.trim() ? this.numRCS.trim() : ''),
         numSIRET: (this.numSIRET.trim() ? this.numSIRET.trim() : ''),
         note: (this.note.trim() ? this.note.trim() : ''),
+        userId: this.selectedEmployee.selectedId ? this.selectedEmployee.selectedId : ''
       };
 
       this.clientService.create(creationData).subscribe({

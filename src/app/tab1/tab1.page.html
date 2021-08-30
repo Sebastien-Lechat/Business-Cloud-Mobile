@@ -1,6 +1,6 @@
 <ion-content>
     <app-header [headerText]="'Projets'"></app-header>
-    <app-add-btn></app-add-btn>
+    <app-add-btn *ngIf="accountService.role === 'Gérant'"></app-add-btn>
     <app-load-bar [active]="loading"></app-load-bar>
     <ion-grid>
         <ion-row>
