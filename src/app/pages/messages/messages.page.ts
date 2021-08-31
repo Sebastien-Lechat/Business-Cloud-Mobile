@@ -22,7 +22,7 @@ export class MessagesPage implements OnInit, OnDestroy {
   message = '';
   newIsPrinted = false;
 
-  target: { _id: string, name: string, socketToken: string, isConnected?: boolean };
+  target: { _id: string, name: string, socketToken: string, phone?: string, isConnected?: boolean };
 
   loading = false;
   interval: any;

@@ -9,7 +9,9 @@
                 <h2 class="header-title center text-center hide-overflow" *ngIf="conversation">{{ target.name }} <span class="connexion-dot" [class.connected]="target?.isConnected" [class.disconnected]="!target?.isConnected"></span></h2>
             </ion-col>
             <ion-col size='2' class="end">
-                <ion-icon name="call" class="app-icon pointer"></ion-icon>
+                <a *ngIf="target && target.phone" href="{{ 'tel:' + target.phone }}">
+                    <ion-icon name="call" class="app-icon pointer"></ion-icon>
+                </a>
             </ion-col>
         </ion-row>
     </ion-grid>

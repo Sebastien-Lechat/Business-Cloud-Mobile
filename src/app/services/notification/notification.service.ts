@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -16,7 +16,7 @@ export class NotificationService {
   }
 
   count() {
-    return this.http.get<any>(this.url + `notifications/count`);
+    return this.http.get<any>(this.url + `notifications/count`, { headers: new HttpHeaders({ timeout: `${60 * 60000}` }) });
   }
 
   delete(id: string) {
