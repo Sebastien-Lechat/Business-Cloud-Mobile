@@ -37,7 +37,12 @@
         <ion-grid>
             <ion-row>
                 <ion-col size='6' class="center ps-0">
-                    <button class="app-btn pointer" [disabled]="!user || !user.phone"><ion-icon name="call"></ion-icon>&nbsp;&nbsp;Appeler</button>
+                    <a *ngIf="!user || !user.phone" class="w-100">
+                        <button class="app-btn pointer" [disabled]="true"><ion-icon name="call"></ion-icon>&nbsp;&nbsp;Appeler</button>
+                    </a>
+                    <a *ngIf="user && user.phone" href="{{ 'tel:' + user.phone }}" class="w-100">
+                        <button class="app-btn pointer"><ion-icon name="call"></ion-icon>&nbsp;&nbsp;Appeler</button>
+                    </a>
                 </ion-col>
                 <ion-col size='6' class="center pe-0">
                     <button class="app-btn pointer" [disabled]="!user" (click)="startConversation(user.id)"><ion-icon name="chatbox" style="padding-top:2px"></ion-icon>&nbsp;&nbsp;Message</button>
@@ -52,8 +57,10 @@
                             <ion-row>
                                 <ion-col size='6'>
                                     <h2 *ngIf="file.estimateNum" class="card-title hide-overflow">{{ file.estimateNum }}</h2>
-                                    <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
-                                    <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                    <p class="card-text-client hide-overflow">
+                                        <ion-icon name="person-outline" class="me-1"></ion-icon> {{ file.clientId.name }}</p>
+                                    <p class="card-text-date hide-overflow">
+                                        <ion-icon name="hourglass-outline" class="me-1"></ion-icon> {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>
@@ -74,8 +81,10 @@
                             <ion-row>
                                 <ion-col size='6'>
                                     <h2 *ngIf="file.billNum" class="card-title hide-overflow">{{ file.billNum }}</h2>
-                                    <p class="card-text-client hide-overflow">{{ file.clientId.name }}</p>
-                                    <p class="card-text-date hide-overflow">Fin: {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
+                                    <p class="card-text-client hide-overflow">
+                                        <ion-icon name="person-outline" class="me-1"></ion-icon> {{ file.clientId.name }}</p>
+                                    <p class="card-text-date hide-overflow">
+                                        <ion-icon name="hourglass-outline" class="me-1"></ion-icon> {{ file.deadline | date: 'longDate' : 'Europe/France' : 'fr-FR'}}</p>
                                 </ion-col>
                                 <ion-col size='4'>
                                     <h2 class="card-title hide-overflow">&nbsp;</h2>

@@ -32,11 +32,15 @@ export class UserService {
     } else if (route.includes('/bill/payment-sheet')) {
       if (method === 'POST') { return 'Tentative de payement'; }
     } else if (route.includes('/bill/') && route.includes('/customer/')) {
-      if (method === 'POST') { return 'Envoi d\'un mail de relance'; }
+      if (method === 'POST') { return 'Envoi d\'un mail de relance de facture'; }
     } else if (route.includes('/bill')) {
       if (method === 'POST') { return 'Création d\'une facture'; }
       else if (method === 'PUT') { return 'Modification d\'une facture'; }
       else if (method === 'DELETE') { return 'Suppression d\'une facture'; }
+    } else if (route.includes('/estimate/') && route.includes('/customer/')) {
+      if (method === 'POST') { return 'Envoi d\'un mail de relance de devis'; }
+    } else if (route.includes('/estimate/transform/')) {
+      if (method === 'POST') { return 'Acceptation d\'un devis'; }
     } else if (route.includes('/estimate')) {
       if (method === 'POST') { return 'Création d\'un devis'; }
       else if (method === 'PUT') { return 'Modification d\'un devis'; }

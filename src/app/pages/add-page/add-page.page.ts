@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AccountService } from 'src/app/services/account/account.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
@@ -15,7 +16,11 @@ export class AddPagePage implements OnInit {
 
   expenseProjectId: string;
 
-  constructor(private router: Router, private globalService: GlobalService) { }
+  constructor(
+    private router: Router,
+    private globalService: GlobalService,
+    public accountService: AccountService,
+  ) { }
 
   ngOnInit() {
     if (this.router.getCurrentNavigation().extras?.state?.projectId) {

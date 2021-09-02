@@ -251,9 +251,10 @@ export class ShowBillPage implements OnInit {
         this.toasterService.presentSuccessToast('Email avec le PDF envoyé');
       },
       error: (error: HttpErrorResponse) => {
-        if (error.error.code === '114051') { this.toasterService.presentErrorToast('ID manquant'); }
-        else if (error.error.code === '114052') { this.toasterService.presentErrorToast('Type manquant'); }
+        if (error.error.code === '114051') { this.toasterService.presentErrorToast('Champs important manquants'); }
+        else if (error.error.code === '114052') { this.toasterService.presentErrorToast('Type invalide'); }
         else if (error.error.code === '114053') { this.toasterService.presentErrorToast('ID du client invalide'); }
+        else if (error.error.code === '114054') { this.toasterService.presentErrorToast('Le document n\'existe plus'); }
         else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
       },
     });

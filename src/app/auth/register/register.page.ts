@@ -35,12 +35,12 @@ export class RegisterPage implements OnInit {
 
 
   constructor(private router: Router, private authService: AuthService, private toasterService: ToasterService, private loadingController: LoadingController) {
-    if (this.router.getCurrentNavigation().extras.state.name) { this.name = this.router.getCurrentNavigation().extras.state.name; }
-    if (this.router.getCurrentNavigation().extras.state.email) { this.email = this.router.getCurrentNavigation().extras.state.email; }
-    if (this.router.getCurrentNavigation().extras.state.avatar) { this.avatar = this.router.getCurrentNavigation().extras.state.avatar; }
-    if (this.router.getCurrentNavigation().extras.state.birthday) { this.dateNaissance = this.router.getCurrentNavigation().extras.state.birthday; }
-    if (this.router.getCurrentNavigation().extras.state.googleAuth) { this.googleAuth = this.router.getCurrentNavigation().extras.state.googleAuth; }
-    if (this.router.getCurrentNavigation().extras.state.facebookAuth) { this.facebookAuth = this.router.getCurrentNavigation().extras.state.facebookAuth; }
+    if (this.router.getCurrentNavigation().extras?.state?.name) { this.name = this.router.getCurrentNavigation().extras?.state?.name; }
+    if (this.router.getCurrentNavigation().extras?.state?.email) { this.email = this.router.getCurrentNavigation().extras?.state?.email; }
+    if (this.router.getCurrentNavigation().extras?.state?.avatar) { this.avatar = this.router.getCurrentNavigation().extras?.state?.avatar; }
+    if (this.router.getCurrentNavigation().extras?.state?.birthday) { this.dateNaissance = this.router.getCurrentNavigation().extras?.state?.birthday; }
+    if (this.router.getCurrentNavigation().extras?.state?.googleAuth) { this.googleAuth = this.router.getCurrentNavigation().extras?.state?.googleAuth; }
+    if (this.router.getCurrentNavigation().extras?.state?.facebookAuth) { this.facebookAuth = this.router.getCurrentNavigation().extras?.state?.facebookAuth; }
   }
 
   ngOnInit() {

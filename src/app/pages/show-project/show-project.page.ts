@@ -57,7 +57,7 @@ export class ShowProjectPage implements OnInit {
         data.project.deadline = formatDate(data.project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
         this.billableTime = !isNaN(parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((data.project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
         this.project = data.project;
-        this.progression = this.calculateProgression(this.project.createdAt as string, this.project.deadline);
+        this.progression = this.project.status !== 'Terminé' ? this.calculateProgression(this.project.createdAt as string, this.project.deadline) : 1;
         this.userService.getUser(this.project.clientId.id).subscribe({
           next: async (data2: { error: false, user: ClientI }) => {
             this.client = data2.user;

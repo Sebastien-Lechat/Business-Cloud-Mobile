@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProjectJsonI } from 'src/interfaces/projectInterface';
+import { AccountService } from '../services/account/account.service';
 import { ProjectService } from '../services/project/project.service';
 
 @Component({
@@ -20,7 +21,11 @@ export class Tab1Page implements OnInit {
   filterStatus = '0';
   filterSorting = '0';
 
-  constructor(private router: Router, private projectService: ProjectService) { }
+  constructor(
+    private router: Router,
+    private projectService: ProjectService,
+    public accountService: AccountService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -37,8 +42,7 @@ export class Tab1Page implements OnInit {
         data.projects.map((project: ProjectJsonI) => {
           project.createdAt = formatDate(project.createdAt, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
           project.deadline = formatDate(project.deadline, 'yyyy-MM-dd', 'fr-FR', 'Europe/France');
-          project.progression = this.calculateProgression(project.createdAt as string, project.deadline);
-
+          project.progression = project.status !== 'Terminé' ? this.calculateProgression(project.createdAt as string, project.deadline) : 1;
           project.totalHours = !isNaN(parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2))) ? parseFloat((project.billing?.billableTime / (1000 * 60 * 60)).toFixed(2)) : 0;
           project.total = project.fixedRate ? project.fixedRate + (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0) : project.hourlyRate * project.totalHours +
             (project.billing?.additionalExpense ? project.billing?.additionalExpense : 0);

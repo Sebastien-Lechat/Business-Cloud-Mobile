@@ -88,16 +88,6 @@ export class AuthService {
 
   /* -------------- Facebook Function -------------- */
 
-  async loginToFacebook(): Promise<{ request: Observable<any>, token: string } | null> {
-    const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos'];
-    const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
-    if (result && result.accessToken) {
-      return { request: from(FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)', 'name'] }) as Promise<any>), token: 'string' };
-    } else {
-      return null;
-    }
-  }
-
   async logoutFromFacebook(): Promise<void> {
     await FacebookLogin.logout();
   }

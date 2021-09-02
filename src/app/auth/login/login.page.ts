@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FacebookLogin, FacebookLoginResponse } from '@capacitor-community/facebook-login';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
@@ -68,15 +69,14 @@ export class LoginPage implements OnInit {
   }
 
   async facebookLogin() {
-    const { request, token } = await this.authService.loginToFacebook();
-    if (!request) {
-      this.toasterService.presentErrorToast('Connexion à Facebook impossible');
-    } else {
-      request.subscribe({
-        next: async (data: FacebookDataI) => {
-          const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Vérification...' });
-          await loading.present();
-          this.authService.externalLogin('facebook', data.id, data.email, token).subscribe({
+    const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos'];
+    await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS })
+      .then(async (loginData: FacebookLoginResponse) => {
+        const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Vérification...' });
+        await loading.present();
+        console.log(loginData);
+        FacebookLogin.getProfile({ fields: ['email', 'birthday', 'picture.width(500).height(500)', 'name'] }).then(async (data: FacebookDataI) => {
+          this.authService.externalLogin('facebook', data.id, data.email, 'eyJhbGciOiJIUzIR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDY3MjBkOTI4NTA1MDWFpbCI6InNlYl9sZUBob9.WxvZwH-HMWSMDdOHK351Wcr_GmaC4KUJp4').subscribe({
             next: async () => {
               await loading.dismiss();
               this.router.navigate(['/tabs/tab3']);
@@ -86,7 +86,7 @@ export class LoginPage implements OnInit {
               if (error.error.code === '101401') { this.toasterService.presentErrorToast('Erreur lors de la connexion'); }
               else if (error.error.code === '101402') { this.toasterService.presentErrorToast('Adresse email invalide'); }
               else if (error.error.code === '101403') {
-                this.router.navigate(['/auth/register'], { state: { email: data.email, name: data.name, avatar: data.picture.data.url, birthday: data.birthday, facebookAuth: { id: data.id, token } } }).then(() => {
+                this.router.navigate(['/auth/register'], { state: { email: data.email, name: data.name, avatar: data.picture.data.url, birthday: data.birthday, facebookAuth: { id: data.id, token: 'eyJhbGciOiJIUzIR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDY3MjBkOTI4NTA1MDWFpbCI6InNlYl9sZUBob9.WxvZwH-HMWSMDdOHK351Wcr_GmaC4KUJp4' } } }).then(() => {
                   this.toasterService.presentSuccessToast('Connexion réussie, compléter votre compte avec les informations nécessaires.');
                 });
               }
@@ -95,13 +95,16 @@ export class LoginPage implements OnInit {
               else { this.toasterService.presentErrorToast('Erreur interne au serveur', { error }); }
             },
           });
-        },
-        error: (error: HttpErrorResponse) => {
+        }).catch(async (error: HttpErrorResponse) => {
           console.log(error);
+          await loading.dismiss();
           this.toasterService.presentErrorToast('Connexion à Facebook impossible');
-        }
+        });
+      })
+      .catch(async (error: any) => {
+        console.log(error);
+        this.toasterService.presentErrorToast('Connexion à Facebook impossible');
       });
-    }
   }
 
   async googleLogin() {

@@ -9,10 +9,10 @@
                         <ion-select-option value="2">Facture</ion-select-option>
                         <ion-select-option value="3">Article</ion-select-option>
                         <ion-select-option value="4">Client</ion-select-option>
-                        <ion-select-option value="5">Employé</ion-select-option>
+                        <ion-select-option value="5" *ngIf="accountService.role === 'Gérant'">Employé</ion-select-option>
                         <ion-select-option value="6">Dépense</ion-select-option>
                         <!-- <ion-select-option value="7">Note de frais</ion-select-option> -->
-                        <ion-select-option value="8">Projet</ion-select-option>
+                        <ion-select-option value="8" *ngIf="accountService.role === 'Gérant'">Projet</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
@@ -22,8 +22,8 @@
     <app-add-bill *ngIf="selected === '2'"></app-add-bill>
     <app-add-article *ngIf="selected === '3'"></app-add-article>
     <app-add-client *ngIf="selected === '4'"></app-add-client>
-    <app-add-employee *ngIf="selected === '5'"></app-add-employee>
+    <app-add-employee *ngIf="selected === '5' && accountService.role === 'Gérant'"></app-add-employee>
     <app-add-expense *ngIf="selected === '6'" [id]="expenseProjectId"></app-add-expense>
     <!-- <app-add-expense-account *ngIf="selected === '7'"></app-add-expense-account> -->
-    <app-add-project *ngIf="selected === '8'"></app-add-project>
+    <app-add-project *ngIf="selected === '8' && accountService.role === 'Gérant'"></app-add-project>
 </ion-content>

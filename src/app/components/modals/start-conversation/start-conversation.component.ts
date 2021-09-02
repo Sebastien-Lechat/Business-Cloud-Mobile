@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { AccountService } from 'src/app/services/account/account.service';
@@ -18,6 +19,7 @@ export class StartConversationComponent implements OnInit {
 
   searchValue = '';
   loading = false;
+  avatarList = {};
   users: ShortUserListI[];
   filteredUsers: ShortUserListI[];
   conversations: ConvJsonI[];
@@ -31,6 +33,7 @@ export class StartConversationComponent implements OnInit {
     private router: Router,
     private toasterService: ToasterService,
     private loadingController: LoadingController,
+    private afStorage: AngularFireStorage,
   ) { }
 
   ngOnInit() {
@@ -45,6 +48,10 @@ export class StartConversationComponent implements OnInit {
               } else if (conversation.member2.user._id === this.accountService.user.id) {
                 data.users = data.users.filter((user) => user._id !== conversation.member1.user._id);
               }
+            });
+            data.users.forEach((user) => {
+              if (user.avatar) { this.loadImg(user.id, user.avatar); }
+              else { this.avatarList[user.id] = { data: undefined, loaded: true }; }
             });
             this.users = data.users;
             this.filteredUsers = data.users;
@@ -95,6 +102,19 @@ export class StartConversationComponent implements OnInit {
   dismiss() {
     this.modalController.dismiss({
       dismissed: true
+    });
+  }
+
+  loadImg(id: string, path: string) {
+    this.avatarList[id] = { data: undefined, loaded: false };
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.avatarList[id] = { data, loaded: true };
+      },
+      error: () => {
+        this.avatarList[id].loaded = true;
+      }
     });
   }
 
