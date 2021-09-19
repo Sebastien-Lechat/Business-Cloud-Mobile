@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { IonRouterOutlet, LoadingController, ModalController } from '@ionic/angular';
+import { PrivatePolicyComponent } from 'src/app/components/modals/private-policy/private-policy.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 
@@ -34,7 +35,14 @@ export class RegisterPage implements OnInit {
   private facebookAuth: { id: string, token: string };
 
 
-  constructor(private router: Router, private authService: AuthService, private toasterService: ToasterService, private loadingController: LoadingController) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toasterService: ToasterService,
+    private loadingController: LoadingController,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
+  ) {
     if (this.router.getCurrentNavigation().extras?.state?.name) { this.name = this.router.getCurrentNavigation().extras?.state?.name; }
     if (this.router.getCurrentNavigation().extras?.state?.email) { this.email = this.router.getCurrentNavigation().extras?.state?.email; }
     if (this.router.getCurrentNavigation().extras?.state?.avatar) { this.avatar = this.router.getCurrentNavigation().extras?.state?.avatar; }
@@ -102,6 +110,15 @@ export class RegisterPage implements OnInit {
   navigateTo(path: string, id?: string) {
     if (id) { this.router.navigate([path, id]); }
     else { this.router.navigate([path]); }
+  }
+
+  async showPrivatePolicy() {
+    const modal = await this.modalController.create({
+      component: PrivatePolicyComponent,
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl
+    });
+    return await modal.present();
   }
 
   segmentChanged(event) {

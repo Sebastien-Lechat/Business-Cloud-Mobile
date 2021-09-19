@@ -8,11 +8,11 @@
         <ion-col size='2' class="end mb-1 py-0 pe-0">
             <ion-icon (click)="navigateTo('/tabs/notifications')" src="assets/icon/notification.svg" class="app-icon pointer">
             </ion-icon>
-            <ion-badge *ngIf="notificationCount !== undefined" class="notifications-badge" [ngStyle]="{'background-color': notificationCount === 0 ? '#e85555' : 'red' }">{{ notificationCount }}</ion-badge>
+            <ion-badge *ngIf="notificationService.notificationCount !== undefined" class="notifications-badge" [ngStyle]="{'background-color': notificationService.notificationCount === 0 ? '#e85555' : 'red' }">{{ notificationService.notificationCount }}</ion-badge>
         </ion-col>
         <ion-col size='2' class="end mb-1 py-0 ps-0">
-            <div *ngIf="user" (click)="navigateToProfile('/tabs/tab5')" class="header-avatar" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');">
-            </div>
+            <div *ngIf="user && !avatar && avatarLoaded" (click)="navigateToProfile('/tabs/tab5')" class="header-avatar" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');"></div>
+            <div *ngIf="user && avatar && avatarLoaded" (click)="navigateToProfile('/tabs/tab5')" class="header-avatar" style="background-image: url('{{ avatar }}');"></div>
             <ion-skeleton-text *ngIf="!user" class="header-avatar-skeleton" animated></ion-skeleton-text>
         </ion-col>
     </ion-row>
