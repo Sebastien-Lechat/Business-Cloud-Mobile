@@ -72,8 +72,10 @@ export class AddClientComponent implements OnInit {
   }
 
   async createClient() {
-    if (!this.name.trim() || !this.email.trim() || (this.selectedEmployee.name && !this.selectedEmployee.selectedId)) {
+    if (!this.name.trim() || !this.email.trim() || (this.selectedEmployee.name && !this.selectedEmployee.selectedId) || !this.password.trim() || !this.confirmPassword.trim()) {
       this.toasterService.presentErrorToast('Données obligatoires manquantes');
+    } else if (this.password.trim() !== this.confirmPassword.trim()) {
+      this.toasterService.presentErrorToast('Les mots de passe doivent être identiques');
     } else {
       const loading = await this.loadingController.create({ cssClass: 'loading-div', message: 'Création...' });
       await loading.present();
@@ -81,7 +83,7 @@ export class AddClientComponent implements OnInit {
       const creationData: ClientCreateI = {
         name: this.name.trim(),
         email: this.email.trim(),
-        password: 'Azerty1!',
+        password: this.password.trim(),
         address: (this.address.trim() ? this.address.trim() : ''),
         zip: (this.zip.trim() ? this.zip.trim() : ''),
         city: (this.city.trim() ? this.city.trim() : ''),

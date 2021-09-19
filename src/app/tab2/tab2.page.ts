@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BillI } from 'src/interfaces/billInterface';
 import { EstimateI } from 'src/interfaces/estimateInterface';
 import { ShortUserListI } from 'src/interfaces/userInterface';
+import { AccountService } from '../services/account/account.service';
 import { BillService } from '../services/bill/bill.service';
 import { EstimateService } from '../services/estimate/estimate.service';
 
@@ -25,7 +26,12 @@ export class Tab2Page implements OnInit {
   filterStatus = '0';
   filterType = '0';
 
-  constructor(private router: Router, private billService: BillService, private estimateService: EstimateService) { }
+  constructor(
+    private router: Router,
+    private billService: BillService,
+    private estimateService: EstimateService,
+    public accountService: AccountService,
+  ) { }
 
   ngOnInit(): void {
   }

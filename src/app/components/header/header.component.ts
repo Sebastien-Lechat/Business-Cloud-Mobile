@@ -1,4 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account/account.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -10,33 +11,43 @@ import { UserI } from 'src/interfaces/userInterface';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
 
   user: UserI;
-  notificationCount = 0;
-  intervalCount: any;
+  avatar = '';
+  avatarLoaded = false;
+
 
   @Input() headerText: string;
 
-  constructor(private router: Router, private notificationService: NotificationService, private globalService: GlobalService, private accountService: AccountService) { }
+  constructor(
+    private router: Router,
+    public notificationService: NotificationService,
+    private globalService: GlobalService,
+    private accountService: AccountService,
+    private afStorage: AngularFireStorage,
+  ) { }
 
   ngOnInit() {
-    if (!this.globalService.headerNotificationsCountAlreadyExist) {
-      this.globalService.headerNotificationsCountAlreadyExist = true;
-      this.getNotificationCount();
-      this.intervalCount = setInterval(() => {
-        this.getNotificationCount();
-      }, 5000);
+    if (!this.notificationService.headerNotificationsCountAlreadyExist) {
+      this.notificationService.headerNotificationsCountAlreadyExist = true;
+      this.notificationService.getNotificationCount();
+      this.notificationService.setNotificationInterval();
     }
     this.user = this.accountService.user;
+    this.loadImg(this.user.avatar);
   }
 
-  getNotificationCount() {
-    this.notificationService.count().subscribe({
-      next: (data: { error: false, count: number }) => {
-        if (data.count > 99) { data.count = 99; }
-        this.notificationCount = data.count;
+  loadImg(path: string) {
+    const ref = this.afStorage.ref('images/' + path);
+    ref.getDownloadURL().subscribe({
+      next: (data: any) => {
+        this.avatar = data;
+        this.avatarLoaded = true;
       },
+      error: () => {
+        this.avatarLoaded = true;
+      }
     });
   }
 
@@ -47,11 +58,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateToProfile(path: string) {
     this.router.navigate([path]);
     this.globalService.tabsSubject.next('profil');
-  }
-
-  ngOnDestroy(): void {
-    this.globalService.headerNotificationsCountAlreadyExist = false;
-    clearInterval(this.intervalCount);
   }
 
 }

@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ClientI } from 'src/interfaces/userInterface';
 import { AccountService } from '../account/account.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,11 @@ export class AuthService {
 
   private url = environment.API;
 
-  constructor(private http: HttpClient, private accountService: AccountService) { }
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService,
+    private notificationService: NotificationService
+  ) { }
 
   register(data: ClientI) {
     return this.http.post<any>(this.url + `auth/register`, data);
@@ -83,6 +88,7 @@ export class AuthService {
   }
 
   logout() {
+    this.notificationService.clearNotificationInterval();
     return this.http.delete<any>(this.url + `auth/disconnect`);
   }
 

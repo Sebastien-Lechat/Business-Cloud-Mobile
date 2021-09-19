@@ -82,10 +82,13 @@
                     <input type="text" id="siret" class="input-with-icon" placeholder="Numéro SIRET de l'entrprise..." [(ngModel)]="numSIRET">
                     <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
                 </ion-col>
-                <ion-col size='12' class="mb-4 start" *ngIf="segment === 'entreprise'">
+                <ion-col size='12' class="mb-1 start" *ngIf="segment === 'entreprise'">
                     <label class="input-label">N° RCS<span class="red-star">*</span></label>
                     <input type="text" id="RCS" class="input-with-icon" placeholder="Numéro RCS de l'entrprise..." [(ngModel)]="numRCS">
                     <ion-icon name="information-circle-outline" class="input-icon-with-label"></ion-icon>
+                </ion-col>
+                <ion-col size='12' class="mb-2 center">
+                    <span class="password-lost-text pointer" (click)="showPrivatePolicy()">Politique de confidentialité</span>
                 </ion-col>
                 <ion-col size='12' class="mb-4 center">
                     <button class="app-btn-auth pointer" (click)="register()">Inscription</button>

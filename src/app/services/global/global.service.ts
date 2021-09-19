@@ -15,7 +15,6 @@ export class GlobalService {
   closeConv: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
 
   creationSubject: BehaviorSubject<number> = new BehaviorSubject(6);
-  headerNotificationsCountAlreadyExist = false;
 
   private url = environment.API;
   private deviceInfo: DeviceId;

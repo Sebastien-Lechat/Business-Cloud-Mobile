@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FacebookLogin, FacebookLoginResponse } from '@capacitor-community/facebook-login';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ToasterService } from 'src/app/services/toaster/toaster.service';
 import { FacebookDataI, GoogleDataI } from 'src/interfaces/globalInterface';
 
@@ -21,10 +22,12 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private toasterService: ToasterService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
+    this.notificationService.clearNotificationInterval();
   }
 
   async login() {

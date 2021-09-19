@@ -1,6 +1,6 @@
 <ion-content class="background-div">
     <div class="background-div-rounded">
-        <div *ngIf="user && !avatar && avatarLoaded" class="avatar-profile" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');"></div>
+        <div *ngIf="user && !avatar && avatarLoaded" class="avatar-profile" style="background-image: url('https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true');" (click)="showLightbox()"></div>
         <div *ngIf="user && avatar && avatarLoaded" class="avatar-profile" style="background-image: url('{{ avatar }}');" (click)="showLightbox()"></div>
         <ng-image-fullscreen-view [images]="[{image: avatar ? avatar : 'https://eu.ui-avatars.com/api/?name={{ user.name }}&background=ececec&size=128&color=2865a2&bold=true' }]" [imageIndex]="0" [show]="showFlag" (close)="closeEventHandler()"></ng-image-fullscreen-view>
         <ion-skeleton-text *ngIf="!user || !avatarLoaded" class="avatar-profile-skeleton" animated></ion-skeleton-text>
